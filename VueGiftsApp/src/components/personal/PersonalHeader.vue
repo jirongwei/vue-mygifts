@@ -23,13 +23,6 @@
             暂无签名      </div>
         </div>
       </div>
-      <router-link to="/settings">
-        <div class="settings-btn hidden-md hidden-xs hidden-sm">
-          <a href="#" class="btn-set">
-            <i class="btn-set-img"></i>个人设置
-          </a>
-        </div>
-      </router-link>
       <div class="mask"></div>
     </div>
 
@@ -95,7 +88,7 @@ export default {
     position: relative;
     float: left;
     width: 66.67%;
-    padding-left: 140px;
+    padding-left: 180px;
   }
 
   @media (max-width: 767px){
@@ -120,7 +113,6 @@ export default {
     border: 6px solid rgba(255, 255, 255, 0.5);
     display: inline-block;
     border-radius: 50%;
-    margin-left: -40px;
   }
 
   @media (max-width: 767px){
@@ -179,7 +171,6 @@ export default {
     background-color: rgba(255, 255, 255, 0.3);
     color: #fff;
     border-radius: 4px;
-    margin-left: -100px;
   }
 
   .user-center-header .user-about-content{
@@ -197,54 +188,5 @@ export default {
     z-index: 0 !important;
   }
 
-  /*[个人设置]按钮*/
-  .user-center-header div.settings-btn{
-    position: absolute;
-    right: 160px;
-    top: 80px;
-    line-height: 48px;
-    vertical-align: middle;
-    height: 48px;
-    width: 110px;
-    cursor: pointer;
-    z-index: 101;
-  }
-
-  @media (max-width: 991px) anx (min-width: 768px) {
-    .user-center-header div.settings-btn{
-      position: absolute;
-      right: 225px;
-
-    }
-  }
-
-
-  .settings-btn a.btn-set{
-    position: relative;
-    padding: 8px 16px 8px 32px;
-    border: 1px solid rgba(255,255,255,.4);
-    border-radius: 18px;
-    font-size: 18px;
-    line-height: 20px;
-    height: 20px;
-    color: rgba(255,255,255,.4);
-    text-decoration: none;
-
-  }
-
-  .settings-btn a.btn-set i.btn-set-img{
-    position: absolute;
-    left: 6px;
-    top: 10px;
-    width: 20px;
-    height: 20px;
-    background: url("../../assets/my-icons/settings.svg") center no-repeat;
-  }
-
-  .user-center-header div.settings-btn:hover a{
-    cursor: pointer;
-    border: 2px solid rgba(255,255,255,.8);
-    color: rgba(255,255,255,.8);
-  }
 
 </style>
