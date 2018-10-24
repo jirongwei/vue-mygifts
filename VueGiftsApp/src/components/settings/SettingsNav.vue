@@ -40,6 +40,7 @@ export default {
 
   /*左侧导航--------sidenav-----------*/
   div.sidenav{
+    margin-top: 30px;
     background: #fff;
   }
 

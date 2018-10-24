@@ -100,7 +100,7 @@
                         </router-link>
                       </li>
                       <li class="l-style">
-                       <router-link to="/personal">
+                       <router-link to="/settings">
                          <a href="#">
                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                            个人设置
