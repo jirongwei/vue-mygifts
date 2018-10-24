@@ -128,6 +128,8 @@ export default {
   data () {
     return {
 
+      userid:1,
+
       // 判断是不是选中
       select:false,
 
@@ -250,7 +252,33 @@ export default {
     // 购物车结算
     cartAccounts:function () {
       // 存放结算的商品id
-      // console.log(this.gifts_list)
+      console.log(this.gifts_list)
+      //存放商品信息 cart_num gifts_id
+      console.log(this.goodsList)
+      for(let i =0;i<this.gifts_list.length;i++){
+        for(let j=0; j<this.goodsList.length;j++){
+          if(this.gifts_list[i]==this.goodsList[j]["gifts_id"]){
+            axios.post(this.GLOBAL.HOST+"gift/account/",{
+              userid:this.userid,
+              postid:this.gifts_list[i],
+              postnum:this.goodsList[j]["cart_num"],
+              payStatus:true
+            })
+              .then(function (response) {
+                console.log(response.data)
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
+          }
+        }
+      }
+
+      // if(this.gifts_list[i]==good["gifts_id"]){
+      //
+
+
+
     }
   },
 
