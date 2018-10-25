@@ -34,6 +34,7 @@ import SettingsIcon from '@/components/settings/SettingsIcon'
 
 
 
+
 Vue.use(Router)
 
 
@@ -109,7 +110,6 @@ export default new Router({
       name:'upload',
       component:SettingsIcon
     },
-
 
 
 

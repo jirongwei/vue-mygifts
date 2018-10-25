@@ -13,6 +13,7 @@ import Pagination from './components/public/Pagination'
 // user
 import Login from './components/user/Login'
 import Regist from './components/user/Regist'
+import UserAddress from './components/user/UserAddress'
 
 // 个人中心
 import PersonalNothing from './components/personal/PersonalNothing'
@@ -103,7 +104,8 @@ Vue.component('personal-header',PersonalHeader);
 // 个人设置 -- 左侧导航
 Vue.component('settingsNav',SettingsNav);
 
-
+//为订单添加地址
+Vue.component('user_addr',UserAddress);
 
 
 
