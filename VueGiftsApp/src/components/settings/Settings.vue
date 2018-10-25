@@ -1,354 +1,153 @@
 
 <template>
-  <div class="container" id="personal-basic">
-    <div class="col-md-12">
-      <div id="content-container" class="container">
-        <div class="row">
-          <div class="col-md-3">
-
-            <!--左侧导航-->
-            <settingsNav></settingsNav>
-          </div>
-
-          <div class="col-md-9 my-show-passage">
-
-            <!--个人设置模块-->
-            <div class="panel panel-default panel-col" style="margin-top: 30px">
-              <div class="panel-heading">基础信息</div>
-              <div class="panel-body">
-
-                <span class="my-passage-tip">完善个人资料是让别人认识你的第一步</span>
-
-                <form id="user-profile-form" class="form-horizontal" method="post">
-
-                  <!--div:用户名-->
-                  <div class="form-group">
-                    <label class="col-md-2 control-label">用户名</label>
-                    <div class="col-md-7 controls">
-                      <div class="Info_username" v-text="userBasic.user__telephone"></div>
-                    </div>
-                  </div>
-
-                  <!--DIY昵称-->
-                  <div class="form-group">
-                    <label class="col-md-2 control-label nickname-label" for="Info-nickname"><em class="sign">*</em>DIY昵称</label>
-                    <div class="col-md-7 controls radios">
-                      <input type="text" id="Info-nickname" class="form-control Info-input" name="Info_nickname" @blur="showNickname" v-model="UserNickname=userBasic.nickname">
-                    </div>
-                    <div class="col-md-2 controls hidden-xs warning-box box-nickname" v-if="isNickname">
-                      <span class="warn-icon"></span>
-                      <span class="warn-text">昵称不能为空</span>
-                    </div>
-                    <div class="col-md-4 col-md-offset-2 basic-tip">用于礼物论坛提问回复,显示系统登录名</div>
-                  </div>
-
-                  <!--性别-->
-                  <div class="form-group">
-                    <label class="col-md-2 control-label">性别</label>
-                    <div class="col-md-7 controls radios">
-                      <div class="Info_gender">
-                        <input type="radio" id="Info-gender-0" name="Info_gender" required="required" value="male" :checked="userBasic.gender__id===1" @click="getUserSex">
-                        <label for="Info-gender-0" class="required">男</label>
-                        <input type="radio" id="Info-gender-1" name="Info_gender" required="required" value="female" :checked="userBasic.gender__id===2" @click="getUserSex">
-                        <label for="Info-gender-1" class="required">女</label>
-                        <input type="radio" id="Info-gender-2" name="Info_gender" required="required" value="secrecy" :checked="userBasic.gender__id===3" @click="getUserSex">
-                        <label for="Info-gender-2" class="required">保密</label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!--城市-->
-                  <div class="form-group form-forIam-group form-notStudent-group">
-                    <label class="col-md-2 control-label"><em class="sign">*</em>城市</label>
-                    <div class="col-md-7 controls" id="city-wrap">
-                      <input type="text" id="Info-city" name="Info_city" class="form-control Info-input" v-model="UserLocation=userBasic.location">
-                    </div>
-                    <div class="col-md-4 col-md-offset-2 basic-tip">留下居住地的足迹</div>
-                  </div>
-
-                  <!--个人签名-->
-                  <div class="form-group">
-                    <label class="col-md-2 control-label"><em class="sign">*</em>个人签名</label>
-                    <div class="col-md-7 controls">
-                      <textarea type="text" rows="4" maxlength="80" id="Info-signature" name="Info_signature" @keyup = "descInput" v-model="UserSignature=userBasic.signature" class="form-control Info-input" placeholder="用一段话介绍你自己，会在你的个人页面显示"></textarea>
-                    </div>
-                    <div class="col-md-4 col-md-offset-2 basic-tip">还可以输入<em id="count_chars" v-text="num_word"></em>个字符</div>
-                  </div>
-
-                  <!--联系信息-->
-                  <div class="contact-info panel-heading">联系信息</div>
-
-                  <!--真实姓名-->
-                  <div class="form-group">
-                    <label class="col-md-2 control-label"><em class="sign">*</em>真实姓名</label>
-                    <div class="col-md-7 controls">
-                      <input type="text" id="Info-name" name="Info_name" class="form-control Info-input" v-model="UserName=userBasic.username">
-                    </div>
-                    <div class="col-md-5 col-md-offset-2 basic-tip">用于礼物商品的寄送，不会以任何形式向第三方透露</div>
-                  </div>
-
-                  <!--微博-->
-                  <div class="form-group">
-                    <div class="col-md-2 control-label">
-                      <label for="Info-email">邮箱</label>
-                    </div>
-                    <div class="col-md-7 controls">
-                      <input type="text" id="Info-email" name="Info_email" class="form-control" v-model="UserEmail=userBasic.user__email">
-                    </div>
-                  </div>
-
-                  <!--qq-->
-                  <div class="form-group">
-                    <label for="Info-qq" class="col-md-2 control-label"><em class="sign">*</em>QQ</label>
-                    <div class="col-md-7 controls">
-                      <input type="text" id="Info-qq" name="Info_qq" class="form-control Info-input" v-model="UserQQ=userBasic.qq">
-                    </div>
-                    <div class="col-md-2 controls mts"><input type="checkbox" name="Info_isQQPublic" value="1">公开</div>
-                    <div class="col-md-5 col-md-offset-2 basic-tip">定时更新物流信息，最新私信动态</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-7 col-md-offset-2">
-                      <a href="#" class="btn btn-primary" id="btn-save" @click="updateUserBasic()">
-                        保存
-                      </a>
-                    </div>
-                  </div>
-                </form>
-
-              </div>
-            </div>
-
-          </div>
-
-
-
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <SettingsLeft @changeright="changeRight"></SettingsLeft>
+      </div>
+      <div class="col-md-9">
+        <SettingsRight v-if="showRight" @changeright="changeRight" :nowShow="rightName"  @SettingsWeixin="WeixinModel"></SettingsRight>
       </div>
     </div>
+
+    <!--微信模态框-->
+    <div class="panel-body" id="weixin-panel" v-show="showWeixin" @click="HideWeixin">
+      <div id="modal-weixin">
+        <div class="main impowerBox">
+          <div class="loginPanel normalPanel">
+            <div class="title">微信登录</div>
+            <div class="waiting panelContent">
+              <div class="wrp_code"><img class="qrcode lightBorder" src="../../assets/my-icons/safe_weixin.png"></div>
+              <div class="info">
+                <div class="status status_browser js_status normal" id="wx_default_tip">
+                  <p>请使用微信扫描二维码登录</p>
+                  <p>“左心房”</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
-
-
-
-
-
 </template>
 
 <script>
-
   import axios from 'axios'
+  import SettingsLeft from'./SettingsLeft'
+  import SettingsRight from'./SettingsRight'
+
   export default {
   name: 'Settings',
   data () {
     return {
-      // 昵称不能为空
-      isNickname:false,
+      // 强制刷新子组件
+      showRight: true,
+      // 右侧显示当前组件名
+      rightName: 'RightBasicInfo',
 
-      num_word:80,
-
-      // 存放用户基本信息
-      userBasic:[],
-      UserNickname:'',
-      UserSex:'',
-      UserLocation:'',
-      UserSignature:'',
-      UserEmail:'',
-      UserName:'',
-      UserQQ:'',
-
+      // 显示微信模态框
+      showWeixin:false
     }
   },
-    mounted:function () {
-      this.getUserBasic();
-    },
-
+    components:{
+      SettingsLeft,
+      SettingsRight
+  },
     methods:{
-      // 获取用户选择性别
-      getUserSex:function(e){
-        let $day_id = $(e.target).val();
-        if($day_id == 'male'){
-          this.UserSex = 1;
-        }else if($day_id == 'female'){
-          this.UserSex = 2;
-        }else{
-          this.UserSex = 3;
-        }
 
-      },
-      // 获取用户基本信息
-      getUserBasic:function(){
-        let vm = this;
-        axios({
-          method:'POST',
-          url:this.GLOBAL.HOST+'user/userinfo/',
-          headers:{"token":sessionStorage.getItem("token")}
+    // 切换右边容器
+      changeRight: function(name){
+        this.showRight = false;
+        this.$nextTick(() =>{
+          this.rightName = name;
+          this.showRight = true;
         })
-        .then(function (response) {
-          vm.UserSex = response.data.userMsg[0].gender__sexname;
-          if(response.data.code == '410'){
-            alert('登录已过期')
-          }else if(response.data.userMsg){
-            vm.userBasic = response.data.userMsg[0];
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        });
       },
 
-      // 修改用户基本信息
-      updateUserBasic:function(){
-        let vm = this;
-        axios({
-          method:'POST',
-          url:this.GLOBAL.HOST+'user/updatemsg/',
-          data:{
-            "nickname":this.UserNickname,
-            "gender_id":this.UserSex,
-            "location":this.UserLocation,
-            "signature":this.UserSignature,
-            "username":this.UserName,
-            "qq":this.UserQQ,
-            "email":this.UserEmail
-          },
-          headers:{"token":sessionStorage.getItem("token")}
-        })
-        .then(function (response) {
-          if(response.data.code == '410'){
-            alert('登录已过期')
-          }
-          if(response.data.code == '808'){
-            alert('保存成功');
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        });
+      // 微信model
+      WeixinModel:function (e) {
+        this.showWeixin = e;
       },
+      HideWeixin:function () {
+        this.showWeixin = false;
+      }
 
-      // 昵称不能为空
-      showNickname:function () {
-        if(this.UserNickname){
-          this.isNickname = false;
-        }else{
-          this.isNickname = true;
-        }
-      },
-      // 个性签名
-      descInput(){
-        let maxChars=80; // 设置最大字符数 p
-        let curr=maxChars-this.UserSignature.length;
-        if(curr>0){
-          this.num_word=curr.toString();
-        }else{
-          this.num_word='0';
-        }
-      },
-
-    }
+    },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-  /*基本信息--------------------*/
-  .form-horizontal .form-group {
-    margin-bottom: 30px;
+  /*安全设置 3.绑定微信*/
+
+  #weixin-panel{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1001;
+    padding: 0;
+    margin: 0;
+
   }
 
-  .Info_username{
-    display: inline-block;
-    min-height: 34px;
-    padding: 6px 0;
-    font-size: 14px;
-    line-height: 20px;
-    vertical-align: middle;
+  #modal-weixin{
+    width: 100%;
+    height: 100%;
+    background: #333333;
+    padding: 50px;
+
   }
 
-  div.panel-default > div.panel-heading {
+  .impowerBox{
+    line-height: 1.6;
     position: relative;
-    font-size: 16px;
-    padding: 15px 0;
-    border-bottom: 2px solid #f5f5f5;
-    color: #919191;
-    text-indent: 20px;
-    background: #fff;
-  }
-
-  /*特别提示符号 *----*/
-
-  em.sign{
-    color: red;
-    font-size: 20px;
-    margin-right: 5px;
+    width: 100%;
+    z-index: 1;
+    text-align: center;
+    display: inline-block;
     vertical-align: middle;
   }
 
-  .Info-input{
-    margin-top: 3px;
+  .impowerBox .title{
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.6;
+    color: #fff;
   }
 
-  /*警告昵称合法性---*/
-  .warning-box{
-    padding-top: 8px;
+  .impowerBox .qrcode{
+    width: 280px;
+    margin-top: 15px;
+    border: 1px solid #E2E2E2;
   }
 
-  .warn-icon{
-    float: left;
-    background: url("../../assets/my-icons/common.png") no-repeat 0 0;
-    width: 20px;
-    height: 20px;
+  .impowerBox .info{
+    width: 280px;
+    margin: 0 auto;
   }
 
-  .warn-text{
-    float: left;
-    line-height: 22px;
-    text-align: left;
-    color: #cc3333;
+  .impowerBox .status.status_browser{
+    text-align: center;
   }
 
-  /*不合法提示信息---*/
-
-  .my-passage-tip{
-    color: #919191;
-    font-size: 12px;
-    display: block;
-    margin: -10px 0 20px 5px;
+  .impowerBox .status{
+    padding: 7px 14px;
   }
 
-  .basic-tip{
-    font-size: 12px;
-    color: #919191;
-    padding-top: 5px;
+  .impowerBox .status.normal{
+    margin-top: 15px;
+    background-color: #232323;
+    border-radius: 100px;
+    box-shadow: inset 0 5px 10px -5px #191919, 0 1px 0 0 #444;
+    color: #fff;
   }
 
-  /*性别标签---*/
 
-  div.Info_gender *{
-    margin-top: 8px;
-    cursor: pointer;
-  }
-
-  div.Info_gender label{
-    color:  #919191;
-    margin-right: 10px;
-  }
-
-  /*联系信息---*/
-  div.contact-info{
-    font-size: 16px;
-    padding: 15px 0;
-    border-bottom: 2px solid #f5f5f5;
-    margin: 0 0 25px 10px;
-    color: #919191;
-    background: #fff;
-  }
-
-  /*[保存按钮]---*/
-  #btn-save{
-    background: #0099e5;
-    border: none;
-  }
 
 </style>
