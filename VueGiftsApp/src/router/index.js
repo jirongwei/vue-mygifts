@@ -20,7 +20,8 @@ import PostDetail from '@/components/post/PostDetail'
 import Post from '@/components/post/Post'
 
 import Settings from '@/components/settings/Settings'
-import SettingsIcon from '@/components/settings/SettingsIcon'
+
+
 
 import MyCollection from '@/components/personal/MyCollection'
 import PersonalMyCollection from '@/components/personal/PersonalMyCollection'
@@ -109,13 +110,6 @@ export default new Router({
       path:'/settings',
       name:'settings',
       component:Settings
-    },
-
-    // 上传头像
-    {
-      path:'/upload',
-      name:'upload',
-      component:SettingsIcon
     },
 
 

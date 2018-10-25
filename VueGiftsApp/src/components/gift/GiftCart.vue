@@ -108,12 +108,12 @@
             <span class="cart-footer-text">元， 合计(不含运费)：</span>
             <span class="cart-footer-total" id="totalPrice"  v-text="getTotal.totalPrice"></span>
           </span>
-              <div class="mz-btn btn-success" id="cartSubmit" @click="cartAccounts">去结算</div>
+              <button type="button" class="mz-btn btn-success" id="cartSubmit" @click="toshowadd">去结算</button>
             </div>
           </div>
         </div>
       </div>
-
+      <user_addr v-if="showaddr" v-on:getaddr="cartAccounts"></user_addr>
     </div>
 
 
@@ -132,6 +132,9 @@ export default {
 
       // 判断是不是选中
       select:false,
+
+      //是否显示地址选项
+      showaddr:false,
 
       goodsList:[],
 
@@ -249,30 +252,47 @@ export default {
       cart.cart_num++;
     },
 
-    // 购物车结算
-    cartAccounts:function () {
-      // 存放结算的商品id
-      console.log(this.gifts_list)
-      //存放商品信息 cart_num gifts_id
-      console.log(this.goodsList)
-      for(let i =0;i<this.gifts_list.length;i++){
-        for(let j=0; j<this.goodsList.length;j++){
-          if(this.gifts_list[i]==this.goodsList[j]["gifts_id"]){
-            axios.post(this.GLOBAL.HOST+"gift/account/",{
-              userid:this.userid,
-              postid:this.gifts_list[i],
-              postnum:this.goodsList[j]["cart_num"],
-              payStatus:true
-            })
-              .then(function (response) {
-                console.log(response.data)
+    toshowadd:function(){
+      if(this.check_goods){
+        this.showaddr=!this.showaddr
+      }else {
+        alert("请先选择商品!")
+      }
+
+    },
+
+    // 购物车结算(选择地址后执行)
+    // 存放结算的商品id
+    // console.log(this.gifts_list)
+    //存放商品信息 cart_num gifts_id
+    // console.log(this.goodsList)
+    cartAccounts:function (mes) {
+      console.log(mes)
+      if(mes["status"]){
+        for(let i =0;i<this.gifts_list.length;i++){
+          for(let j=0; j<this.goodsList.length;j++){
+            if(this.gifts_list[i]==this.goodsList[j]["gifts_id"]){
+              axios.post(this.GLOBAL.HOST+"gift/account/",{
+                userid:this.userid,
+                postid:this.gifts_list[i],
+                postnum:this.goodsList[j]["cart_num"],
+                addressid:mes["addrid"],
+                payStatus:true,
+
               })
-              .catch(function (error) {
-                console.log(error)
-              })
+                .then(function (response) {
+                  console.log(response.data)
+                })
+                .catch(function (error) {
+                  console.log(error)
+                })
+            }
           }
         }
       }
+      this.showaddr=!this.showaddr
+      this.$router.push({name:'giftorder'})
+
 
       // if(this.gifts_list[i]==good["gifts_id"]){
       //

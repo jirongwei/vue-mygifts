@@ -1,84 +1,110 @@
 <template>
 
-    <div class="mainbody cart" style="margin-top: 80px;">
-      <div class="container">
+    <div class="allContent">
+      <personal-header></personal-header>
 
-        <!--订单导航-->
-       <div class="order_nav">
-         <ul>
-           <li><a href="" :class="{on: this.nav=='all'}" @click.prevent="chengenav('all')">全部订单</a></li>
-           <li><a href="" :class="{on: this.nav=='nopay'}"  @click.prevent="chengenav('nopay')">未支付订单</a></li>
-           <li><a href="" :class="{on: this.nav=='nofinish'}"  @click.prevent="chengenav('nofinish')">未完成订单</a></li>
-           <li><a href="" :class="{on: this.nav=='history'}"  @click.prevent="chengenav('history')">历史订单</a></li>
-         </ul>
-       </div>
+      <div id="content-container" class="container">
+        <ul class="nav nav-tabs clearfix">
+          <li>
+            <router-link to="/personal">
+              <a href="#">个人介绍</a>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/receive">
+              <a href="#" >我的礼物</a>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="">
+              <a href="#" >我的点赞</a>
+            </router-link>
+          </li>
+        </ul>
 
+        <div class="cart" style="margin-top: 20px;">
+        <div class="container" style="margin-right: 0;margin-left: -15px">
 
-        <!-- 订单车详情头 -->
-        <table class="cart-header">
-          <tbody>
-          <tr>
-            <td class="cart-col-select col-md-3 col-xs-4 col-sm-4">
-
-                 <span class="cart-select-title">订单列表</span>
-
-            </td>
-            <td class="cart-col-price col-md-3 hidden-xs hidden-sm">商品信息</td>
-            <td class="cart-col-number col-md-2 hidden-xs hidden-sm">数量</td>
-            <td class="cart-col-total col-md-2 hidden-xs hidden-sm">总金额</td>
-            <td class="cart-col-ctrl col-md-2 hidden-xs hidden-sm">订单状态</td>
-          </tr>
-          </tbody>
-        </table>
-
-        <!-- 订单信息列表 -->
-        <div class="cart-merchant-list">
-          <div class="cart-merchant">
-            <table class="cart-merchant-body">
-              <tbody>
-              <tr class="cart-product" v-for="good in goodsList">
-
-                <!--商品主图片-->
-                <td class="cart-col-select col-md-3 col-xs-4 col-sm-4">
-                  <a href="#" class="cart-product-link">
-                    <img :src="good.gifts__giftImg" class="cart-product-img" alt="" width="50">
-                  </a>
-                </td>
-
-                <!--商品名字-->
-                <td class="cart-col-name col-md-3 col-xs-8 col-sm-8">
-                  <a href="#" class="cart-product-link">
-                    <p v-text="good.gifts__gift_name"></p>
-                  </a>
-                  <span class="cart-product-desc" v-text="good.gifts__descr"></span>
-                </td>
-
-                <!--商品数量-->
-                <td class="cart-col-price col-md-2 hidden-xs hidden-sm">
-                  <p>
-                    <span  v-text="good.cart_num"></span>
-                  </p>
-                </td>
-
-
-                <!--金额-->
-                <td class="cart-col-total col-md-2 hidden-xs hidden-sm">
-                  <span class="cart-product-price total" >{{good.gifts__price*good.cart_num}}</span>
-                </td>
-
-                <!--订单状态-->
-                <td class="cart-col-ctrl col-md-2 hidden-xs hidden-sm">
-                  <span v-text="good.order_status"></span>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+          <!--订单导航-->
+          <div class="order_nav">
+            <ul>
+              <li><a href="" :class="{on: this.nav=='all'}" @click.prevent="chengenav('all')">全部订单</a></li>
+              <li><a href="" :class="{on: this.nav=='nopay'}"  @click.prevent="chengenav('nopay')">未支付订单</a></li>
+              <li><a href="" :class="{on: this.nav=='nofinish'}"  @click.prevent="chengenav('nofinish')">未完成订单</a></li>
+              <li><a href="" :class="{on: this.nav=='history'}"  @click.prevent="chengenav('history')">历史订单</a></li>
+            </ul>
           </div>
+
+
+          <!-- 订单车详情头 -->
+          <table class="cart-header">
+            <tbody>
+            <tr>
+              <td class="cart-col-select col-md-3 col-xs-4 col-sm-4">
+
+                <span class="cart-select-title">订单列表</span>
+
+              </td>
+              <td class="cart-col-price col-md-3 hidden-xs hidden-sm">商品信息</td>
+              <td class="cart-col-number col-md-2 hidden-xs hidden-sm">数量</td>
+              <td class="cart-col-total col-md-2 hidden-xs hidden-sm">总金额</td>
+              <td class="cart-col-ctrl col-md-2 hidden-xs hidden-sm">订单状态</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!-- 订单信息列表 -->
+          <div class="cart-merchant-list">
+            <div class="cart-merchant">
+              <table class="cart-merchant-body">
+                <tbody>
+                <tr class="cart-product" v-for="good in goodsList">
+
+                  <!--商品主图片-->
+                  <td class="cart-col-select col-md-3 col-xs-4 col-sm-4">
+                    <a href="#" class="cart-product-link">
+                      <img :src="good.gifts__giftImg" class="cart-product-img" alt="" width="50">
+                    </a>
+                  </td>
+
+                  <!--商品名字-->
+                  <td class="cart-col-name col-md-3 col-xs-8 col-sm-8">
+                    <a href="#" class="cart-product-link">
+                      <p v-text="good.gifts__gift_name"></p>
+                    </a>
+                    <span class="cart-product-desc" v-text="good.gifts__descr"></span>
+                  </td>
+
+                  <!--商品数量-->
+                  <td class="cart-col-price col-md-2 hidden-xs hidden-sm">
+                    <p>
+                      <span  v-text="good.cart_num"></span>
+                    </p>
+                  </td>
+
+
+                  <!--金额-->
+                  <td class="cart-col-total col-md-2 hidden-xs hidden-sm">
+                    <span class="cart-product-price total" >{{good.gifts__price*good.cart_num}}</span>
+                  </td>
+
+                  <!--订单状态-->
+                  <td class="cart-col-ctrl col-md-2 hidden-xs hidden-sm">
+                    <span v-text="good.order_status"></span>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <pagination :currentPage="page" :pageCount="parseInt(pagecount)" @prePage="prePage" @nextPage="nextPage" @jumpPage="jumpPage"></pagination>
+
+
         </div>
 
-
       </div>
-
+      </div>
     </div>
 
 
@@ -94,6 +120,7 @@ export default {
     return {
       userid:1,
       page:1,
+      pagecount:"",
       goodsList:[{
         cart_num: 1,
         gifts__descr: "FlowerSong系列：厄瓜多尔粉玫瑰1朵(直径6-7cm)，进口双色绣球、白色小星花，米花",
@@ -110,6 +137,7 @@ export default {
   },
   mounted:function(){
     this.changeOrderShow();
+    this.getpagesize()
   },
 
   methods: {
@@ -119,7 +147,9 @@ export default {
       console.log(this.nav);
       this.page=1;
       this.changeOrderShow()
+      this.getpagesize()
     },
+
     //  改变订单显示
     changeOrderShow:function(){
       let vm=this;
@@ -131,7 +161,40 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    },
+
+    // 分页组件
+    prePage() {
+      this.page--;
+      this.changeOrderShow();
+    },
+    nextPage() {
+      this.page++;
+      // 重新渲染数据
+      this.changeOrderShow();
+    },
+    jumpPage(pageIndex) {
+      if (pageIndex > this.pageCount) {
+        pageIndex = this.pageCount
+      }
+      if (!pageIndex || pageIndex < 1) {
+        pageIndex = 1
+      }
+      this.page = pageIndex;
+      this.changeOrderShow();
+    },
+    getpagesize:function () {
+      let vm=this;
+      axios.get(this.GLOBAL.HOST+"gift/getorderpage/"+this.userid+','+this.nav)
+        .then(function (response) {
+          console.log(response.data)
+          vm.pagecount=response.data
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
+
   },
 
 
@@ -156,11 +219,66 @@ export default {
     text-decoration: none;
   }
 
+  .allContent{
+    margin-top: -20px;
+  }
   .cart{
     min-height: 600px;
     padding-bottom:100px;
+    margin-top: 10px;
 
   }
+
+
+  /*personal展示区域*/
+  #content-container{
+    margin: 30px auto;
+    min-height: 400px;
+  }
+
+  @media (max-width: 767px){
+    #content-container {
+      min-height: 250px;
+    }
+  }
+
+
+  .nav.nav-tabs{
+    position: relative;
+    margin-bottom: 25px;
+    border-bottom: solid 2px #e8e8e8;
+  }
+
+  .nav.nav-tabs li{
+    margin-bottom: 0;
+  }
+
+  @media(max-width: 1199px){
+    .nav.nav-tabs li a{
+      padding: 5px 5px 10px;
+      font-size: 14px;
+    }
+  }
+
+  .nav.nav-tabs li a{
+    border: none;
+    margin-right: 0;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    color: #0099e5;
+    text-decoration: none;
+  }
+
+
+  /*personal-content----------*/
+  .content{
+    min-height: 500px;
+    background: #fff;
+    position: relative;
+    padding-bottom: 20px;
+  }
+
 
   /*订单头部*/
   .order_nav{
