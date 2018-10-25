@@ -29,8 +29,6 @@ import PostLeft from './components/post/PostLeft'
 import PostReplyLeft from './components/post/PostReplyLeft'
 import PostDetailLeft from './components/post/PostDetailLeft'
 
-// 个人设置
-import SettingsNav from './components/settings/SettingsNav'
 
 //  我的收藏
 import MyCollection from './components/personal/MyCollection'
@@ -105,8 +103,6 @@ Vue.component('personal-nothing',PersonalNothing);
 // 6.个人首页--icon区
 Vue.component('personal-header',PersonalHeader);
 
-// 个人设置 -- 左侧导航
-Vue.component('settingsNav',SettingsNav);
 
 //为订单添加地址
 Vue.component('user_addr',UserAddress);
