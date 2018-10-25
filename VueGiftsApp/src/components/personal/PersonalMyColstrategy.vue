@@ -4,13 +4,13 @@
 
       <div id="content-container" class="container">
         <ul class="nav nav-tabs clearfix">
-          <li class="active">
+          <li>
             <router-link to="/personal">
               <a href="#">个人介绍</a>
             </router-link>
 
           </li>
-          <li>
+          <li class="active">
             <router-link to="/personalmycollection">
               <a href="#" >我的收藏</a>
             </router-link>
@@ -40,7 +40,7 @@
         </ul>
 
         <div class="tab-content personal-content">
-          <personal-nothing></personal-nothing>
+          <collection-strategy></collection-strategy>
         </div>
 
 
@@ -65,15 +65,11 @@
 <script>
 
 export default {
-  name: 'Personal',
+  name: 'PersonalMyColstrategy',
   data () {
     return {
 
     }
-
-  },
-  mounted:function () {
-
   }
 }
 </script>
