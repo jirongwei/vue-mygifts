@@ -12,6 +12,7 @@ import PersonalTrends from '@/components/personal/PersonalTrends'
 import Product from '@/components/gift/Product'
 import DetailFlower from '@/components/gift/DetailFlower'
 import GiftCart from '@/components/gift/GiftCart'
+import GiftOrder from '@/components/gift/GiftOrder'
 
 
 import PostReply from '@/components/post/PostReply'
@@ -67,8 +68,17 @@ export default new Router({
       component: GiftCart
     },
 
+    //订单页面
     {
-      path:'/postdetail',
+      path:'/giftorder/',
+      name:'giftorder',
+      component:GiftOrder
+    },
+
+
+    //帖子详情页
+    {
+      path:'/postdetail/:pid',
       name:'postdetail',
       component:PostDetail
     },

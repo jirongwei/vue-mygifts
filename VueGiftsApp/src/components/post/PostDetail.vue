@@ -13,14 +13,16 @@
         name: "PostDetail",
         data:function () {
           return{
-            postid:""
+            postid:this.$route.params.pid
           }
         },
-      create:function () {
-        this.postid=this.$route.params.pid
-      }
+      // create:function () {
+      //   this.postid=this.$route.params.pid;
+      //   // console.log(this.$route.params.pid)
+      // }
 
     }
+
 </script>
 
 <style scoped>

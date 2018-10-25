@@ -28,7 +28,7 @@
       <div class="sc_list">
         <ul >
           <li v-for="scm in glmes" >
-            <router-link :to="{path:'/talkdetail',query:{glid:scm.glid}}">
+            <router-link :to="{path:'/talkdetail/'+scm.glid,params:{glid:scm.glid}}">
             <div class="sc_list_img" v-bind:style="{backgroundImage:'url('+scm.glimg+')'}"></div>
             <div class="sc_list_title" v-text="scm.gltitle"></div>
             <div class="sc_list_content" v-text="scm.glcontent"></div>
@@ -99,7 +99,7 @@
                   </a>
                 </div>
                 <div class="pc_m_p_r">
-                    <router-link :to="{path:'/postdetail',query:{pid:pi.postId}}">
+                    <router-link :to="{path:'/postdetail/'+pi.postId,param:{pid:pi.postId}}">
                     <div class="pc_m_p_r_title"v-text="pi.postTitle"></div>
                     <div class="pc_m_p_r_content"v-text="pi.postContent"></div>
                     </router-link>
