@@ -147,16 +147,6 @@ export default new Router({
       component: PersonalTrends
     },
 
-    // 个人设置
-    {
-      path: '/settings',
-      name: 'settings',
-      component: Settings
-    },
-
-
-
-
 
 
   ],
