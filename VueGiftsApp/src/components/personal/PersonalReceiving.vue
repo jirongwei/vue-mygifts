@@ -11,8 +11,8 @@
 
           </li>
           <li  class="active">
-            <router-link to="/receive">
-              <a href="#" >我的礼物</a>
+            <router-link to="/personalmycollection">
+              <a href="#" >我的收藏</a>
             </router-link>
 
           </li>
