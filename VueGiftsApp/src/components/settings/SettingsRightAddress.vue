@@ -1,3 +1,5 @@
+
+
 <template>
   <div class="panel panel-default panel-col" style="margin: 30px 0 70px 0">
     <div class="panel-heading">            地址管理
@@ -9,7 +11,41 @@
 
     <div class="panel-body">
       <div class="container-fluid">
-        <div class="row address-list">
+        <!--地址模板-->
+        <div class="row address-list" v-for="addr in list_address" :id="addr.id">
+          <div class="col-xs-12 address-detail">
+            <div style="width:90px;float:left;">收件人：</div>
+            <div class="col-xs-4 col-sm-3 tb-order-time" style="color:black;" v-text="addr.receiver"></div>
+            <a class="col-xs-1 col-sm-1 pull-right" style="cursor: pointer;">
+              <i class="glyphicon glyphicon-remove" style="color: #0099e5;"></i></a>
+          </div>
+          <div class="col-xs-13 tb-content">
+            <div class="col-xs-11 tb-img-title" style="margin:10px 0 10px 0;">
+              <div class="col-xs-3 not-address">所在地区：</div>
+              <div class="col-xs-6 not-address-desc" v-text="addr.province+'-'+addr.city+'-'+addr.area"></div>
+            </div>
+            <div class="col-xs-11 tb-img-title" style="margin:0 0 10px 0;">
+              <div class="col-xs-2 not-address-content">地址：</div>
+              <div class="col-xs-5 not-address-content-desc" v-text="addr.detailLocation"></div>
+            </div>
+            <div class="col-xs-11 tb-img-title" style="margin:0 0 10px 0;">
+              <div class="col-xs-2 not-address-content">手机：</div>
+              <div class="col-xs-5 " v-text="addr.phone"></div>
+            </div>
+            <div class="col-xs-11 tb-img-title" style="margin:0;">
+              <div class="col-xs-2 not-address-content">邮编：</div>
+              <div class="col-xs-5" v-text="addr.postcode"></div>
+            </div>
+            <div class="col-xs-11 tb-img-title" style="width:98%;margin:0 0 10px 0;">
+              <div class="col-xs-1 col-sm-1 tb-order-sn pull-right default-address" v-if="addr.status">
+                默认地址
+              </div>
+              <a class="btn-sm pull-right edit-address" data-toggle="modal" data-target="#modal">编辑</a>
+            </div>
+
+          </div>
+        </div>
+       <!-- <div class="row address-list">
           <div class="col-xs-12 address-detail">
             <div style="width:90px;float:left;">收件人：</div>
             <div class="col-xs-4 col-sm-3 tb-order-time" style="color:black;">魏吉荣</div>
@@ -49,48 +85,7 @@
             </div>
 
           </div>
-        </div>
-        <div class="row address-list">
-          <div class="col-xs-12 address-detail">
-            <div style="width:90px;float:left;">收件人：</div>
-            <div class="col-xs-4 col-sm-3 tb-order-time" style="color:black;">魏吉荣</div>
-            <a class="col-xs-1 col-sm-1 pull-right" style="cursor: pointer;">
-              <i class="glyphicon glyphicon-remove" style="color: #0099e5;"></i></a>
-          </div>
-          <div class="col-xs-13 tb-content">
-            <div class="col-xs-11 tb-img-title" style="margin:10px 0 10px 0;">
-              <div class="col-xs-3 not-address">所在地区：</div>
-              <div class="col-xs-6 not-address-desc">
-                甘肃省兰州市榆中县
-              </div>
-            </div>
-            <div class="col-xs-11 tb-img-title" style="margin:0 0 10px 0;">
-              <div class="col-xs-2 not-address-content">地址：</div>
-              <div class="col-xs-5 not-address-content-desc">
-                金崖镇金崖村5社13号
-              </div>
-            </div>
-            <div class="col-xs-11 tb-img-title" style="margin:0 0 10px 0;">
-              <div class="col-xs-2 not-address-content">手机：</div>
-              <div class="col-xs-5 ">
-                13069740206
-              </div>
-            </div>
-            <div class="col-xs-11 tb-img-title" style="margin:0;">
-              <div class="col-xs-2 not-address-content">邮编：</div>
-              <div class="col-xs-5">
-                730104
-              </div>
-            </div>
-            <div class="col-xs-11 tb-img-title" style="width:98%;margin:0 0 10px 0;">
-              <div class="col-xs-1 col-sm-1 tb-order-sn pull-right default-address">
-                默认地址
-              </div>
-              <a class="btn-sm pull-right edit-address" data-toggle="modal" data-target="#modal">编辑</a>
-            </div>
-
-          </div>
-        </div>
+        </div>-->
 
 
       </div>
@@ -121,7 +116,7 @@
               <div class="form-group mbl">
                 <label class="control-label required col-md-2">所在地区</label>
                 <div class="controls col-md-10" id="city-wrap">
-                  <input type="text" id="city" name="province" class="form-control" onfocus="this.blur();">
+                  <input type="text" id="city" name="province" class="form-control" onfocus="this.blur()" @click="getAddrModel()">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -159,6 +154,7 @@
         </div>
       </div>
 
+
     </div>
 
   </div>
@@ -167,20 +163,53 @@
 <script>
 
   import axios from 'axios'
+  import $ from 'jquery'
+
+
   export default {
   name: 'SettingsRightAddress',
   data () {
     return {
+      // 存放地址列表
+      list_address:[],
 
 
 
     }
   },
     mounted:function () {
-
+      this.getAllAddress();
     },
 
     methods:{
+      // 获取地址模态框
+      getAddrModel:function(e){
+        alert(1111)
+        SelCity(this.e,'city-wrap')
+      },
+
+      // 获取用户所有地址
+      getAllAddress:function () {
+        let vm = this;
+        axios({
+          method:'POST',
+          url:this.GLOBAL.HOST+'user/getaddress/',
+          headers:{"token":sessionStorage.getItem("token")}
+        })
+        .then(function (response) {
+          if(response.data.code == '410'){
+            alert('登录已过期')
+          }else if(response.data.address){
+            vm.list_address = response.data.address;
+            console.log(vm.list_address)
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        });
+
+
+      }
 
 
 
