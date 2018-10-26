@@ -21,7 +21,7 @@ import Post from '@/components/post/Post'
 
 import Settings from '@/components/settings/Settings'
 
-
+import DetailTalk from '@/components/tribune/DetailTalk'
 
 
 
@@ -104,8 +104,12 @@ export default new Router({
       component:Settings
     },
 
-
-
+    //攻略搜索
+    {
+      path:'/tribuneSearch',
+      name:'tribuneSearch',
+      component:DetailTalk
+    },
 
 
 
