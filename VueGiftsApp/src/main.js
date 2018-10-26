@@ -30,7 +30,10 @@ import PostReplyLeft from './components/post/PostReplyLeft'
 import PostDetailLeft from './components/post/PostDetailLeft'
 
 
-
+//  我的收藏
+import MyCollection from './components/personal/MyCollection'
+import CollectionNote from './components/personal/CollectionNote'
+import CollectionStrategy from './components/personal/CollectionStrategy'
 
 
 
@@ -103,6 +106,15 @@ Vue.component('personal-header',PersonalHeader);
 
 //为订单添加地址
 Vue.component('user_addr',UserAddress);
+
+// 8.我收藏的礼物
+Vue.component('my-collection',MyCollection);
+
+// 9.我收藏的帖子
+Vue.component('collection-note',CollectionNote);
+
+// 9.我收藏的攻略
+Vue.component('collection-strategy',CollectionStrategy);
 
 
 

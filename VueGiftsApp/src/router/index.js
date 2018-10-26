@@ -23,6 +23,14 @@ import Settings from '@/components/settings/Settings'
 
 import DetailTalk from '@/components/tribune/DetailTalk'
 
+import MyCollection from '@/components/personal/MyCollection'
+import PersonalMyCollection from '@/components/personal/PersonalMyCollection'
+import CollectionStrategy from '@/components/personal/CollectionStrategy'
+import CollectionNote from '@/components/personal/CollectionNote'
+import PersonalMyColnote from '@/components/personal/PersonalMyColnote'
+import PersonalMyColstrategy from '@/components/personal/PersonalMyColstrategy'
+import TalkDetail from '@/components/tribune/TalkDetail'
+
 
 
 
@@ -151,6 +159,51 @@ export default new Router({
       path: '/trends',
       name: 'trends',
       component: PersonalTrends
+    },
+
+
+    // 礼物的收藏
+    {
+      path: '/mycollection',
+      name: 'mycollection',
+      component: MyCollection
+    },
+    // 攻略的收藏
+    {
+      path: '/collectionstrategy',
+      name: 'collectionstrategy',
+      component: CollectionStrategy
+    },
+    // 帖子的收藏
+    {
+      path: '/collectionnote',
+      name: 'collectionnote',
+      component: CollectionNote
+    },
+
+    // 我的收藏
+    {
+      path: '/personalmycollection',
+      name: 'personalmycollection',
+      component: PersonalMyCollection
+    },
+    // 我的帖子的收藏
+    {
+      path: '/personalmycolnote',
+      name: 'personalmycolnote',
+      component: PersonalMyColnote
+    },
+    // 我的攻略的收藏
+    {
+      path: '/personalmycolstrategy',
+      name: 'personalmycolstrategy',
+      component: PersonalMyColstrategy
+    },
+    // 论坛详情
+    {
+      path: '/talkdetail/:tid',
+      name: 'talkdetail',
+      component: TalkDetail
     },
 
 

@@ -12,22 +12,14 @@
         <div class="form-group row">
           <div class="col-md-3 control-label"><label for="password">您的登录密码</label></div>
           <div class="col-md-4 controls">
-            <input type="password" id="password" name="password" class="form-control" value="" placeholder="请输入当前登录密码">
-            <div class="col-md-5 col-md-offset-3 controls hidden-xs warning-box box-bindPhone" v-if="showPwd">
-              <span class="warn-icon"></span>
-              <span class="warn-text" id="warn-password-tip" v-text="err_pwd"></span>
-            </div>
+            <input v-model.lazy="input_old_pwd" type="password" id="password" name="password" class="form-control" value="" placeholder="请输入当前登录密码">
           </div>
         </div>
 
         <div class="form-group row">
           <div class="col-md-3 control-label"><label for="mobile">手机号码</label></div>
           <div class="col-md-4 controls">
-            <input type="text" id="mobile" name="mobile" class="form-control" value="" placeholder="请输入手机号">
-          </div>
-          <div class="col-md-5 col-md-offset-3 controls hidden-xs warning-box box-bindPhone" v-if="showPhone">
-            <span class="warn-icon"></span>
-            <span class="warn-text" id="warn-phone-tip" v-text="err_phone"></span>
+            <input v-model.lazy="input_telephone" type="text" id="mobile" name="mobile" class="form-control" value="" placeholder="请输入手机号">
           </div>
         </div>
 
@@ -35,7 +27,7 @@
           <div class="col-md-3 control-label"><label for="sms-code">短信验证码</label></div>
 
           <div class="col-md-2 controls">
-            <input type="text" id="sms-code" name="sms_code" class="form-control" value="">
+            <input v-model.lazy="input_code" type="text" id="sms-code" name="sms_code" class="form-control" value="">
           </div>
 
           <div class="col-md-4 controls">
@@ -44,15 +36,15 @@
               <span id="js-fetch-btn-text" v-text="codeMsg"></span>
             </a>
           </div>
-          <div class="col-md-5 col-md-offset-3 controls hidden-xs warning-box box-code" v-if="validate_code">
+          <div class="col-md-5 col-md-offset-3 controls hidden-xs warning-box box-code" v-if="showError">
             <span class="warn-icon"></span>
-            <span class="warn-text" id="warn-code-tip" v-text="err_code"></span>
+            <span class="warn-text" id="warn-code-tip" v-text="err_message"></span>
           </div>
 
         </div>
         <div class="form-group row">
           <div class="col-md-4 col-md-offset-3  controls">
-            <a id="submit-btn" class="btn btn-primary">提交</a>
+            <a id="submit-btn" class="btn btn-primary" @click="bindPhone()">提交</a>
           </div>
         </div>
 
@@ -72,23 +64,18 @@
   name: 'SettingsRightPhone',
   data () {
     return {
-      // 判断当前密码
-      showPwd:false,
-      err_pwd:'',
 
-      // 判断手机号
-      showPhone:false,
-      err_phone:'',
-
-      // 判断验证码
-      validate_code:false,
-      err_code:'',
+      // 判断数据合法性
+      showError:false,
+      err_message:'',
 
       codeMsg:'获取短信验证码',
 
-
-
-
+      reg_telephone:/^1[3456789]\d{9}$/,
+      reg_password:/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
+      input_old_pwd:'',
+      input_telephone:'',
+      input_code:'',
 
     }
   },
@@ -100,8 +87,16 @@
       // 获取手机验证码
       getPhoneCode:function () {
         // 发送请求验证码
-
-
+        let vm = this;
+        axios.get(this.GLOBAL.HOST+'user/sendmessage/'+vm.input_telephone+'/')
+          .then(function (response) {
+            if(response.data.code == '408'){
+              alert('该手机号已被绑定')
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          });
         // 判断获取验证码时间
         let timer = 60;
         this.codeMsg = timer+'(s)';
@@ -113,7 +108,60 @@
             clearInterval(auth_time);
           }
         },1000);
-      }
+      },
+
+      // 绑定手机号
+      bindPhone:function(){
+        let vm = this;
+        if(this.check_form()){
+          let bindMsg = {
+            "old_pwd": this.input_old_pwd,
+            "new_telephone": this.input_telephone,
+            "phone_code":this.input_code
+          };
+          axios({
+            method:'POST',
+            url:this.GLOBAL.HOST+'user/bindphone/',
+            data:bindMsg,
+            headers:{"token":sessionStorage.getItem("token")}
+          })
+            .then(function (response) {
+              if(response.data.code == '808'){
+                vm.showNewPwd = false;
+                vm.err_current = '';
+                alert('绑定成功')
+              }else if(response.data.code == '402'){
+               alert('该用户已绑定')
+              }else if(response.data.code == '410'){
+                alert('登录已过期')
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            });
+
+        }
+      },
+
+      check_form : function () {
+        if(!this.input_old_pwd || !this.input_telephone || !this.input_code) {
+          this.showError = true;
+          this.err_message = '绑定列表不能为空';
+        }
+        else if(!this.reg_telephone.test(this.input_telephone)){
+          this.showError = true;
+          this.err_message = '请输入正确的手机号'
+        }
+        else if (!this.reg_password.test(this.input_old_pwd)){
+          this.showError = true;
+          this.err_message = '密码格式不规范'
+        }
+        else{
+          this.showError = false;
+          this.err_message = '';
+          return true
+        }
+      },
 
 
     }

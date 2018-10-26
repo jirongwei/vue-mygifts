@@ -160,10 +160,11 @@
           headers:{"token":sessionStorage.getItem("token")}
         })
           .then(function (response) {
-            vm.UserSex = response.data.userMsg[0].gender__sexname;
+
             if(response.data.code == '410'){
               alert('登录已过期')
             }else if(response.data.userMsg){
+              vm.UserSex = response.data.userMsg[0].gender__sexname;
               vm.userBasic = response.data.userMsg[0];
             }
           })
