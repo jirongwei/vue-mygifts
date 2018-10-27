@@ -17,7 +17,7 @@
       <div class="row" style="width: 100%;margin:0 auto;">
         <div class="tuijian col-lg-3" >
           <div class="hotgoods" v-for="hg in hotgoods">
-            <router-link tag="a" :to="{name:'talkdetail',params:{giftid:hg.id}}">
+            <router-link tag="a" :to="{path:'/giftInfo/'+hg.id,params:{giftid:hg.id}}">
               <div class="gotile">精美礼品</div>
               <div class="gocon">
                 <div class="goimg" :style="{backgroundImage:'url('+hg.giftImg+')'}"></div>
@@ -34,7 +34,7 @@
         <div class="gl col-lg-9">
           <ul >
             <li v-for="gl in gls">
-              <router-link :to="{name:'postdetail',params:{tid:gl.id}}">
+              <router-link :to="{path:'/talkdetail/'+gl.id,params:{tid:gl.id}}">
                 <div class="sc_list_img" :style="{backgroundImage:'url('+gl.ttitleimg+')'}"></div>
                 <div class="sc_list_title" v-text="gl.ttitle"></div>
                 <div class="sc_list_content" v-text="gl.tbriefcont"></div>
