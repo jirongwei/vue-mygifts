@@ -16,6 +16,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "popper.js": "^1.14.4",
+    "qiniu-js": "^2.5.1",
+    "v-distpicker": "^1.0.20",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
