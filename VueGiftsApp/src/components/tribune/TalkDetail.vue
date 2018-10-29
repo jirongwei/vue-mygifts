@@ -126,11 +126,27 @@ export default {
   created:function(){
     this.addComment();
     this.tri_id = this.$route.params.tid;
+    console.log(this.tri_id)
     this.getTribune()
   },
   mounted:function(){
   },
   methods:{
+
+//    添加收藏
+    addCollect:function(){
+      let vm = this;
+      axios.get('', {
+        params:{"tid":this.tri_id}
+      })
+        .then(function (response) {
+          vm.tri_list=response.data;
+          console.log(vm.tri_list)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
 
 //渲染攻略详情渲染数据
     getTribune:function(){
