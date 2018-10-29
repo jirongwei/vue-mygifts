@@ -49,26 +49,22 @@
             </div>
 
             <div class="nav-user-icon">
-              <img src="../../assets/user-icon/2.jpg" alt="用户头像" class="img-circle my-nav-icon">
+              <img :src="user_icon" class="img-circle my-nav-icon">
               <!--用户登录hover模块-->
               <div class="user-card">
                 <div class="card-inner">
                   <div class="card-top">
                     <a href="#">
-                      <img src="../../assets/user-icon/2.jpg" alt="用户登录头像">
+                      <img :src="user_icon" alt="用户登录头像">
                     </a>
                     <div class="card-top-right-box">
                       <a href="#">
-                        <span class="name">Memorinal小怪咖</span>
+                        <span class="name" v-text="userlogin.nickname"></span>
                       </a>
                       <div class="meta">
                         <a href="#">
-                          经验<b id="user-mp">30</b>
+                          积分<b id="user-credit" v-text="userlogin.integral__integral_num"></b>
                         </a>
-                        <a href="#">
-                          积分<b id="user-credit">0</b>
-                        </a>
-
                       </div>
                     </div>
                   </div>
@@ -185,9 +181,10 @@
 </template>
 
 <script>
+  import axios from'axios'
 export default {
   name: 'NavMain',
-  inject: ['reload'],
+  // inject: ['reload'],
   data () {
     return {
       // 用户登录状态
@@ -196,11 +193,18 @@ export default {
       registStatus:false,
       // 登录成功
       showStatus:false,
+      // 用户头像
+      user_icon: '',
+      // 用户登录基本信息
+      userlogin:[],
     }
   },
   created () {
     this.LoginFlushSelf();
     this.RegistFlushSelf();
+  },
+  mounted:function(){
+
   },
 
   methods:{
@@ -210,8 +214,9 @@ export default {
       if(sessionStorage.getItem("token")){
         this.showStatus = true;
       }
+      this.getLoginUser();
       // vue实现刷新页面
-      this.reload();
+      this.$emit('flushnav')
     },
     // 注册成功
     RegistFlushSelf:function () {
@@ -219,8 +224,10 @@ export default {
       if(sessionStorage.getItem("token")){
         this.showStatus = true;
       }
+      this.getLoginUser();
       // vue实现刷新页面
-      this.reload();
+      // this.reload();
+      this.$emit('flushnav')
     },
 
 
@@ -253,7 +260,29 @@ export default {
     RegistLogin:function () {
       this.loginStatus = true;
       this.registStatus = false;
+    },
+
+    // 用户登录显示信息
+    getLoginUser:function () {
+      let vm = this;
+      axios({
+        method:'POST',
+        url:this.GLOBAL.HOST+'user/getloginuser/',
+        headers:{"token":window.sessionStorage.getItem("token")}
+      })
+      .then(function (response) {
+        if(response.data.code == '410'){
+          vm.LoginOut();
+        }else if(response.data){
+          vm.userlogin = response.data.login_user[0];
+          vm.user_icon = vm.GLOBAL.IMG + response.data.login_user[0].icons__iconurl;
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
     }
+
 
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <SettingsRightbasic v-if="rightShow==='RightBasicInfo'"></SettingsRightbasic>
-    <SettingsRightIcon v-if="rightShow==='RightIcon'"></SettingsRightIcon>
+    <SettingsRightIcon v-if="rightShow==='RightIcon'" @flushnav="$emit('flushnav')"></SettingsRightIcon>
     <SettingsRightSafe @updatePwd="$emit('changeright','RightPassword')" @bindPhone="$emit('changeright','RightPhone')" @weixin="$emit('SettingsWeixin',true)" v-if="rightShow==='RightSafe'"></SettingsRightSafe>
     <SettingsRightPassword v-if="rightShow==='RightPassword'"></SettingsRightPassword>
     <SettingsRightPhone v-if="rightShow==='RightPhone'"></SettingsRightPhone>

@@ -3,10 +3,10 @@
 
     <!--页面导航-->
     <div class="container-fluid">
-      <nav-main></nav-main>
+      <nav-main v-if="showNav"></nav-main>
     </div>
 
-    <router-view v-if="isRouterAlive"/>
+    <router-view @flushnav="flushnav"/>
 
     <nav-footer></nav-footer>
   </div>
@@ -23,16 +23,23 @@ export default {
   },
   data () {
     return {
-      isRouterAlive: true
+      isRouterAlive: true,
+      showNav: true
     }
   },
   methods:{
     reload() {
       this.isRouterAlive = false;
-      this.$nextTick(function () {
+      this.$nextTick(()=> {
         this.isRouterAlive = true
       })
     },
+    flushnav: function () {
+      this.showNav = false;
+      this.$nextTick(()=>{
+        this.showNav = true;
+      })
+    }
   }
 
 

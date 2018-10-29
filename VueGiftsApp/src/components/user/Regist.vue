@@ -80,12 +80,12 @@ export default {
 
 
       // 用户名密码
-      telephone:'15009319411',
-      password:'1qwer1',
+      telephone:'',
+      password:'',
       reg_telephone:/^1[3456789]\d{9}$/,
       reg_password:/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
 
-      password_confirm:'1qwer1',
+      password_confirm:'',
       err_message:'',
       checked:true,
       codeMsg:'获取验证码',

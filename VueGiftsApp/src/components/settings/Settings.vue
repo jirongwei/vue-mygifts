@@ -6,7 +6,7 @@
         <SettingsLeft @changeright="changeRight"></SettingsLeft>
       </div>
       <div class="col-md-9">
-        <SettingsRight v-if="showRight" @changeright="changeRight" :nowShow="rightName"  @SettingsWeixin="WeixinModel"></SettingsRight>
+        <SettingsRight @flushnav="$emit('flushnav')" v-if="showRight" @changeright="changeRight" :nowShow="rightName"  @SettingsWeixin="WeixinModel"></SettingsRight>
       </div>
     </div>
 

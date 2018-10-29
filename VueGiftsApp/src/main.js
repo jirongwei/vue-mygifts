@@ -9,6 +9,9 @@ import NavMain from './components/public/NavMain'
 import NavFooter from './components/public/NavFooter'
 import NavBottom from './components/public/NavBottom'
 import Pagination from './components/public/Pagination'
+import VDistpicker from 'v-distpicker'
+
+
 
 // user
 import Login from './components/user/Login'
@@ -58,6 +61,8 @@ Vue.config.productionTip = false;
 /* eslint-disable no-new */
 
 // 注册全局组件
+
+Vue.component('v-distpicker', VDistpicker)
 
 // 1.页面顶部导航
 Vue.component('nav-main',NavMain);
