@@ -143,28 +143,69 @@
               <h5>已加入<span class="incart-num">0</span>件礼物</h5>
             </div>
             <div class="cart-wrap">
-              <div class="clear-cart">
+
+              <!--购物车空空如也-->
+              <div class="clear-cart" v-if="showCart">
                 <span class="glyphicon glyphicon-shopping-cart cartIcon" aria-hidden="true"></span>
                 <h3>购物车空空如也</h3>
                 <div class="text">快去这里选购你中意的礼物</div>
                 <p>
-                  <a href="#" class="go-link">创意礼物</a>
+                  <a href="#" class="go-link"><router-link to="/gifts">创意礼物</router-link></a>
                 </p>
                 <p>
-                  <a href="#" class="go-link">礼物攻略</a>
+                  <a href="#" class="go-link"><router-link to="/tribuneSearch">礼物攻略</router-link></a>
                 </p>
               </div>
+
+              <div class="cart-wrap-box" v-else>
+                <ul>
+                  <li>
+                    <a href="#">
+                      <img src="../../assets/goods/goods_eggs.jpg">
+                    </a>
+                    <div class="content-box l">
+                      <a href="//coding.imooc.com/class/280.html" target="_blank">
+                        <h3>Vue全家桶+SSR+Koa2全栈开发美团网</h3>
+                      </a>
+                      <p class="clearfix">
+                        <span class="price l">￥388</span>
+                        <span class="del r js-close">删除</span>
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <img src="../../assets/goods/goods_eggs.jpg">
+                    </a>
+                    <div class="content-box l">
+                      <a href="//coding.imooc.com/class/280.html" target="_blank">
+                        <h3>Vue全家桶+SSR+Koa2全栈开发美团网</h3>
+                      </a>
+                      <p class="clearfix">
+                        <span class="price l">￥388</span>
+                        <span class="del r js-close">删除</span>
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
             </div>
 
             <div class="more-box">
               <div class="show-box">
                     <span class="text">
-                      <a href="#">我的订单中心</a>
+                      <a href="#" :click-id="0" @click.prevent.stop="CartAuth">我的订单中心</a>
                     </span>
-                <a href="#" class="go-cart">去购物车</a>
+                <a href="#" :click-id="1" class="go-cart" @click.prevent.stop="CartAuth">去购物车</a>
               </div>
             </div>
+
+
           </div>
+
+
+
         </div>
 
 
@@ -197,6 +238,10 @@ export default {
       user_icon: '',
       // 用户登录基本信息
       userlogin:[],
+
+      // 显示购物车信息
+      showCart:true,
+
     }
   },
   created () {
@@ -229,8 +274,6 @@ export default {
       // this.reload();
       this.$emit('flushnav')
     },
-
-
     // 退出登录
     LoginOut:function(){
       window.sessionStorage.removeItem("telephone");
@@ -239,28 +282,25 @@ export default {
 
       this.showStatus = false;
     },
-
     // 用户Login
     UserLogin:function () {
       this.loginStatus=true
     },
-
     // 登录界面跳转注册界面
     LoginRegist:function(){
       this.loginStatus = false;
       this.registStatus = true;
     },
-
     // 用户Regist
     userRegist:function () {
       this.registStatus=true
     },
-
     // 注册界面跳转登陆界面
     RegistLogin:function () {
       this.loginStatus = true;
       this.registStatus = false;
     },
+
 
     // 用户登录显示信息
     getLoginUser:function () {
@@ -276,6 +316,33 @@ export default {
         }else if(response.data){
           vm.userlogin = response.data.login_user[0];
           vm.user_icon = vm.GLOBAL.IMG + response.data.login_user[0].icons__iconurl;
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
+    },
+
+
+    // 购物车权限判定
+    CartAuth:function (e) {
+      let $obj = $(e.target).attr('click-id');
+      let vm =this;
+      axios({
+        method:'POST',
+        url:this.GLOBAL.HOST+'user/cartauth/',
+        headers:{"token":window.sessionStorage.getItem("token")}
+      })
+      .then(function (response) {
+        if(response.data.code == '410'){
+          alert('未登录,请先登录！')
+        }else{
+          if($obj === '0'){
+            vm.$router.push({path:'/giftorder'})
+          }else{
+            vm.$router.push({path:'/giftCart'})
+          }
+
         }
       })
       .catch(function (error) {
@@ -576,6 +643,14 @@ export default {
     margin-bottom: 16px;
   }
 
+  .shop-cart .my-cart .cart-wrap .clear-cart .go-link a{
+    display: block;
+    color: rgba(240, 20, 20, .6);
+    font-size: 12px;
+    line-height: 12px;
+    margin-bottom: 16px;
+  }
+
   .shop-cart .my-cart .more-box {
     padding: 16px 12px;
     border-top: 1px solid #d9dde1;
@@ -745,9 +820,96 @@ export default {
     color: #5e5e5e;
   }
 
-  .nav-user-icon:hover div.user-card{
+  .nav-user-icon:hover div.user-card {
     display: block;
   }
+
+
+    /*购物车有商品*/
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box {
+    height: 284px;
+    overflow-y: scroll;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+  }
+
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li {
+    padding: 12px 12px 8px;
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li a {
+    width: auto;
+    height: auto;
+    color: #787d82;
+    text-align: center;
+    display: block;
+    line-height: 72px;
+    transition: background-color .2s;
+  }
+
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li img {
+    width: 100px;
+    height: 56px;
+    margin-right: 12px;
+    float: left;
+  }
+
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li .content-box {
+    width: 170px;
+    float: left;
+    margin: 0;
+    padding: 0;
+  }
+
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li a {
+    width: auto;
+    height: auto;
+    color: #1c1f21;
+  }
+
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li .content-box h3 {
+    word-break: break-word;
+    font-size: 12px;
+    color: #07111b;
+    line-height: 16px;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+  }
+
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li .content-box p {
+    margin-top: 16px;
+    height: 12px;
+    word-break: break-all;
+    padding: 0;
+  }
+
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li .content-box p span {
+    color: rgba(240,20,20,.6);
+    font-size: 12px;
+    line-height: 12px;
+  }
+
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li .content-box p .price{
+    float: left;
+  }
+
+  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li .del {
+    display: block;
+    cursor: pointer;
+    float: right;
+  }
+
 
 
 
