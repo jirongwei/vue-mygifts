@@ -49,13 +49,13 @@
             </div>
 
             <div class="nav-user-icon">
-              <img :src="GLOBAL.IMG+'/'+userlogin.icons__iconurl" alt="用户头像" class="img-circle my-nav-icon">
+              <img :src="user_icon" class="img-circle my-nav-icon">
               <!--用户登录hover模块-->
               <div class="user-card">
                 <div class="card-inner">
                   <div class="card-top">
                     <a href="#">
-                      <img :src="GLOBAL.IMG+'/'+userlogin.icons__iconurl" alt="用户登录头像">
+                      <img :src="user_icon" alt="用户登录头像">
                     </a>
                     <div class="card-top-right-box">
                       <a href="#">
@@ -184,7 +184,7 @@
   import axios from'axios'
 export default {
   name: 'NavMain',
-  inject: ['reload'],
+  // inject: ['reload'],
   data () {
     return {
       // 用户登录状态
@@ -193,7 +193,8 @@ export default {
       registStatus:false,
       // 登录成功
       showStatus:false,
-
+      // 用户头像
+      user_icon: '',
       // 用户登录基本信息
       userlogin:[],
     }
@@ -215,7 +216,7 @@ export default {
       }
       this.getLoginUser();
       // vue实现刷新页面
-      this.reload();
+      this.$emit('flushnav')
     },
     // 注册成功
     RegistFlushSelf:function () {
@@ -225,7 +226,8 @@ export default {
       }
       this.getLoginUser();
       // vue实现刷新页面
-      this.reload();
+      // this.reload();
+      this.$emit('flushnav')
     },
 
 
@@ -270,16 +272,15 @@ export default {
       })
       .then(function (response) {
         if(response.data.code == '410'){
-          alert('登录已过期');
           vm.LoginOut();
         }else if(response.data){
           vm.userlogin = response.data.login_user[0];
+          vm.user_icon = vm.GLOBAL.IMG + response.data.login_user[0].icons__iconurl;
         }
       })
       .catch(function (error) {
         console.log(error)
       });
-      this.reload();
     }
 
 

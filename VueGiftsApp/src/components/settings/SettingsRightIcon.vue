@@ -8,7 +8,7 @@
           <div class="form-group">
             <div class="col-md-2 control-label"><b>当前头像</b></div>
             <div class="controls col-md-8" id="current-img">
-              <img :src="GLOBAL.IMG+current_icon.iconurl" alt="上传图片" class="img-thumbnail" style="width: 210px;height: 210px;">
+              <img :src="user_icon" class="img-thumbnail" style="width: 210px;height: 210px;">
             </div>
           </div>
 
@@ -55,6 +55,7 @@
       return {
         // 获取当前用户头像
         current_icon:[],
+        user_icon:'',
         // 上传头像错误信息
         showError: false,
         err_message: '',
@@ -63,6 +64,7 @@
     },
     mounted: function () {
       this.getUserIcon();
+      this.file =$('#file').get(0).files[0];
     },
 
     methods: {
@@ -79,6 +81,7 @@
             alert('登录已过期')
           }else if(response.data.icons_url){
             vm.current_icon = response.data.icons_url[0];
+            vm.user_icon = vm.GLOBAL.IMG + response.data.icons_url[0].iconurl;
           }
         })
         .catch(function (error) {
@@ -114,13 +117,16 @@
           let a = document.createEvent('MouseEvents');
           a.initEvent('click', true, true);
           $ipt.get(0).dispatchEvent(a);
-          $ipt.change(() => {
+          $ipt.change( ()=>{
             // 将图片存到data当中的file对象中
             let file = $ipt.get(0).files[0];
             // 展示图片
             this.showPic(file);
-            // 上传图片
-            this.getQiniuToken(file)
+            if(this.file !== file) {
+              this.file = file;
+              // 上传图片
+              this.getQiniuToken(file)
+            }
           })
         }
       },
@@ -169,7 +175,6 @@
             console.log(err)
           },
           complete (res) {
-            alert('success');
             // 保存本地服务器
             // res.key 为文件名
             that.updateIcon(res.key)
@@ -180,28 +185,27 @@
 
       // 保存本地服务器
       updateIcon: function (filename) {
+        let vm = this;
         axios({
           method: 'POST',
           url: this.GLOBAL.HOST+'user/iconurl/' + filename + '/',
           headers: {"token": window.sessionStorage.getItem('token')}
 
         })
-          .then(function (response) {
-            let res = response.data.code;
-            if (res === '808') {
-              alert('上传成功')
-            } else {
-              alert('登录过期')
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
+        .then(function (response) {
+          let res = response.data.code;
+          if (res === '808') {
+            alert('上传成功');
+            vm.getUserIcon();
+            vm.$emit('flushnav');
+          } else {
+            alert('登录过期')
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        });
       }
-
-
-
-
     }
   }
 </script>

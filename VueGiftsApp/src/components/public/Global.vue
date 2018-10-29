@@ -6,7 +6,7 @@
     export default {
 
       HOST:"http://localhost:8000/",
-      IMG:'http://ph8m18qjm.bkt.clouddn.com/',
+      IMG:"http://ph8m18qjm.bkt.clouddn.com/",
       // HOST:"http://192.168.155.2:8000/"
       // userSite,//用户地址
       // token,//用户token身份
