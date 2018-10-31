@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12 my-show-passage" style="margin: 30px 0 125px 0">
+  <div class="col-md-12 my-show-passage" style="margin: 30px 0 128px 0">
 
     <div class="panel panel-default panel-col">
       <div class="panel-heading">安全设置</div>

@@ -1,10 +1,10 @@
 <template>
-  <div class="panel panel-default panel-col" style="margin: 30px 0 210px 0">
+  <div class="panel panel-default panel-col" style="margin: 30px 0 171px 0">
     <div class="panel-heading">安全设置</div>
     <div class="panel-body">
 
       <ul class="breadcrumb">
-        <li><a href="#">安全设置</a></li>
+        <li><a href="#" @click="$emit('changeright')">安全设置</a></li>
         <li class="active">登录密码修改</li>
       </ul>
 
@@ -24,7 +24,7 @@
             <label for="form-newPassword" class="required">新密码</label>
           </div>
           <div class="controls col-md-8 controls">
-            <input v-model.lazy="input_new_pwd" id="form-newPassword" name="form_newPassword" class="form-control" type="password" placeholder="新密码由6-16位字母、数字符号组成">
+            <input v-model.lazy="input_new_pwd" id="form-newPassword" name="form_newPassword" class="form-control" type="password" placeholder="新密码由6-20位字母、数字组成">
           </div>
         </div>
 
@@ -57,6 +57,7 @@
 <script>
 
   import axios from 'axios'
+  import '../../../static/js/message'
   export default {
   name: 'SettingsRightPassword',
   data () {
@@ -91,17 +92,27 @@
           headers:{"token":sessionStorage.getItem("token")}
         })
         .then(function (response) {
-          if(response.data.code == '808'){
+          if(response.data.code === '808'){
             vm.showNewPwd = false;
             vm.err_current = '';
-            alert('修改成功')
-          }else if(response.data.code == '401'){
+            $.message({
+              message:'修改成功！',
+              type:'success'
+            });
+          }else if(response.data.code === '401'){
             vm.showNewPwd = true;
             vm.err_current = '用户名与密码不匹配';
-          }else if(response.data.code == '410'){
-            alert('登录已过期')
-          }else if(response.data.code == '403'){
-            alert('修改失败')
+          }else if(response.data.code === '410'){
+            $.message({
+              message:'登录过期,请重新登录！',
+              type:'warning'
+            });
+            this.$router.push({path:'/'});
+          }else if(response.data.code === '403'){
+            $.message({
+              message:'修改失败！',
+              type:'error'
+            });
           }
         })
         .catch(function (error) {

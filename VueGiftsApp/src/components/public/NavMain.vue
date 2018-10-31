@@ -1,233 +1,197 @@
 <template>
-  <nav class="navbar navbar-default navbar-static-top">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header" id="header-content">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <!--<span class="glyphicon glyphicon-education" aria-hidden="true"></span>-->
-        </button>
-        <a class="navbar-brand navbar-icon" href="#">
-          <!--<img src="../assets/nav/logo-header.png" alt="">-->
-        </a>
-      </div>
+  <div>
+    <nav class="navbar navbar-default navbar-static-top" id="project-nav">
+      <div class="container-fluid">
+        <div class="navbar-header" id="header-content">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!--nav背景图片-->
+          <a class="navbar-brand navbar-icon" href="#"></a>
+        </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse row" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse row" id="bs-example-navbar-collapse-1">
 
-        <ul class="nav navbar-nav hidden-sm" id="nav-top" style="font-size: 18px;margin-top: 5px">
-          <li class="nav-first-images"></li>
-          <li class="nav-first-navigation"><a href="#" class="nav-navigation"><router-link to="/">首页</router-link></a></li>
-          <li><a href="#" class="nav-navigation"><router-link to="/gifts">创意礼物</router-link></a></li>
-          <li><a href="#" class="nav-navigation">创意社区</a></li>
-          <li><a href="#" class="nav-navigation">人脉圈</a></li>
-          <li><a href="#" class="nav-navigation">关于我们</a></li>
-        </ul>
+          <ul class="nav navbar-nav hidden-sm" id="nav-top">
+            <li class="nav-first-navigation"><router-link to="/" class="nav-navigation">首页</router-link></li>
+            <li><router-link to="/gifts"  class="nav-navigation">创意礼物</router-link></li>
+            <li><a href="#" class="nav-navigation">创意社区</a></li>
+            <li><a href="#" class="nav-navigation">人脉圈</a></li>
+            <li><a href="#" class="nav-navigation">关于我们</a></li>
+          </ul>
 
-        <!--搜索栏-->
-        <form class="navbar-form hidden-sm hidden-md my-search">
-          <div class="form-group">
-            <input type="text" class="form-control my-search-input" placeholder="Search">
-            <button class="my-search-icon btn btn-group-sm">
-              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            </button>
-          </div>
-        </form>
+          <!--个人中心模块-->
+          <ul class="hidden-xs hidden-sm hidden-md my-nav-operate">
 
-
-
-        <!--个人中心模块-->
-        <ul class="hidden-xs hidden-sm hidden-md my-nav-operate">
-
-          <!--登录成功 显示用户头像-->
-          <li id="my-show-operate" v-if="showStatus">
-            <div class="my-notice-icon">
-              <span class="glyphicon glyphicon-bell icon-notice" aria-hidden="true"></span>
-            </div>
-
-            <div class="nav-user-icon">
-              <img :src="user_icon" class="img-circle my-nav-icon">
-              <!--用户登录hover模块-->
-              <div class="user-card">
-                <div class="card-inner">
-                  <div class="card-top">
-                    <a href="#">
-                      <img :src="user_icon" alt="用户登录头像">
-                    </a>
-                    <div class="card-top-right-box">
+            <!--登录成功 显示用户头像-->
+            <li id="my-show-operate" v-if="showStatus">
+              <div class="nav-user-icon">
+                <img :src="user_icon" class="img-circle my-nav-icon">
+                <!--用户登录hover模块-->
+                <div class="user-card">
+                  <div class="card-inner">
+                    <div class="card-top">
                       <a href="#">
-                        <span class="name" v-text="userlogin.nickname"></span>
+                        <img :src="user_icon" alt="用户登录头像">
                       </a>
-                      <div class="meta">
+                      <div class="card-top-right-box">
                         <a href="#">
-                          积分<b id="user-credit" v-text="userlogin.integral__integral_num"></b>
+                          <span class="name" v-text="userlogin.nickname"></span>
                         </a>
+                        <div class="meta">
+                          <a href="#">
+                            积分<b id="user-credit" v-text="userlogin.integral__integral_num"></b>
+                          </a>
+                        </div>
                       </div>
                     </div>
+
+                    <div class="user-center-box">
+                      <ul>
+                        <li class="l-style">
+                          <router-link to="/">
+                            <a href="#">
+                              <span class="glyphicon glyphicon-gift" aria-hidden="true"></span>
+                              我的礼物
+                            </a>
+                          </router-link>
+                        </li>
+                        <li class="l-style">
+                          <router-link to="/">
+                            <a href="#">
+                              <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+                              订单中心
+                            </a>
+                          </router-link>
+                        </li>
+                        <li class="l-style">
+                          <router-link to="/">
+                            <a href="#">
+                              <span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span>
+                              礼物攻略
+                            </a>
+                          </router-link>
+                        </li>
+                        <li class="l-style">
+                          <router-link to="/settings">
+                            <a href="#">
+                              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                              个人设置
+                            </a>
+                          </router-link>
+                        </li>
+
+                      </ul>
+                    </div>
+
+                    <div class="card-sets l-style">
+                      <a href="#" @click="LoginOut()">安全退出</a>
+                    </div>
+
                   </div>
-
-                  <div class="user-center-box">
-                    <ul>
-                      <li class="l-style">
-                        <router-link to="/">
-                          <a href="#">
-                            <span class="glyphicon glyphicon-gift" aria-hidden="true"></span>
-                            我的礼物
-                          </a>
-                        </router-link>
-                      </li>
-                      <li class="l-style">
-                        <router-link to="/">
-                          <a href="#">
-                            <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
-                            订单中心
-                          </a>
-                        </router-link>
-                      </li>
-                      <li class="l-style">
-                        <router-link to="/">
-                          <a href="#">
-                            <span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span>
-                            礼物攻略
-                          </a>
-                        </router-link>
-                      </li>
-                      <li class="l-style">
-                       <router-link to="/settings">
-                         <a href="#">
-                           <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                           个人设置
-                         </a>
-                       </router-link>
-                      </li>
-
-                    </ul>
-                  </div>
-
-                  <div class="card-sets l-style">
-                    <a href="#" @click="LoginOut()">安全退出</a>
-                  </div>
-
                 </div>
               </div>
-            </div>
-          </li>
+            </li>
 
-          <!-- v-if 根据登录状态切换显示-->
-          <ul class="user-operate hidden-xs hidden-sm hidden-md" v-else>
+            <!-- v-if 根据登录状态切换显示-->
+            <ul class="user-operate hidden-xs hidden-sm hidden-md" v-else>
 
-            <li class="li-login">
+              <li class="li-login">
                 <a href="#" @click.prevent.stop="UserLogin">登录</a>
-            </li>
-            <li class="li-sper">|</li>
+              </li>
+              <li class="li-sper">|</li>
 
-            <li class="li-regist">
+              <li class="li-regist">
                 <a href="#" @click.prevent.stop="userRegist">注册</a>
-            </li>
+              </li>
 
+            </ul>
           </ul>
-        </ul>
 
-        <!--购物车-->
-        <div class="shop-cart hidden-xs hidden-sm hidden-md" id="shop-cart">
-          <a href="#" class="shop-cart-icon">
-            <span class="glyphicon glyphicon-shopping-cart icon-shopping-cart" aria-hidden="true"></span>
-            <span>购物车</span>
-          </a>
-          <div class="my-cart">
-            <div class="cart-title-box">
-              <h2>我的购物车</h2>
-              <h5>已加入<span class="incart-num">0</span>件礼物</h5>
-            </div>
-            <div class="cart-wrap">
-
-              <!--购物车空空如也-->
-              <div class="clear-cart" v-if="showCart">
-                <span class="glyphicon glyphicon-shopping-cart cartIcon" aria-hidden="true"></span>
-                <h3>购物车空空如也</h3>
-                <div class="text">快去这里选购你中意的礼物</div>
-                <p>
-                  <a href="#" class="go-link"><router-link to="/gifts">创意礼物</router-link></a>
-                </p>
-                <p>
-                  <a href="#" class="go-link"><router-link to="/tribuneSearch">礼物攻略</router-link></a>
-                </p>
+          <!--购物车-->
+          <div class="shop-cart hidden-xs hidden-sm hidden-md" id="shop-cart">
+            <a href="#" class="shop-cart-icon" @mouseenter="showGiftsItem()">
+              <span class="glyphicon glyphicon-shopping-cart icon-shopping-cart" aria-hidden="true"></span>
+              <span>购物车</span>
+            </a>
+            <div class="my-cart">
+              <div class="cart-title-box">
+                <h2>我的购物车</h2>
+                <h5>已加入<span class="incart-num" v-text="goodsList.length"></span>件礼物</h5>
               </div>
+              <div class="cart-wrap">
 
-              <div class="cart-wrap-box" v-else>
-                <ul>
-                  <li>
-                    <a href="#">
-                      <img src="../../assets/goods/goods_eggs.jpg">
-                    </a>
-                    <div class="content-box l">
-                      <a href="//coding.imooc.com/class/280.html" target="_blank">
-                        <h3>Vue全家桶+SSR+Koa2全栈开发美团网</h3>
-                      </a>
-                      <p class="clearfix">
-                        <span class="price l">￥388</span>
-                        <span class="del r js-close">删除</span>
-                      </p>
-                    </div>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <img src="../../assets/goods/goods_eggs.jpg">
-                    </a>
-                    <div class="content-box l">
-                      <a href="//coding.imooc.com/class/280.html" target="_blank">
-                        <h3>Vue全家桶+SSR+Koa2全栈开发美团网</h3>
-                      </a>
-                      <p class="clearfix">
-                        <span class="price l">￥388</span>
-                        <span class="del r js-close">删除</span>
-                      </p>
-                    </div>
-                  </li>
-                </ul>
+                <!--购物车空空如也-->
+                <div class="clear-cart" v-if="showCart">
+                  <span class="glyphicon glyphicon-shopping-cart cartIcon" aria-hidden="true"></span>
+                  <h3>购物车空空如也</h3>
+                  <div class="text">快去这里选购你中意的礼物</div>
+                  <p>
+                    <a href="#" class="go-link"><router-link to="/gifts">创意礼物</router-link></a>
+                  </p>
+                  <p>
+                    <a href="#" class="go-link"><router-link to="/tribuneSearch">礼物攻略</router-link></a>
+                  </p>
+                </div>
+
+                <div class="cart-wrap-box" v-else>
+                  <ul>
+                    <li v-for="li in goodsList">
+                      <router-link :to="{name:'giftInfo',params: {giftid:li.gifts_id}}" @click.native="$emit('flushbody')">
+                        <img :src="li.gifts__giftImg">
+                      </router-link>
+                      <div class="content-box">
+                        <router-link :to="{name:'giftInfo',params: {giftid:li.gifts_id}}" @click.native="$emit('flushbody')">
+                          <h3 v-text="li.gifts__gift_name"></h3>
+                        </router-link>
+                        <p>
+                          <span class="price" v-text="'￥'+li.gifts__price"></span>
+                          <span class="del" @click="delNavCart(li.gifts_id)">删除</span>
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
               </div>
-
-            </div>
-
-            <div class="more-box">
-              <div class="show-box">
+              <div class="more-box">
+                <div class="show-box">
                     <span class="text">
                       <a href="#" :click-id="0" @click.prevent.stop="CartAuth">我的订单中心</a>
                     </span>
-                <a href="#" :click-id="1" class="go-cart" @click.prevent.stop="CartAuth">去购物车</a>
+                  <a href="#" :click-id="1" class="go-cart" @click.prevent.stop="CartAuth">去购物车</a>
+                </div>
               </div>
             </div>
-
-
           </div>
 
 
 
         </div>
-
-
-
       </div>
-    </div>
 
-    <!--用户登录-->
-    <user-login v-if="loginStatus" @LoginSuccess="LoginFlushSelf" @UserRegist="LoginRegist" @IndexLogin="loginStatus=false"></user-login>
+      <!--用户登录-->
+      <user-login v-if="loginStatus" @LoginSuccess="LoginFlushSelf" @UserRegist="LoginRegist" @IndexLogin="loginStatus=false"></user-login>
 
-    <!--用户注册-->
-    <user-regist v-if="registStatus" @RegistSuccess="RegistFlushSelf" @UserLogin="RegistLogin" @IndexRegist="registStatus=false"></user-regist>
-  </nav>
+      <!--用户注册-->
+      <user-regist v-if="registStatus" @RegistSuccess="RegistFlushSelf" @UserLogin="RegistLogin" @IndexRegist="registStatus=false"></user-regist>
+    </nav>
+  </div>
 </template>
 
 <script>
   import axios from'axios'
+  import $ from 'jquery'
+  import '../../../static/js/message'
 export default {
   name: 'NavMain',
   // inject: ['reload'],
   data () {
     return {
+
       // 用户登录状态
       loginStatus:false,
       // 用户注册状态
@@ -241,12 +205,14 @@ export default {
 
       // 显示购物车信息
       showCart:true,
+      goodsList:[],
 
     }
   },
   created () {
     this.LoginFlushSelf();
     this.RegistFlushSelf();
+    this.showGiftsItem();
   },
   mounted:function(){
 
@@ -279,8 +245,9 @@ export default {
       window.sessionStorage.removeItem("telephone");
       window.sessionStorage.removeItem("token");
       window.sessionStorage.removeItem("u_id");
-
       this.showStatus = false;
+      this.goodsList = [];
+      this.$router.push({path:'/'})
     },
     // 用户Login
     UserLogin:function () {
@@ -335,20 +302,84 @@ export default {
       })
       .then(function (response) {
         if(response.data.code == '410'){
-          alert('未登录,请先登录！')
+          $.message({
+            message:'未登录,请先登录！',
+            type:'success'
+          });
+
+
         }else{
           if($obj === '0'){
             vm.$router.push({path:'/giftorder'})
           }else{
             vm.$router.push({path:'/giftCart'})
           }
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
+    },
 
+    // 显示用户商品
+    showGiftsItem:function () {
+      this.getGiftsItem();
+      if(window.sessionStorage.getItem("token")){
+        if(this.goodsList.length -1 !==0){
+          this.showCart = false;
+          this.$emit('flushnav');
+        }else{
+          this.showCart = true;
+        }
+      }else{
+        this.showCart = true;
+      }
+
+    },
+
+    // 获取用户购物车商品
+    getGiftsItem:function () {
+      let vm = this;
+      axios({
+        method:'POST',
+        url:this.GLOBAL.HOST+'gift/getallcarts/',
+        headers:{"token":window.sessionStorage.getItem("token")}
+      })
+      .then(function (response) {
+        if(response.data.carts){
+          vm.goodsList = response.data.carts;
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
+    },
+
+    // 删除购物车
+    delNavCart:function (giftid) {
+      let vm = this;
+      axios({
+        method:'POST',
+        url:this.GLOBAL.HOST+'gift/delgift/'+giftid+'/',
+        headers:{"token":window.sessionStorage.getItem("token")},
+
+      })
+      .then(function (response) {
+        // 删除成功 刷新购物车
+        if(response.data.code='808'){
+          vm.showGiftsItem();
+        }else if(response.data.code = '410'){
+          $.message({
+            message:'未登录，请先登录！',
+            type:'success'
+          });
         }
       })
       .catch(function (error) {
         console.log(error)
       });
     }
+
 
 
   }
@@ -367,14 +398,13 @@ export default {
 
   }
 
+  #project-nav{
+    background: #333;
+  }
+
   /*设置导航栏背景*/
   .navbar-default {
     background: #FFF;
-  }
-
-  /*[更多]去除背景*/
-  .my-nav-dropdown-ul li a:hover {
-    background: none;
   }
 
   /*logo图片*/
@@ -382,67 +412,32 @@ export default {
     height: 60px;
     width: 220px;
     background: url("../../assets/nav/logo-header.png") center no-repeat;
-    margin-left: 5px;
+    margin-left: 10px;
+  }
+
+  @media (max-width: 767px) {
+    .navbar-header a.navbar-icon{
+      margin-left: 5px;
+    }
   }
 
   #header-content button {
     margin: 13px 30px 0 0;
   }
 
-  /*顶部导航---search------------*/
-  form.my-search {
-    margin-top: 13px;
-    float: left;
-    position: relative;
+  #nav-top li{
+    margin-left: 20px;
+    font-size: 18px;
+    margin-top: 5px;
   }
 
-  @media (max-width: 767px) {
-    form.my-search {
-      position: relative;
-      width: 100%;
-      margin-left: 0;
-    }
-
-    form.my-search .my-search-icon {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 225px;
-    }
+  #nav-top li a{
+    color: #fff;
   }
 
-  @media (max-width: 767px) {
-    #nav-top li{
-      margin-left: 20px;
-    }
+  #nav-top li a:hover{
+    color: #f4604b;
   }
-
-  form.my-search div.form-group {
-    border-radius: 15px !important;
-    width: 250px;
-    border: solid 1px #777;
-  }
-
-  form.my-search .my-search-icon {
-    position: absolute;
-    right: 15px;
-    top: 3px;
-    color: #777;
-    cursor: pointer;
-    background: none;
-    outline: none;
-    box-shadow: none;
-  }
-
-  div.form-group input.my-search-input {
-    border: none;
-    background: none;
-    box-shadow: none;
-    margin-left: 8px;
-    width: 85%;
-  }
-
 
   /*登录成功展示用户icon,desc*/
   ul.my-nav-operate {
@@ -457,17 +452,6 @@ export default {
 
   li#my-show-operate div {
     float: left;
-  }
-
-  li#my-show-operate span.icon-notice {
-    font-size: 25px;
-    color: #787d82;
-    margin: 14px 15px 0 50px;
-  }
-
-  li#my-show-operate span.icon-notice:hover {
-    color: red;
-    cursor: pointer;
   }
 
   .nav-user-icon{
@@ -507,13 +491,14 @@ export default {
   }
 
   .user-operate li a:hover {
-    color: #444;
+    color: #f4604b;
   }
 
   .user-operate li.li-sper {
     font-size: 20px;
     margin: 15px 5px 0 0;
     padding-left: 5px;
+    color: #777;
   }
 
   /*购物车*/
@@ -522,6 +507,7 @@ export default {
     position: relative;
     height: 50px;
     margin-top: 5px;
+    margin-right: 50px;
   }
 
   .shop-cart .shop-cart-icon {
@@ -836,7 +822,6 @@ export default {
 
   .shop-cart .my-cart .cart-wrap .cart-wrap-box ul {
     width: 100%;
-    list-style: none;
     margin: 0;
     padding: 0;
   }
@@ -845,16 +830,19 @@ export default {
     padding: 12px 12px 8px;
     box-sizing: border-box;
     margin: 0;
+    display: list-item;
+    text-align: -webkit-match-parent;
+    clear: both;
   }
 
   .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li a {
     width: auto;
     height: auto;
-    color: #787d82;
     text-align: center;
     display: block;
     line-height: 72px;
     transition: background-color .2s;
+    color: #1c1f21;
   }
 
   .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li img {
@@ -869,12 +857,6 @@ export default {
     float: left;
     margin: 0;
     padding: 0;
-  }
-
-  .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li a {
-    width: auto;
-    height: auto;
-    color: #1c1f21;
   }
 
   .shop-cart .my-cart .cart-wrap .cart-wrap-box ul li .content-box h3 {

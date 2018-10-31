@@ -1,48 +1,55 @@
 
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3">
-        <SettingsLeft @changeright="changeRight"></SettingsLeft>
+  <div class="container-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <SettingsLeft @changeright="changeRight"></SettingsLeft>
+        </div>
+        <div class="col-md-9">
+          <SettingsRight @flushnav="$emit('flushnav')" v-if="showRight" @changeright="changeRight" :nowShow="rightName"  @SettingsWeixin="WeixinModel"></SettingsRight>
+        </div>
       </div>
-      <div class="col-md-9">
-        <SettingsRight @flushnav="$emit('flushnav')" v-if="showRight" @changeright="changeRight" :nowShow="rightName"  @SettingsWeixin="WeixinModel"></SettingsRight>
-      </div>
-    </div>
 
-    <!--微信模态框-->
-    <div class="panel-body" id="weixin-panel" v-show="showWeixin" @click="HideWeixin">
-      <div id="modal-weixin">
-        <div class="main impowerBox">
-          <div class="loginPanel normalPanel">
-            <div class="title">微信登录</div>
-            <div class="waiting panelContent">
-              <div class="wrp_code"><img class="qrcode lightBorder" src="../../assets/my-icons/safe_weixin.png"></div>
-              <div class="info">
-                <div class="status status_browser js_status normal" id="wx_default_tip">
-                  <p>请使用微信扫描二维码登录</p>
-                  <p>“左心房”</p>
+      <!--微信模态框-->
+      <div class="panel-body" id="weixin-panel" v-show="showWeixin" @click="HideWeixin">
+        <div id="modal-weixin">
+          <div class="main impowerBox">
+            <div class="loginPanel normalPanel">
+              <div class="title">微信登录</div>
+              <div class="waiting panelContent">
+                <div class="wrp_code"><img class="qrcode lightBorder" src="../../assets/my-icons/safe_weixin.png"></div>
+                <div class="info">
+                  <div class="status status_browser js_status normal" id="wx_default_tip">
+                    <p>请使用微信扫描二维码登录</p>
+                    <p>“左心房”</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
+    <nav-footer></nav-footer>
+
+    <!--<MakeSureDel v-if="showTip" @quxiaoclick="showTip=false" @sureclick="delAddr(addr.id)"></MakeSureDel>-->
 
   </div>
+
 </template>
 
 <script>
   import axios from 'axios'
   import SettingsLeft from'./SettingsLeft'
   import SettingsRight from'./SettingsRight'
+  // import MakeSureDel from './MakeSureDel'
 
   export default {
   name: 'Settings',
   data () {
     return {
+      // shoeTip:false,
       // 强制刷新子组件
       showRight: true,
       // 右侧显示当前组件名
@@ -55,6 +62,7 @@
     components:{
       SettingsLeft,
       SettingsRight
+      // MakeSureDel
   },
     methods:{
 

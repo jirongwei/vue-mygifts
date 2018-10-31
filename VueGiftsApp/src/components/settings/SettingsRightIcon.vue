@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-12 my-show-passage">
     <!--个人设置模块-->
-    <div class="panel panel-default panel-col" style="margin: 30px 0 110px 0">
+    <div class="panel panel-default panel-col" style="margin: 30px 0 112px 0">
       <div class="panel-heading">头像设置</div>
       <div class="panel-body">
         <form class="form-horizontal" method="post" enctype="multipart/form-data">
@@ -48,6 +48,7 @@
   import axios from 'axios'
   import $ from 'jquery'
   import * as qiniu from 'qiniu-js'
+  import '../../../static/js/message'
 
   export default {
     name: 'SettingsRightIcon',
@@ -77,8 +78,12 @@
           headers:{"token":window.sessionStorage.getItem("token")}
         })
         .then(function (response) {
-          if(response.data.code == '410'){
-            alert('登录已过期')
+          if(response.data.code === '410'){
+            $.message({
+              message:'登录过期,请重新登录！',
+              type:'warning'
+            });
+            this.$router.push({path:'/'})
           }else if(response.data.icons_url){
             vm.current_icon = response.data.icons_url[0];
             vm.user_icon = vm.GLOBAL.IMG + response.data.icons_url[0].iconurl;
@@ -102,6 +107,7 @@
           $('#current-img').empty().append($img)
         }
       },
+
       // 上传按钮点击事件 （召唤出图片上传input）
       readyUp: function () {
         // 保存当前图片
@@ -130,6 +136,7 @@
           })
         }
       },
+
       // 获取七牛token
       getQiniuToken: function (file) {
         // 发送到服务器，获取七牛token
@@ -145,6 +152,7 @@
           }
         })
       },
+
       // 上传到七牛云
       upImgToQiniu: function (token, newname,file) {
         let newfile = new File([file], newname);
@@ -171,8 +179,11 @@
           next( res ) {
           },
           error(err){
-            alert('error！');
-            console.log(err)
+            $.message({
+              message:'上传错误！',
+              type:'error'
+            });
+            console.log(err);
           },
           complete (res) {
             // 保存本地服务器
@@ -195,11 +206,18 @@
         .then(function (response) {
           let res = response.data.code;
           if (res === '808') {
-            alert('上传成功');
+            $.message({
+              message:'上传成功！',
+              type:'success'
+            });
             vm.getUserIcon();
             vm.$emit('flushnav');
           } else {
-            alert('登录过期')
+            $.message({
+              message:'登录过期,请重新登录！',
+              type:'warning'
+            });
+            this.$router.push({path:'/'});
           }
         })
         .catch(function (error) {

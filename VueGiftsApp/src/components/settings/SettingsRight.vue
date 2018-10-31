@@ -3,8 +3,8 @@
     <SettingsRightbasic v-if="rightShow==='RightBasicInfo'"></SettingsRightbasic>
     <SettingsRightIcon v-if="rightShow==='RightIcon'" @flushnav="$emit('flushnav')"></SettingsRightIcon>
     <SettingsRightSafe @updatePwd="$emit('changeright','RightPassword')" @bindPhone="$emit('changeright','RightPhone')" @weixin="$emit('SettingsWeixin',true)" v-if="rightShow==='RightSafe'"></SettingsRightSafe>
-    <SettingsRightPassword v-if="rightShow==='RightPassword'"></SettingsRightPassword>
-    <SettingsRightPhone v-if="rightShow==='RightPhone'"></SettingsRightPhone>
+    <SettingsRightPassword v-if="rightShow==='RightPassword'" @changeright="SafePassword"></SettingsRightPassword>
+    <SettingsRightPhone v-if="rightShow==='RightPhone'" @changeright="SafePhone"></SettingsRightPhone>
     <SettingsRightAddress v-if="rightShow==='RightAddress'"></SettingsRightAddress>
   </div>
 
@@ -36,6 +36,14 @@
       SettingsRightAddress
     },
     methods:{
+      // 修改密码跳转安全设置
+      SafePassword:function () {
+        this.rightShow = 'RightSafe';
+      },
+      // 修改密码跳转安全设置
+      SafePhone:function () {
+        this.rightShow = 'RightSafe';
+      }
     }
 }
 </script>
