@@ -183,7 +183,7 @@
           this.doload();
 
           //获取用户id
-
+          this.getuserid();
 
           //axios请求攻略数据
           axios.get('http://localhost:8000/tribune/tribunes/'+this.glpage)
@@ -269,6 +269,13 @@
                  },3000)
             },
 
+            //获取当前用户id
+            getuserid:function(){
+              if(window.sessionStorage.getItem("u_id")){
+                this.uid=window.sessionStorage.getItem("u_id")
+              }
+            },
+
             //axios查看更多攻略
             getmoregl:function(){
               var vnn=this;
@@ -288,6 +295,7 @@
             glthumb:function(triid){
               var vm=this
               if (window.sessionStorage.getItem("token")){
+                this.getuserid()
                 for(let i=0 ; i<this.glmes.length;i++){
                 if(this.glmes[i].glid==triid){
                   this.glmes[i].colstatus=!this.glmes[i].colstatus
@@ -318,6 +326,7 @@
             glcollect:function(triid){
               var vm=this
               if (window.sessionStorage.getItem("token")){
+                this.getuserid()
                 for(let i=0 ; i<this.glmes.length;i++) {
                   if(this.glmes[i].glid==triid){
                     this.glmes[i].praisestatus=!this.glmes[i].praisestatus
@@ -366,6 +375,7 @@
             goodsthumb:function(gooid){
               var vm=this
               if(window.sessionStorage.getItem("token")){
+                this.getuserid()
                 for(let i=0 ; i<this.goodmes.length;i++){
                   if(this.goodmes[i].goodid==gooid){
                     this.goodmes[i].colstatus=!this.goodmes[i].colstatus;
@@ -396,6 +406,7 @@
             goodscollect:function(triid){
               var vm=this
               if(window.sessionStorage.getItem("token")){
+                this.getuserid()
                 for(let i=0 ; i<this.goodmes.length;i++) {
                   if(this.goodmes[i].goodid==triid){
                     this.goodmes[i].praisestatus=!this.goodmes[i].praisestatus;
