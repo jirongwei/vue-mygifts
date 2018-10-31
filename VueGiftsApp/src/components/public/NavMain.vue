@@ -185,7 +185,7 @@
 <script>
   import axios from'axios'
   import $ from 'jquery'
-  import '../../../static/js/message'
+  // import '../../../static/js/message'
 export default {
   name: 'NavMain',
   // inject: ['reload'],

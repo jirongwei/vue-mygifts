@@ -20,7 +20,6 @@ import PostDetail from '@/components/post/PostDetail'
 import Post from '@/components/post/Post'
 import PostSend from '@/components/post/PostSend'
 
-import Settings from '@/components/settings/Settings'
 
 import DetailTalk from '@/components/tribune/DetailTalk'
 import TribuneSend from '@/components/tribune/TribuneSend'
@@ -112,13 +111,6 @@ export default new Router({
       path:'/postsend',
       name:'postsend',
       component:PostSend
-    },
-
-    // 个人设置
-    {
-      path:'/settings',
-      name:'settings',
-      component:Settings
     },
 
     //攻略搜索
