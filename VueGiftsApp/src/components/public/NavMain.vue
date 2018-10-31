@@ -117,55 +117,7 @@
               <span class="glyphicon glyphicon-shopping-cart icon-shopping-cart" aria-hidden="true"></span>
               <span>购物车</span>
             </a>
-            <div class="my-cart">
-              <div class="cart-title-box">
-                <h2>我的购物车</h2>
-                <h5>已加入<span class="incart-num" v-text="goodsList.length"></span>件礼物</h5>
-              </div>
-              <div class="cart-wrap">
 
-                <!--购物车空空如也-->
-                <div class="clear-cart" v-if="showCart">
-                  <span class="glyphicon glyphicon-shopping-cart cartIcon" aria-hidden="true"></span>
-                  <h3>购物车空空如也</h3>
-                  <div class="text">快去这里选购你中意的礼物</div>
-                  <p>
-                    <a href="#" class="go-link"><router-link to="/gifts">创意礼物</router-link></a>
-                  </p>
-                  <p>
-                    <a href="#" class="go-link"><router-link to="/tribuneSearch">礼物攻略</router-link></a>
-                  </p>
-                </div>
-
-                <div class="cart-wrap-box" v-else>
-                  <ul>
-                    <li v-for="li in goodsList">
-                      <router-link :to="{name:'giftInfo',params: {giftid:li.gifts_id}}" @click.native="$emit('flushbody')">
-                        <img :src="li.gifts__giftImg">
-                      </router-link>
-                      <div class="content-box">
-                        <router-link :to="{name:'giftInfo',params: {giftid:li.gifts_id}}" @click.native="$emit('flushbody')">
-                          <h3 v-text="li.gifts__gift_name"></h3>
-                        </router-link>
-                        <p>
-                          <span class="price" v-text="'￥'+li.gifts__price"></span>
-                          <span class="del" @click="delNavCart(li.gifts_id)">删除</span>
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-
-              </div>
-              <div class="more-box">
-                <div class="show-box">
-                    <span class="text">
-                      <a href="#" :click-id="0" @click.prevent.stop="CartAuth">我的订单中心</a>
-                    </span>
-                  <a href="#" :click-id="1" class="go-cart" @click.prevent.stop="CartAuth">去购物车</a>
-                </div>
-              </div>
-            </div>
           </div>
 
 
