@@ -34,10 +34,16 @@
             <div class="sc_list_content" v-text="scm.glcontent"></div>
             </router-link>
             <div class="sc_list_info">
-              <i class="sc_list_info_icon sc_list_info_love"></i>
-              <span class="sc_list_info_love_" v-text="scm.glclicknum"></span>
-              <i class="sc_list_info_icon sc_list_info_comment"></i>
-              <span class="sc_list_info_comment_" v-text="scm.glreplynum"></span>
+              <svg t="1540213544665" @click="glthumb(scm.glid)" v-if="!scm.colstatus" style="float: left;margin-right: 5px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1998" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"><path d="M782.036 447.65h-172.29c66.761-246.563-45.998-259.156-45.998-259.156-47.791 0-37.884 37.791-41.498 44.092 0 120.58-128.074 215.065-128.074 215.065v341.946c0 33.754 45.998 45.91 64.042 45.91h258.866c24.363 0 44.202-63.892 44.202-63.892 64.043-217.77 64.043-282.564 64.043-282.564 0.001-44.993-43.293-41.398-43.293-41.398v0 0zM782.036 447.65z" fill="#bfbfbf" p-id="1999"></path><path d="M323.472 447.763h-103.167c-21.306 0-21.635 20.927-21.635 20.927l21.306 344.864c0 21.95 21.987 21.95 21.987 21.95h89.291c18.602 0 18.437-14.52 18.437-14.52v-347.069c0-26.486-26.221-26.151-26.221-26.151v0 0zM323.472 447.763z" fill="#bfbfbf" p-id="2000"></path></svg>
+              <svg t="1540213544665" @click="glthumb(scm.glid)" v-if="scm.colstatus" style="float: left;margin-right: 5px;" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1998" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"><path d="M782.036 447.65h-172.29c66.761-246.563-45.998-259.156-45.998-259.156-47.791 0-37.884 37.791-41.498 44.092 0 120.58-128.074 215.065-128.074 215.065v341.946c0 33.754 45.998 45.91 64.042 45.91h258.866c24.363 0 44.202-63.892 44.202-63.892 64.043-217.77 64.043-282.564 64.043-282.564 0.001-44.993-43.293-41.398-43.293-41.398v0 0zM782.036 447.65z" fill="#FF7204" p-id="1999"></path><path d="M323.472 447.763h-103.167c-21.306 0-21.635 20.927-21.635 20.927l21.306 344.864c0 21.95 21.987 21.95 21.987 21.95h89.291c18.602 0 18.437-14.52 18.437-14.52v-347.069c0-26.486-26.221-26.151-26.221-26.151v0 0zM323.472 447.763z" fill="#FF7204" p-id="2000"></path></svg>
+              <span v-text="scm.glclicknum" @click="glthumb(scm.glid)" style="float: left;margin-right: 5px;" :class="{olp:scm.colstatus}"></span>
+              <svg t="1540213654320" @click="glcollect(scm.glid)" v-if="!scm.praisestatus" class="icon" style="float: left;margin-right: 5px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3578" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"><path d="M673.15625001 166.90624999c-63.703125 0-122.765625 32.0625-162.00000002 84.79687501-38.8125-52.734375-98.296875-84.796875-161.99999998-84.79687501-114.75 0-207.984375 102.09375001-207.98437501 227.39062501 0 74.671875 33.328125 127.40625001 60.328125 169.59375C279.546875 686.65625001 476.140625 838.953125 484.578125 845.28125001c8.015625 6.328125 17.296875 9.28125001 26.57812501 9.28124999s18.5625-2.953125 26.57812499-9.28125001c8.4375-6.328125 204.609375-159.046875 283.078125-281.39062499 27-42.1875 60.328125-94.921875 60.328125-169.59375 0-125.296875-93.234375-227.390625-207.98437501-227.39062499z" fill="#bfbfbf" p-id="3579"></path></svg>
+              <svg t="1540213654320" @click="glcollect(scm.glid)" v-if="scm.praisestatus" class="icon" style="float: left;margin-right: 5px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3578" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"><path d="M673.15625001 166.90624999c-63.703125 0-122.765625 32.0625-162.00000002 84.79687501-38.8125-52.734375-98.296875-84.796875-161.99999998-84.79687501-114.75 0-207.984375 102.09375001-207.98437501 227.39062501 0 74.671875 33.328125 127.40625001 60.328125 169.59375C279.546875 686.65625001 476.140625 838.953125 484.578125 845.28125001c8.015625 6.328125 17.296875 9.28125001 26.57812501 9.28124999s18.5625-2.953125 26.57812499-9.28125001c8.4375-6.328125 204.609375-159.046875 283.078125-281.39062499 27-42.1875 60.328125-94.921875 60.328125-169.59375 0-125.296875-93.234375-227.390625-207.98437501-227.39062499z" fill="#FF7204" p-id="3579"></path></svg>
+              <span v-text="scm.colnum" @click="glcollect(scm.glid)" style="float: left;margin-right: 5px;" :class="{olp:scm.praisestatus}"></span>
+              <router-link :to="{path:'/talkdetail/'+scm.glid,params:{glid:scm.glid}}">
+                <svg t="1540213734953" class="icon" style="float: left;margin-right: 5px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4403" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"><path d="M329.86709543 249.22599137c-50.40069004 0-91.41166249 41.01097245-91.41166248 91.4116625v267.19269925c0 50.40069004 41.01097245 91.41166249 91.41166248 91.41166249h115.5763769l69.18012524 74.42732036 69.31820931-74.42732036h110.19109769c50.40069004 0 91.41166249-41.01097245 91.41166248-91.41166249V340.63765387c0-50.40069004-41.01097245-91.41166249-91.41166248-91.4116625H329.86709543z m184.06608172 554.40759046c-7.59462453 0-14.63691274-3.59018613-20.02219193-9.94205393l-61.03316439-65.5899391h-103.0107254c-66.2803595 0-120.2712357-53.99087618-120.27123568-120.27123568V340.63765387c0-66.2803595 53.99087618-120.2712357 120.27123568-120.2712357h364.26580914c66.2803595 0 120.2712357 53.99087618 120.27123568 120.2712357v267.19269925c0 66.2803595-53.99087618 120.2712357-120.27123568 120.27123568h-97.6254462l-61.44741662 66.00419135c-1.65700898 1.51892491-9.66588576 9.52780169-21.1268646 9.52780168z" p-id="4404" fill="#FF7204"></path><path d="M618.1866593 474.16496145c0 9.94205392 4.14252247 19.74602377 11.04672657 26.78831197 7.18037229 7.04228819 16.70817396 11.04672658 26.78831198 11.04672658 9.94205392 0 19.74602377-4.14252247 26.78831195-11.04672658 7.04228819-7.04228819 11.04672658-16.84625804 11.04672659-26.78831197 0-9.94205392-4.14252247-19.74602377-11.04672659-26.78831197-7.18037229-7.04228819-16.70817396-11.04672658-26.78831195-11.04672658-9.94205392 0-19.74602377 4.14252247-26.78831198 11.04672658-7.04228819 7.18037229-11.04672658 16.70817396-11.04672657 26.78831197z m-145.1263705 0c0 9.94205392 4.14252247 19.74602377 11.04672657 26.78831197 7.04228819 7.04228819 16.84625804 11.04672658 26.78831198 11.04672658 9.94205392 0 19.74602377-4.14252247 26.78831196-11.04672658 7.04228819-7.04228819 11.04672658-16.84625804 11.04672659-26.78831197 0-9.94205392-4.14252247-19.74602377-11.04672659-26.78831197-7.04228819-7.04228819-16.84625804-11.04672658-26.78831196-11.04672658-9.94205392 0-19.74602377 4.14252247-26.78831198 11.04672658-7.04228819 7.18037229-11.04672658 16.70817396-11.04672657 26.78831197z m-139.87917538 0c0 9.94205392 4.14252247 19.74602377 11.04672658 26.78831197 7.18037229 7.04228819 16.70817396 11.04672658 26.78831197 11.04672658 9.94205392 0 19.74602377-4.14252247 26.78831197-11.04672658 7.04228819-7.18037229 11.04672658-16.70817396 11.04672658-26.78831197 0-9.94205392-4.14252247-19.74602377-11.04672658-26.78831197-7.18037229-7.04228819-16.70817396-11.04672658-26.78831197-11.04672658-9.94205392 0-19.74602377 4.14252247-26.78831197 11.04672658-6.90420412 7.04228819-11.04672658 16.84625804-11.04672658 26.78831197z" p-id="4405" fill="#FF7204"></path></svg>
+                <span v-text="scm.glreplynum" style="float: left;margin-right: 5px;" :class="{olp:true}"></span>
+              </router-link>
             </div>
           </li>
         </ul>
@@ -62,10 +68,13 @@
                 <span v-text="goodm.goodprice"></span>
               </div>
               <div class="gc_message_r">
-                <i class="gc_like"></i>
-                <span class="gc_like_" v-text="goodm.goodclicknum"></span>
-                <i class="gc_comment"></i>
-                <span class="gc_comment_" v-text="goodm.goodreplynum"></span>
+                <svg t="1540213544665" @click="goodsthumb(goodm.goodid)" v-if="!goodm.colstatus" class="icon" style="float: left;margin-right: 5px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1998" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"><path d="M782.036 447.65h-172.29c66.761-246.563-45.998-259.156-45.998-259.156-47.791 0-37.884 37.791-41.498 44.092 0 120.58-128.074 215.065-128.074 215.065v341.946c0 33.754 45.998 45.91 64.042 45.91h258.866c24.363 0 44.202-63.892 44.202-63.892 64.043-217.77 64.043-282.564 64.043-282.564 0.001-44.993-43.293-41.398-43.293-41.398v0 0zM782.036 447.65z" fill="#bfbfbf" p-id="1999"></path><path d="M323.472 447.763h-103.167c-21.306 0-21.635 20.927-21.635 20.927l21.306 344.864c0 21.95 21.987 21.95 21.987 21.95h89.291c18.602 0 18.437-14.52 18.437-14.52v-347.069c0-26.486-26.221-26.151-26.221-26.151v0 0zM323.472 447.763z" fill="#bfbfbf" p-id="2000"></path></svg>
+                <svg t="1540213544665" @click="goodsthumb(goodm.goodid)" v-if="goodm.colstatus" class="icon" style="float: left;margin-right: 5px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1998" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"><path d="M782.036 447.65h-172.29c66.761-246.563-45.998-259.156-45.998-259.156-47.791 0-37.884 37.791-41.498 44.092 0 120.58-128.074 215.065-128.074 215.065v341.946c0 33.754 45.998 45.91 64.042 45.91h258.866c24.363 0 44.202-63.892 44.202-63.892 64.043-217.77 64.043-282.564 64.043-282.564 0.001-44.993-43.293-41.398-43.293-41.398v0 0zM782.036 447.65z" fill="#FF7204" p-id="1999"></path><path d="M323.472 447.763h-103.167c-21.306 0-21.635 20.927-21.635 20.927l21.306 344.864c0 21.95 21.987 21.95 21.987 21.95h89.291c18.602 0 18.437-14.52 18.437-14.52v-347.069c0-26.486-26.221-26.151-26.221-26.151v0 0zM323.472 447.763z" fill="#FF7204" p-id="2000"></path></svg>
+                <span class="gc_like_" @click="goodsthumb(goodm.goodid)" v-text="goodm.goodclicknum" :class="{olp:goodm.colstatus}" style="float: left;margin-right: 5px;"></span>
+                <svg t="1540213654320" @click="goodscollect(goodm.goodid)" v-if="!goodm.praisestatus" class="icon" style="float: left;margin-right: 5px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3578" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"><path d="M673.15625001 166.90624999c-63.703125 0-122.765625 32.0625-162.00000002 84.79687501-38.8125-52.734375-98.296875-84.796875-161.99999998-84.79687501-114.75 0-207.984375 102.09375001-207.98437501 227.39062501 0 74.671875 33.328125 127.40625001 60.328125 169.59375C279.546875 686.65625001 476.140625 838.953125 484.578125 845.28125001c8.015625 6.328125 17.296875 9.28125001 26.57812501 9.28124999s18.5625-2.953125 26.57812499-9.28125001c8.4375-6.328125 204.609375-159.046875 283.078125-281.39062499 27-42.1875 60.328125-94.921875 60.328125-169.59375 0-125.296875-93.234375-227.390625-207.98437501-227.39062499z" fill="#bfbfbf" p-id="3579"></path></svg>
+                <svg t="1540213654320" @click="goodscollect(goodm.goodid)" v-if="goodm.praisestatus" class="icon" style="float: left;margin-right: 5px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3578" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"><path d="M673.15625001 166.90624999c-63.703125 0-122.765625 32.0625-162.00000002 84.79687501-38.8125-52.734375-98.296875-84.796875-161.99999998-84.79687501-114.75 0-207.984375 102.09375001-207.98437501 227.39062501 0 74.671875 33.328125 127.40625001 60.328125 169.59375C279.546875 686.65625001 476.140625 838.953125 484.578125 845.28125001c8.015625 6.328125 17.296875 9.28125001 26.57812501 9.28124999s18.5625-2.953125 26.57812499-9.28125001c8.4375-6.328125 204.609375-159.046875 283.078125-281.39062499 27-42.1875 60.328125-94.921875 60.328125-169.59375 0-125.296875-93.234375-227.390625-207.98437501-227.39062499z" fill="#FF7204" p-id="3579"></path></svg>
+                <span class="gc_comment_" @click="goodscollect(goodm.goodid)" v-text="goodm.goodreplynum" :class="{olp:goodm.praisestatus}" style="float: left;margin-right: 5px;"></span>
+                <div class="clear"></div>
               </div>
               <div class="clear"></div>
             </div>
@@ -92,17 +101,16 @@
             <ul v-bind:style="{ marginLeft:  postmarginleft}">
               <li v-for="pi in postimgs">
                 <div class="pc_m_p_l">
-                  <a href="">
-                    <!--<router-link :to="{path:'/',query:{userid:pi.userid}}"></router-link>-->
+                  <router-link :to="{path:'/postdetail/'+pi.postId,param:{pid:pi.postId}}">
                     <div class="pc_m_p_l_img" v-bind:style="{ backgroundImage:'url('+pi.userImg+')'}"></div>
                     <div class="pc_m_p_l_nickname" v-text="pi.userName"></div>
-                  </a>
+                  </router-link>
                 </div>
                 <div class="pc_m_p_r">
-                    <router-link :to="{path:'/postdetail/'+pi.postId,param:{pid:pi.postId}}">
+                  <router-link :to="{path:'/postdetail/'+pi.postId,param:{pid:pi.postId}}">
                     <div class="pc_m_p_r_title"v-text="pi.postTitle"></div>
                     <div class="pc_m_p_r_content"v-text="pi.postContent"></div>
-                    </router-link>
+                  </router-link>
                 </div>
                 <div class="clear"></div>
               </li>
@@ -129,7 +137,8 @@
             return {
                 //首页轮播图
                 top_index:0,
-                topimgstyle:[{
+                topimgstyle:[
+                  {
                   class:"topimgs1",
                   title:"11",
                   content:"111111111111111111111"
@@ -153,16 +162,14 @@
 
                 //获取本地数据来判断
                 telephone:"",
-
+                uid:1,
                 //攻略展示
                 glmes:[],
                 glpage:1,
-                gllikestatus:0,
 
                 //礼品展示
                 goodmes:[],
                 goodpage:1,
-                goodlikestatus:0,
 
                 //帖子的轮播展示
                 post_index:0,
@@ -176,6 +183,7 @@
         components:{
           NavBottom
         },
+
         mounted:function() {
           var vm = this;
           //加载首页轮播图
@@ -194,8 +202,6 @@
               console.log(error)
             });
 
-          //axios修改用户对攻略点赞状态
-
           //axios请求商品数据
           axios.get('http://localhost:8000/gift/indexgifts/'+this.goodpage)
             .then(function (response) {
@@ -205,8 +211,6 @@
             .catch(function (error) {
               console.log(error)
             });
-
-          //axios修改用户对商品点赞状态
 
           //axios请求帖子数据
 
@@ -287,10 +291,67 @@
                 })
             },
 
-            //获取本地信息来判断用户是否登录
-            getuser:function(){
-              pass
+            //攻略点赞
+            glthumb:function(triid){
+              var vm=this
+              if (window.sessionStorage.getItem("token")){
+                for(let i=0 ; i<this.glmes.length;i++){
+                if(this.glmes[i].glid==triid){
+                  this.glmes[i].colstatus=!this.glmes[i].colstatus
+                  if(this.glmes[i].colstatus){
+                    this.glmes[i].glclicknum+=1
+                  }else{
+                    this.glmes[i].glclicknum-=1
+                  }
+                  axios.post(this.GLOBAL.HOST+'tribune/thumbup/',{
+                    my_token:window.sessionStorage.getItem("token"),
+                    postid:this.glmes[i].glid,
+                    praisestatus:this.glmes[i].clickstatus
+                  })
+                    .then(function (response) {
+                      console.log(response.data)
+                    })
+                    .catch(function (error) {
+                      console.log(error)
+                    })
+                }
+              }
+              }else{
+                alert("请您先进行登录")
+              }
             },
+
+            //攻略收藏
+            glcollect:function(triid){
+              var vm=this
+              if (window.sessionStorage.getItem("token")){
+                for(let i=0 ; i<this.glmes.length;i++) {
+                  if(this.glmes[i].glid==triid){
+                    this.glmes[i].praisestatus=!this.glmes[i].praisestatus
+                    if(this.glmes[i].praisestatus){
+                      this.glmes[i].colnum+=1
+                    }else {
+                      this.glmes[i].colnum-=1
+                    }
+                    axios.post(this.GLOBAL.HOST+'tribune/collect/',{
+                      my_token:window.sessionStorage.getItem("token"),
+                      postid:this.glmes[i].glid,
+                      collectstatus:this.glmes[i].praisestatus
+                    })
+                      .then(function (response) {
+                        console.log(response.data)
+                      })
+                      .catch(function (error) {
+                        console.log(error)
+                      })
+                  }
+                }
+              }else{
+                alert("请您先进行登录")
+              }
+
+            },
+
 
             //axios查看更多商品
             getmoregood:function(){
@@ -307,6 +368,66 @@
                 console.log(error)
               })
           },
+
+            //商品点赞
+            goodsthumb:function(gooid){
+              var vm=this
+              if(window.sessionStorage.getItem("token")){
+                for(let i=0 ; i<this.goodmes.length;i++){
+                  if(this.goodmes[i].goodid==gooid){
+                    this.goodmes[i].colstatus=!this.goodmes[i].colstatus;
+                    if(this.goodmes[i].colstatus){
+                      this.goodmes[i].goodclicknum+=1;
+                    }else{
+                      this.goodmes[i].goodclicknum-=1;
+                    }
+                    axios.post(this.GLOBAL.HOST+'gift/indexthumbgifts/',{
+                      userid:window.sessionStorage.getItem("token"),
+                      postid:this.goodmes[i].goodid,
+                      dianzanstatus:this.goodmes[i].colstatus
+                    })
+                      .then(function (response) {
+                        console.log(response.data)
+                      })
+                      .catch(function (error) {
+                        console.log(error)
+                      })
+                  }
+                }
+              }else{
+                alert("请您先进行登录")
+              }
+            },
+
+            //商品收藏
+            goodscollect:function(triid){
+              var vm=this
+              if(window.sessionStorage.getItem("token")){
+                for(let i=0 ; i<this.goodmes.length;i++) {
+                  if(this.goodmes[i].goodid==triid){
+                    this.goodmes[i].praisestatus=!this.goodmes[i].praisestatus;
+                    if  (this.goodmes[i].praisestatus){
+                      this.goodmes[i].goodreplynum+=1;
+                    }else{
+                      this.goodmes[i].goodreplynum-=1;
+                    }
+                    axios.post(this.GLOBAL.HOST+'gift/indexcolgifts/',{
+                      userid:window.sessionStorage.getItem("token"),
+                      postid:this.goodmes[i].goodid,
+                      collectstatus:this.goodmes[i].praisestatus
+                    })
+                      .then(function (response) {
+                        console.log(response.data)
+                      })
+                      .catch(function (error) {
+                        console.log(error)
+                      })
+                  }
+                }
+              }else{
+                alert("请您先进行登录")
+              }
+            },
 
             //轮播使用帖子
             post_btnl:function () {
@@ -376,7 +497,9 @@ body{
 .clear{
   clear: both;
 }
-
+.olp{
+  color:#ff8000!important;
+}
 #index{
   margin-top: -20px !important;
 }
@@ -572,7 +695,7 @@ body{
   display: inline-block;
   height: 18px;
   font-size: 1.1em;
-  color:#ff6c00;
+  color:#555;
 }
 .strategyContain .sc_more{
   display: block;
