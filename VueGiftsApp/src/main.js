@@ -7,7 +7,7 @@ import router from './router/index'
 // 导入全局组件
 import NavMain from './components/public/NavMain'
 import NavFooter from './components/public/NavFooter'
-import NavBottom from './components/public/NavBottom'
+
 import Pagination from './components/public/Pagination'
 import VDistpicker from 'v-distpicker'
 
@@ -69,9 +69,6 @@ Vue.component('nav-main',NavMain);
 
 // 2-1.页面底部导航--其他
 Vue.component('nav-footer',NavFooter);
-
-// 2-2.页面底部导航--首页
-Vue.component('nav-bottom',NavBottom);
 
 // 3.用户登录
 Vue.component('user-login',Login);

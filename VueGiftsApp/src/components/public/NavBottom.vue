@@ -37,34 +37,6 @@
       </dl>
     </div>
 
-    <div class="footer-middle">
-      <strong class="bt">友情链接:</strong>
-
-      <div class="link">
-        <a target="_blank" href="http://www.51fashion.com.cn/">饰品品牌</a>
-        <a target="_blank" href="http://zhidao.cocodiy.com/">礼物百科</a>
-        <a target="_blank" href="http://pet.pclady.com.cn/">宠物</a>
-        <a target="_blank" href="http://www.53shop.com/">53货源网</a>
-        <a target="_blank" href="http://www.huangye88.com/">黄页88网</a>
-        <a target="_blank" href="http://www.vsigo.cn/">隐形眼镜</a>
-        <a target="_blank" href="http://www.lovenus.cn/">求婚钻戒</a>
-        <a target="_blank" href="http://www.darryring.com/">darry ring</a>
-        <a target="_blank" href="http://www.zbird.com/">钻石小鸟</a>
-        <a target="_blank" href="http://www.hua.com/">鲜花网</a>
-        <a target="_blank" href="http://www.hao224.com/">团购网</a>
-        <a target="_blank" href="http://www.zhidiy.com/">手工制作</a>
-        <a target="_blank" href="http://www.91lai.com/">返利网</a>
-        <a target="_blank" href="http://www.cunan.com/">村安商城</a>
-        <a target="_blank" href="http://www.qqqnm.com/">海淘</a>
-        <a target="_blank" href="http://iask.sina.com.cn/c/166.html">爱问礼节礼仪</a>
-        <a target="_blank" href="http://www.36588.com.cn/">个性礼品定制</a>
-        <a target="_blank" href="http://www.hznzcn.com/">女装批发</a>
-        <a target="_blank" href="http://www.hunliji.com/">婚纱摄影</a>
-        <a target="_blank" href="http://www.drlmeng.com/">多肉植物</a>
-        <a target="_blank" href="/about/link.html">更多</a>
-      </div>
-    </div>
-
     <div class="copyright">
       <span>© 2018 leftheart.com All Rights Reserved. 鲁ICP备09018381号</span>
       <span class="bottom-image"></span>
@@ -107,6 +79,7 @@ export default {
     text-align: center;
     padding: 20px 0 0 0;
     border-top: solid 3px lightgray;
+    background: #333;
   }
 
   div.footer-top{
@@ -126,7 +99,7 @@ export default {
     display: block;
     width: 200px;
     height: 56px;
-    margin-top: 58px;
+    margin-top: 29px;
     background: url("../../assets/nav/logo-header.png") center no-repeat;
   }
 
@@ -144,7 +117,7 @@ export default {
     line-height: 26px;
     margin-bottom: 10px;
     font-size: 16px;
-    color: #333;
+    color: white;
   }
 
   div.footer-top dl dd{
@@ -155,38 +128,8 @@ export default {
     color: #666;
   }
 
-  div.footer-middle{
-    width: 1200px;
-    height: 70px;
-    margin: 0 auto 0 auto;
-    border: 1px solid #e6e6e6;
-    border-left: none;
-    border-right: none;
-    padding: 8px 0 0 0;
-    text-align: left;
-  }
-
-  div.footer-middle strong.bt{
-    float: left;
-    width: 75px;
-    line-height: 26px;
-    font-weight: normal;
-    color: #666;
-  }
-
-  div.footer-middle div.link{
-    float: left;
-    width: 1125px;
-    line-height: 26px;
-  }
-
-  div.footer-middle div.link a{
-    margin-right: 15px;
-    color: #c1c1c1;
-    display: inline-block;
-    zoom: 1;
-    vertical-align: top;
-    line-height: 26px;
+  div.footer-top dl dd a:hover{
+    color: #f4604b;
   }
 
   div.copyright{
@@ -194,7 +137,7 @@ export default {
     text-align: center;
     width: 100%;
     height: 40px;
-    margin-bottom: 0;
+    border-top: solid 2px #666;
   }
 
   div.copyright span{

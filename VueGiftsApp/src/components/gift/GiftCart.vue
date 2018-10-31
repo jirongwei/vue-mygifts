@@ -99,7 +99,7 @@
             <span class="cart-footer-num" v-text="getTotal.totalNum"></span>
             件商品
            </span>
-              <div class="mz-btn btn-danger" @click="deleteGoods()">清空购物车</div>
+              <div class="mz-btn btn-danger" @click="showTip=true">清空购物车</div>
             </div>
             <div class="cart-footer-right col-md-5 col-md-offset-1 col-sm-offset-2 col-xs-8 col-sm-6">
           <span class="cart-footer-sum">
@@ -114,20 +114,20 @@
         </div>
       </div>
       <user_addr v-if="showaddr" v-on:getaddr="cartAccounts"></user_addr>
+      <!--清空购物车提示模态框-->
+      <MakeSureBuy v-if="showTip" @quxiaoclick="showTip=false" @sureclick="deleteGoods"></MakeSureBuy>
     </div>
-
-
-
-
 </template>
 
 <script>
   import axios from 'axios'
+  import MakeSureBuy from './MakeSureBuy'
 export default {
   name: 'GiftCart',
+
   data () {
     return {
-
+      showTip: false,
       userid:1,
 
       // 判断是不是选中
@@ -144,7 +144,7 @@ export default {
     }
 
   },
-
+  components: {MakeSureBuy},
   mounted:function () {
     let _this = this;
     setTimeout(function () {
@@ -164,14 +164,18 @@ export default {
       axios({
         method:'POST',
         url:this.GLOBAL.HOST+'gift/getallcarts/',
-        data:{"userinfo_id":1}
+        headers:{"token":window.sessionStorage.getItem("token")}
       })
       .then(function (response) {
-        vm.goodsList = response.data.carts;
-        // 设置所有商品为未选中状态
-        vm.goodsList.map(function (cart) {
-          vm.$set(cart, 'select', false);
-        })
+        if(response.data.carts){
+          vm.goodsList = response.data.carts;
+          // 设置所有商品为未选中状态
+          vm.goodsList.map(function (cart) {
+            vm.$set(cart, 'select', false);
+          })
+        }else if(response.data.code === '410'){
+          alert('未登录，请先登录！')
+        }
       })
       .catch(function (error) {
         console.log(error)
@@ -203,13 +207,16 @@ export default {
       let vm = this;
       axios({
         method:'POST',
-        url:this.GLOBAL.HOST+'gift/delgift/',
-        data:{"gifts_id":giftid,"userinfo_id":1}
+        url:this.GLOBAL.HOST+'gift/delgift/'+giftid+'/',
+        headers:{"token":window.sessionStorage.getItem("token")},
+
       })
       .then(function (response) {
           // 删除成功 刷新购物车
           if(response.data.code='808'){
             vm.getUserCarts();
+          }else if(response.data.code = '410'){
+            alert('未登录，请先登录！')
           }
       })
       .catch(function (error) {
@@ -224,7 +231,7 @@ export default {
       axios({
         method:'POST',
         url:this.GLOBAL.HOST+'gift/clearcart/',
-        data:{"userinfo_id":1}
+        headers:{"token":window.sessionStorage.getItem("token")}
       })
       .then(function (response) {
         // 删除成功 刷新购物车
@@ -235,7 +242,7 @@ export default {
       .catch(function (error) {
         console.log(error)
       });
-
+      this.showTip = false;
     },
 
     // 商品类减

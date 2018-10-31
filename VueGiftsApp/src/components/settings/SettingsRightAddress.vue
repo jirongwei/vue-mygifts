@@ -17,7 +17,7 @@
             <div style="width:90px;float:left;">收件人：</div>
             <div class="col-xs-4 col-sm-3 tb-order-time" style="color:black;" v-text="addr.receiver"></div>
             <a class="col-xs-1 col-sm-1 pull-right" style="cursor: pointer;">
-              <i class="glyphicon glyphicon-remove" @click="delAddr(addr.id)" style="color: #0099e5;"></i>
+              <i class="glyphicon glyphicon-remove" :obj-id="addr.id" @click="getAddrId" style="color: #0099e5;"></i>
             </a>
           </div>
           <div class="col-xs-13 tb-content">
@@ -53,7 +53,9 @@
 
     <!--添加地址模态框-->
     <div id="modal" class="modal in modal-address" aria-hidden="false">
-      <div class="alert alert-danger bootstrap-notify-bar" id="alert-div" v-text="err_message"  v-if="alertStatus"><button type="button" class="close" data-dismiss="alert">×</button></div>
+      <div class="alert alert-danger bootstrap-notify-bar" id="alert-div" v-text="err_message"  v-if="alertStatus">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+      </div>
       <div class="modal-dialog ">
         <div class="modal-content">
           <div class="modal-header">
@@ -68,7 +70,7 @@
               <div class="form-group mbl">
                 <label class="control-label required col-md-2">收货人</label>
                 <div class="controls col-md-10">
-                  <input v-model="add_receiver" @blur="checkA" type="text" id="name" class="form-control" name="name" placeholder="填写你常用的名字">
+                  <input v-model="add_receiver" type="text" id="name" class="form-control" name="name" placeholder="填写你常用的名字">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -90,7 +92,7 @@
               <div class="form-group mbl">
                 <label class="control-label required col-md-2">详细地址</label>
                 <div class="controls col-md-10">
-                  <textarea v-model.lazy="add_detail" @blur="checkA" id="address" class="form-control" name="city" placeholder="填写你的常用地址"></textarea>
+                  <textarea v-model.lazy="add_detail" id="address" class="form-control" name="city" placeholder="填写你的常用地址"></textarea>
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -107,7 +109,7 @@
               <div class="form-group mbl">
                 <label class="control-label required col-md-2" for="zip-code">邮编</label>
                 <div class="controls col-md-10">
-                  <input v-model.lazy="add_post" @blur="checkA" type="number" id="zip-code" class="form-control" name="zcode" placeholder="邮编可以不填写">
+                  <input v-model.lazy="add_post" type="number" id="zip-code" class="form-control" name="zcode" placeholder="邮编可以不填写">
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -125,8 +127,8 @@
       </div>
 
 
-    </div>
-
+    </div> <!---->
+    <MakeSureDel v-if="showTip" @quxiaoclick="showTip=false" @sureclick="delAddr()"></MakeSureDel>
   </div>
 </template>
 
@@ -134,12 +136,15 @@
 
   import axios from 'axios'
   import VDistpicker from 'v-distpicker'
+  import '../../../static/js/message'
+  import MakeSureDel from './MakeSureDel'
 
 
   export default {
   name: 'SettingsRightAddress',
   data () {
     return {
+      showTip: false,
       // 存放地址列表
       list_address:[],
       err_message:'',
@@ -173,9 +178,12 @@
       // 获取修改id
       edit_id:'',
       update_msg:[],
+
+      // 删除地址id
+      del_id:'',
     }
   },
-    components:{VDistpicker},
+    components:{VDistpicker, MakeSureDel},
 
     mounted:function () {
       this.getAllAddress();
@@ -215,7 +223,6 @@
         this.addr_area = data.value;
       },
 
-
       // 获取用户所有地址
       getAllAddress:function () {
         let vm = this;
@@ -225,8 +232,12 @@
           headers:{"token":sessionStorage.getItem("token")}
         })
         .then(function (response) {
-          if(response.data.code == '410'){
-            alert('登录已过期')
+          if(response.data.code === '410'){
+            $.message({
+              message:'登录过期,请重新登录！',
+              type:'warning'
+            });
+            this.$router.push({path:'/'});
           }else if(response.data.address){
             vm.list_address = response.data.address;
           }
@@ -266,13 +277,22 @@
           })
           .then(function (response) {
             if(response.data.code == '808'){
-              alert('添加成功');
+              $.message({
+                message:'添加成功！',
+                type:'success'
+              });
               vm.getAllAddress();
             }else if(response.data.code == '403'){
-              alert('添加失败')
-
+              $.message({
+                message:'添加失败！',
+                type:'error'
+              });
             }else if(response.data.code == '410'){
-              alert('登录已过期')
+              $.message({
+                message:'登录过期,请重新登录！',
+                type:'warning'
+              });
+              this.$router.push({path:'/'});
             }
           })
           .catch(function (error) {
@@ -302,10 +322,16 @@
             vm.add_phone = vm.update_msg.phone;
             vm.add_post = vm.update_msg.postcode;
           }else if(response.data.code == '403'){
-            alert('获取失败')
-
+            $.message({
+              message:'获取失败！',
+              type:'error'
+            });
           }else if(response.data.code == '410'){
-            alert('登录已过期')
+            $.message({
+              message:'登录过期,请重新登录！',
+              type:'warning'
+            });
+            this.$router.push({path:'/'});
           }
         })
         .catch(function (error) {
@@ -333,13 +359,23 @@
            })
              .then(function (response) {
                if(response.data.code == '808'){
-                 alert('修改成功');
+                 $.message({
+                   message:'修改成功！',
+                   type:'success'
+                 });
                  vm.getAllAddress();
                }else if(response.data.code == '403'){
-                 alert('修改失败')
+                 $.message({
+                   message:'修改失败！',
+                   type:'error'
+                 });
 
                }else if(response.data.code == '410'){
-                 alert('登录已过期')
+                 $.message({
+                   message:'登录过期,请重新登录！',
+                   type:'warning'
+                 });
+                 this.$router.push({path:'/'});
                }
              })
              .catch(function (error) {
@@ -351,32 +387,49 @@
 
       },
 
-      // 删除地址
-      delAddr:function(addrid){
-        let result = confirm('确定删除该地址吗？');
-        if(result===true){
-          let vm = this;
-          axios({
-            method:'POST',
-            url:this.GLOBAL.HOST+'user/deladdr/'+addrid+'/',
-            headers:{"token":window.sessionStorage.getItem("token")}
-          })
-          .then(function (response) {
-            if(response.data.code == '808'){
-              alert('删除成功');
-              vm.getAllAddress();
-            }else if(response.data.code == '403'){
-              alert('删除失败')
+      // 删除地址获取当前地址id
+      getAddrId:function(e){
+        this.showTip = true;
+        let $obj = $(e.target).attr('obj-id');
+        this.del_id = $obj;
+        console.log(this.del_id);
+      },
 
-            }else if(response.data.code == '410'){
-              alert('登录已过期')
+      // 删除地址
+      delAddr:function(){
+        this.showTip = false;
+        let vm = this;
+        axios({
+          method:'POST',
+          url:this.GLOBAL.HOST+'user/deladdr/'+vm.del_id+'/',
+          headers:{"token":window.sessionStorage.getItem("token")}
+        })
+          .then(function (response) {
+            if(response.data.code === '808'){
+              $.message({
+                message:'删除成功！',
+                type:'success'
+              });
+              vm.getAllAddress();
+            }else if(response.data.code === '403'){
+              $.message({
+                message:'删除失败！',
+                type:'error'
+              });
+
+            }else if(response.data.code === '410'){
+              $.message({
+                message:'登录过期,请重新登录！',
+                type:'warning'
+              });
+              this.$router.push({path:'/'});
             }
           })
           .catch(function (error) {
             console.log(error)
           });
-        }
       },
+      
       // 检验数据合法性
       check_form:function () {
         if(!this.add_receiver || !this.add_phone || !this.add_detail){

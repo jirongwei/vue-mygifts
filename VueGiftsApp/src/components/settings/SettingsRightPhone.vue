@@ -1,9 +1,9 @@
 <template>
-  <div class="panel panel-default panel-col" style="margin: 30px 0 170px 0">
+  <div class="panel panel-default panel-col" style="margin: 30px 0 171px 0">
     <div class="panel-heading">绑定手机</div>
     <div class="panel-body">
       <ul class="breadcrumb">
-        <li><a href="#">安全设置</a></li>
+        <li><a href="#" @click="$emit('changeright')">安全设置</a></li>
         <li class="active">手机号码绑定</li>
       </ul>
 
@@ -27,14 +27,15 @@
           <div class="col-md-3 control-label"><label for="sms-code">短信验证码</label></div>
 
           <div class="col-md-2 controls">
-            <input v-model.lazy="input_code" type="text" id="sms-code" name="sms_code" class="form-control" value="">
+            <input v-model.lazy="input_code" type="text" id="sms-code" name="sms_code" class="form-control">
           </div>
 
           <div class="col-md-4 controls">
-            <a href="#modal" data-toggle="modal" class="btn btn-default btn-sm js-sms-send" @click.prevent.stop="getPhoneCode()">
-              <span id="js-time-left"></span>
-              <span id="js-fetch-btn-text" v-text="codeMsg"></span>
+            <a class="btn btn-default btn-sm">
+              <span v-if="showCode" v-text="codeMsg"  @click.prevent.stop="getPhoneExist()"></span>
+              <span  v-else :disabled="disabled" :style="{cursor:styleCursor}" v-text="codeTime"></span>
             </a>
+
           </div>
           <div class="col-md-5 col-md-offset-3 controls hidden-xs warning-box box-code" v-if="showError">
             <span class="warn-icon"></span>
@@ -60,6 +61,7 @@
 <script>
 
   import axios from 'axios'
+  import '../../../static/js/message'
   export default {
   name: 'SettingsRightPhone',
   data () {
@@ -70,12 +72,16 @@
       err_message:'',
 
       codeMsg:'获取短信验证码',
+      codeTime:'',
 
       reg_telephone:/^1[3456789]\d{9}$/,
       reg_password:/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
       input_old_pwd:'',
       input_telephone:'',
       input_code:'',
+      disabled:false,
+      styleCursor:'pointer',
+      showCode:true,
 
     }
   },
@@ -84,30 +90,70 @@
     },
 
     methods:{
-      // 获取手机验证码
-      getPhoneCode:function () {
+      // 验证手机号是否存在
+      getPhoneExist:function () {
         // 发送请求验证码
         let vm = this;
-        axios.get(this.GLOBAL.HOST+'user/sendmessage/'+vm.input_telephone+'/')
+        if(this.reg_telephone.test(vm.input_telephone)){
+          axios({
+            method:'POST',
+            url:this.GLOBAL.HOST+'user/getuser/'+vm.input_telephone+'/',
+            headers:{"token":window.sessionStorage.getItem("token")}
+          })
           .then(function (response) {
-            if(response.data.code == '408'){
-              alert('该手机号已被绑定')
+            if(response.data.code === '808'){
+             vm.showError = true;
+             vm.err_message = '该手机号已被绑定！'
+            }else if(response.data.code === '403'){
+              // 该手机号可用
+              vm.getPhoneCode();
+              // 判断获取验证码时间
+              vm.showCode = false;
+              vm.styleCursor = 'not-allowed';
+              let timer = 60;
+              vm.codeTime = timer+'(s)';
+              setInterval(()=>{
+                timer--;
+                vm.codeTime = timer+'(s)';
+                if(timer <= 0){
+                  vm.showCode = true;
+                }
+              },1000);
+              window.clearInterval();
+
+            }else if(response.data.code === '410'){
+              $.message({
+                message:'登录过期,请重新登录！',
+                type:'warning'
+              });
+              this.$router.push({path:'/'});
             }
           })
           .catch(function (error) {
             console.log(error)
           });
-        // 判断获取验证码时间
-        let timer = 60;
-        this.codeMsg = timer+'(s)';
-        let auth_time = setInterval(()=>{
-          timer--;
-          this.codeMsg = timer+'(s)';
-          if(timer <= 0){
-            this.codeMsg = '获取验证码';
-            clearInterval(auth_time);
-          }
-        },1000);
+
+        }else{
+          this.showError = true;
+          vm.err_message = '请输入正确的手机号！'
+        }
+      },
+
+      // 获取短信验证码
+      getPhoneCode:function(){
+        let vm = this;
+        axios({
+          method:'GET',
+          url:this.GLOBAL.HOST+'user/sendmessage/'+vm.input_telephone+'/',
+          headers:{"token":window.sessionStorage.getItem("token")}
+        })
+          .then(function (response) {
+            console.log(response.data.code)
+          })
+
+          .catch(function (error) {
+            console.log(error)
+          });
       },
 
       // 绑定手机号
@@ -126,20 +172,35 @@
             headers:{"token":sessionStorage.getItem("token")}
           })
             .then(function (response) {
-              if(response.data.code == '808'){
-                vm.showNewPwd = false;
-                vm.err_current = '';
-                alert('绑定成功')
-              }else if(response.data.code == '402'){
-               alert('该用户已绑定')
-              }else if(response.data.code == '410'){
-                alert('登录已过期')
+              if(response.data.code === '808'){
+                $.message({
+                  message:'绑定成功！',
+                  type:'success'
+                });
+              }else if(response.data.code === '410'){
+                $.message({
+                  message:'登录过期,请重新登录！',
+                  type:'warning'
+                });
+                this.$router.push({path:'/'});
+              }else if(response.data.code ==='802'){
+                $.message({
+                  message:'短信验证码不正确或已过期！',
+                  type:'warning'
+                });
+              }else if(response.data.code === '801'){
+                vm.showError = true;
+                vm.err_message = '用户名与密码不匹配！'
+              }else if(response.data.code === '403'){
+                $.message({
+                  message:'绑定失败！',
+                  type:'error'
+                });
               }
             })
             .catch(function (error) {
               console.log(error)
             });
-
         }
       },
 

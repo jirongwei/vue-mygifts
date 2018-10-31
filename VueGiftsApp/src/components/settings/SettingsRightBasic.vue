@@ -58,7 +58,7 @@
           <div class="form-group">
             <label class="col-md-2 control-label"><em class="sign">*</em>个人签名</label>
             <div class="col-md-7 controls">
-              <textarea type="text" rows="4" maxlength="80" id="Info-signature" name="Info_signature" @keyup = "descInput" v-model="UserSignature=userBasic.signature" class="form-control Info-input" placeholder="用一段话介绍你自己，会在你的个人页面显示"></textarea>
+              <textarea type="text" rows="4" maxlength="80" id="Info-signature" name="Info_signature" @keyup = "descInput" v-model="UserSignature" class="form-control Info-input" placeholder="用一段话介绍你自己，会在你的个人页面显示"></textarea>
             </div>
             <div class="col-md-4 col-md-offset-2 basic-tip">还可以输入<em id="count_chars" v-text="num_word"></em>个字符</div>
           </div>
@@ -111,6 +111,7 @@
 <script>
 
   import axios from 'axios'
+  import '../../../static/js/message'
   export default {
   name: 'SettingsRightBasic',
     data () {
@@ -138,19 +139,18 @@
     },
 
     methods:{
-
       // 获取用户选择性别
       getUserSex:function(e){
         let $day_id = $(e.target).val();
-        if($day_id == 'male'){
+        if($day_id === 'male'){
           this.UserSex = 1;
-        }else if($day_id == 'female'){
+        }else if($day_id === 'female'){
           this.UserSex = 2;
         }else{
           this.UserSex = 3;
         }
-
       },
+
       // 获取用户基本信息
       getUserBasic:function(){
         let vm = this;
@@ -160,12 +160,19 @@
           headers:{"token":sessionStorage.getItem("token")}
         })
           .then(function (response) {
-
-            if(response.data.code == '410'){
-              alert('登录已过期')
+            // token过期
+            if(response.data.code === '410'){
+              $.message({
+                message:'登录过期,请重新登录！',
+                type:'warning'
+              });
+              this.$router.push({path:'/'});
+            // 获取用户基本信息
             }else if(response.data.userMsg){
               vm.UserSex = response.data.userMsg[0].gender__sexname;
               vm.userBasic = response.data.userMsg[0];
+              vm.num_word -= vm.userBasic.signature.length;
+              vm.UserSignature = vm.userBasic.signature
             }
           })
           .catch(function (error) {
@@ -191,11 +198,18 @@
           headers:{"token":sessionStorage.getItem("token")}
         })
           .then(function (response) {
-            if(response.data.code == '410'){
-              alert('登录已过期')
+            if(response.data.code ==='410'){
+              $.message({
+                message:'登录过期,请重新登录！',
+                type:'warning'
+              });
+              this.$router.push({path:'/'});
             }
-            if(response.data.code == '808'){
-              alert('保存成功');
+            else if(response.data.code === '808'){
+              $.message({
+                message:'保存成功！',
+                type:'success'
+              });
             }
           })
           .catch(function (error) {
@@ -211,17 +225,11 @@
           this.isNickname = true;
         }
       },
-      // 个性签名
-      descInput(){
-        let maxChars=80; // 设置最大字符数 p
-        let curr=maxChars-this.UserSignature.length;
-        if(curr>0){
-          this.num_word=curr.toString();
-        }else{
-          this.num_word='0';
-        }
-      },
 
+      // 计算个性签名剩余字数
+      descInput(){
+        this.num_word = 80 - parseInt(this.UserSignature.length);
+      },
     }
   }
 </script>

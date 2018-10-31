@@ -122,11 +122,15 @@
         <div class="clear"></div>
       </div>
     </div>
+
+    <!--首页底部导航-->
+    <NavBottom ></NavBottom>
   </div>
 </template>
 
 <script>
     import axios from 'axios'
+    import NavBottom from './public/NavBottom'
     export default {
         name: "index",
         data:function () {
@@ -175,6 +179,9 @@
 
 
             }
+        },
+        components:{
+          NavBottom
         },
 
         mounted:function() {

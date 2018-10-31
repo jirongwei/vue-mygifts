@@ -8,9 +8,6 @@
           <a href="http://www.miibeian.gov.cn/">京ICP备11018177号</a>
           <a href="#">京公网安备1101140200017</a>
         </strong>
-        <div style="display: none">
-          <a href="#" target="_blank" title="站长统计">站长统计</a>
-        </div>
       </div>
     </div>
   </footer>
@@ -36,6 +33,7 @@ export default {
     left:0;
     bottom:0;
     width:100%;
+    background: #333;
   }
 
   .es-footer .copyright {
@@ -44,7 +42,7 @@ export default {
     text-align: center;
     padding: 20px 0;
     line-height: 30px;
-    color: #333;
+    color: #c1c1c1;
   }
 
   @media (max-width: 767px){
@@ -54,9 +52,16 @@ export default {
     }
   }
 
+  .es-footer .copyright a:hover{
+    color: #ffffff;
+  }
+
+
   .es-footer strong a{
-    color: #333;
+    color: #c1c1c1;
     text-decoration: none;
   }
+
+
 
 </style>

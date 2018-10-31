@@ -3,12 +3,10 @@
 
     <!--页面导航-->
     <div class="container-fluid">
-      <nav-main v-if="showNav"></nav-main>
+      <nav-main v-if="showNav" @flushbody="flushbody"></nav-main>
     </div>
 
-    <router-view @flushnav="flushnav"/>
-
-    <nav-footer></nav-footer>
+    <router-view @flushnav="flushnav" v-if="showBody"/>
   </div>
 </template>
 
@@ -24,7 +22,8 @@ export default {
   data () {
     return {
       isRouterAlive: true,
-      showNav: true
+      showNav: true,
+      showBody:true,
     }
   },
   methods:{
@@ -38,6 +37,12 @@ export default {
       this.showNav = false;
       this.$nextTick(()=>{
         this.showNav = true;
+      })
+    },
+    flushbody:function () {
+      this.showBody = false;
+      this.$nextTick(()=>{
+        this.showBody = true;
       })
     }
   }
