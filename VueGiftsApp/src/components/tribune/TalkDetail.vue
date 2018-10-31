@@ -39,9 +39,11 @@
     <div class="zong">
         <ul>
           <li class="daotiao">
-            <a class="spz">
-              <img class="spz_img" src="../../assets/ind_images/shou.svg" alt="">
-              <a class="spz_in">收藏</a>
+            <a class="spz" @click="addCollect"  >
+              <!--<img class="spz_img" src="../../assets/ind_images/shou.svg" alt="">-->
+              <svg t="1540213654320" v-if="!collectstatus" class="icon" style="position: relative;top: 4px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3578" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"><path d="M673.15625001 166.90624999c-63.703125 0-122.765625 32.0625-162.00000002 84.79687501-38.8125-52.734375-98.296875-84.796875-161.99999998-84.79687501-114.75 0-207.984375 102.09375001-207.98437501 227.39062501 0 74.671875 33.328125 127.40625001 60.328125 169.59375C279.546875 686.65625001 476.140625 838.953125 484.578125 845.28125001c8.015625 6.328125 17.296875 9.28125001 26.57812501 9.28124999s18.5625-2.953125 26.57812499-9.28125001c8.4375-6.328125 204.609375-159.046875 283.078125-281.39062499 27-42.1875 60.328125-94.921875 60.328125-169.59375 0-125.296875-93.234375-227.390625-207.98437501-227.39062499z" fill="#bfbfbf" p-id="3579"></path></svg>
+              <svg t="1540213654320" v-if="collectstatus" class="icon" style="position: relative;top: 4px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3578" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"><path d="M673.15625001 166.90624999c-63.703125 0-122.765625 32.0625-162.00000002 84.79687501-38.8125-52.734375-98.296875-84.796875-161.99999998-84.79687501-114.75 0-207.984375 102.09375001-207.98437501 227.39062501 0 74.671875 33.328125 127.40625001 60.328125 169.59375C279.546875 686.65625001 476.140625 838.953125 484.578125 845.28125001c8.015625 6.328125 17.296875 9.28125001 26.57812501 9.28124999s18.5625-2.953125 26.57812499-9.28125001c8.4375-6.328125 204.609375-159.046875 283.078125-281.39062499 27-42.1875 60.328125-94.921875 60.328125-169.59375 0-125.296875-93.234375-227.390625-207.98437501-227.39062499z" fill="#FF7204" p-id="3579"></path></svg>
+              <a class="spz_in" :class="{shoucangc:collectstatus}">收藏</a>
             </a>
           </li>
           <li class="daotiao">
@@ -51,9 +53,10 @@
             </div>
           </li>
           <li class="daotiao">
-            <div class="spz">
-              <img class="spz_img2" src="../../assets/ind_images/dianzan.svg" alt="">
-              <a class="spz_in">点赞</a>
+            <div class="spz" @click="addPraise">
+              <svg t="1540213544665" v-if="!praisestatus" class="icon" style="position: relative;top: 4px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1998" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"><path d="M782.036 447.65h-172.29c66.761-246.563-45.998-259.156-45.998-259.156-47.791 0-37.884 37.791-41.498 44.092 0 120.58-128.074 215.065-128.074 215.065v341.946c0 33.754 45.998 45.91 64.042 45.91h258.866c24.363 0 44.202-63.892 44.202-63.892 64.043-217.77 64.043-282.564 64.043-282.564 0.001-44.993-43.293-41.398-43.293-41.398v0 0zM782.036 447.65z" fill="#bfbfbf" p-id="1999"></path><path d="M323.472 447.763h-103.167c-21.306 0-21.635 20.927-21.635 20.927l21.306 344.864c0 21.95 21.987 21.95 21.987 21.95h89.291c18.602 0 18.437-14.52 18.437-14.52v-347.069c0-26.486-26.221-26.151-26.221-26.151v0 0zM323.472 447.763z" fill="#bfbfbf" p-id="2000"></path></svg>
+              <svg t="1540213544665" v-if="praisestatus" class="icon" style="position: relative;top: 4px;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1998" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"><path d="M782.036 447.65h-172.29c66.761-246.563-45.998-259.156-45.998-259.156-47.791 0-37.884 37.791-41.498 44.092 0 120.58-128.074 215.065-128.074 215.065v341.946c0 33.754 45.998 45.91 64.042 45.91h258.866c24.363 0 44.202-63.892 44.202-63.892 64.043-217.77 64.043-282.564 64.043-282.564 0.001-44.993-43.293-41.398-43.293-41.398v0 0zM782.036 447.65z" fill="#FF7204" p-id="1999"></path><path d="M323.472 447.763h-103.167c-21.306 0-21.635 20.927-21.635 20.927l21.306 344.864c0 21.95 21.987 21.95 21.987 21.95h89.291c18.602 0 18.437-14.52 18.437-14.52v-347.069c0-26.486-26.221-26.151-26.221-26.151v0 0zM323.472 447.763z" fill="#FF7204" p-id="2000"></path></svg>
+              <a class="spz_in" :class="{shoucangc:praisestatus}">点赞</a>
             </div>
           </li>
         </ul>
@@ -116,37 +119,73 @@ export default {
   data () {
     return {
       comments:'',          // 评论列表
-      // id:'1',       // 文章id
-      comment:'' ,    // 评论内容
-      uid_id:'' ,    // 用户id
-      tri_id:'' ,    // 攻略id
-      tri_list:'',   // 攻略列表
+      // id:'1',            // 文章id
+      comment:'' ,          // 评论内容
+      uid_id:'' ,           // 用户id
+      tri_id:'' ,           // 攻略id
+      tri_list:'',          // 攻略列表
+      token:'',             //token
+      collectstatus:false,  //  收藏状态
+      tri_sc:'',            //  收藏
+      tri_pri:'',           // 点赞
+      praisestatus:false    // 点赞状态
     }
   },
+
   created:function(){
     this.addComment();
     this.tri_id = this.$route.params.tid;
-    console.log(this.tri_id)
+    this.token=window.sessionStorage.getItem('token');
     this.getTribune()
   },
-  mounted:function(){
-  },
+
   methods:{
 
 //    添加收藏
     addCollect:function(){
       let vm = this;
-      axios.get('', {
-        params:{"tid":this.tri_id}
-      })
-        .then(function (response) {
-          vm.tri_list=response.data;
-          console.log(vm.tri_list)
+      this.collectstatus=!this.collectstatus;
+      if (this.token){
+        axios.post("http://127.0.0.1:8000/tribune/collect/",{
+          my_token:this.token,
+          postid:this.tri_id,
+          collectstatus:this.collectstatus
         })
-        .catch(function (error) {
-          console.log(error)
-        })
+          .then(function (response) {
+            vm.tri_sc=response.data;
+            console.log(vm.tri_sc);
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }else {
+        alert('您还没有登录，请先登录！！！！')
+      }
     },
+
+
+    //    点赞
+    addPraise:function(){
+      let vm = this;
+      this.praisestatus=!this.praisestatus;
+      if (this.token){
+        axios.post("http://127.0.0.1:8000/tribune/thumbup/",{
+          my_token:this.token,
+          postid:this.tri_id,
+          praisestatus:this.praisestatus
+        })
+          .then(function (response) {
+            vm.tri_pri=response.data;
+            console.log(vm.tri_pri);
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }else {
+        alert('您还没有登录，请先登录！！！！')
+      }
+    },
+
 
 //渲染攻略详情渲染数据
     getTribune:function(){
@@ -162,7 +201,7 @@ export default {
           console.log(error)
         })
     },
-
+    //  渲染评论列表
     addComment:function(){
       let vm = this;
       axios.get('http://127.0.0.1:8000/tribune/comment/')
@@ -173,35 +212,42 @@ export default {
         .catch(function (error) {
           console.log(error)
         });
-
     },
+
+    // 添加评论
     add:function(){
       let vm = this;
-      axios.post('http://localhost:8000/tribune/zmAddComment/',{
-        "tReply_pid_id":this.id,
-        "tReply_con":this.comment,
-        "tReply_time":"123456",
-        "tReply_uid_id":"2"
-      })
-        .then(function (response) {
-          console.log(response.data);
-          vm.addComment()
+      if (vm.token){
+        axios.post('http://localhost:8000/tribune/zmAddComment/',{
+          "tReply_pid_id":vm.tri_id,
+          "tReply_con":this.comment,
+          "tReply_time":"123456",
+          "tReply_uid_id":"2",
+          "my_token":vm.token
         })
-        .catch(function (error) {
-          console.log(error)
-        });
-      vm.comment=""
+          .then(function (response) {
+            console.log(response.data);
+            vm.addComment()
+          })
+          .catch(function (error) {
+            console.log(error)
+          });
+        vm.comment=""
+      }else {
+        alert('您还没有登录，请先登录！！！！')
+      }
     },
-
   }
-
-
   }
 
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .shoucangc{
+    color: #ff7204 !important;
+    background-color: #fffad7;
+  }
   .zong{
     height: 60px;
     width: 800px;
@@ -231,16 +277,11 @@ export default {
   margin-top: 7px;
  }
 .spz_in{
-  margin: auto;
-  font-size: 16px;
-  color: gray;
-}
-.spz_img{
-  width: 22px;
-  height: 22px;
-  background: url("../../assets/ind_images/shou.svg") no-repeat;
-  background-size: 22px;
-}
+   margin: auto;
+   font-size: 16px;
+   color: #bfbfbf;
+ }
+
   .spz_img1{
     width: 22px;
     height: 22px;
@@ -253,13 +294,7 @@ export default {
     background: url("../../assets/ind_images/dianzan.svg") no-repeat;
     background-size: 22px;
   }
-  .spz_img:hover{
-    width: 22px;
-    height: 22px;
-    background: url("../../assets/ind_images/shou1.svg") no-repeat;
-    background-size: 22px;
 
-  }
   .spz_img1:hover{
     width: 22px;
     height: 22px;
@@ -273,16 +308,9 @@ export default {
     background-size: 22px;
   }
 .spz_in:hover{
-   color: red;
+   color: #ff7204;
  }
-.spz_img:hover{
-  color: red;
-}
- .shoucang{
-   height: 20px;
-   width: 20px;
-   background:olive;
- }
+
 
 
 
