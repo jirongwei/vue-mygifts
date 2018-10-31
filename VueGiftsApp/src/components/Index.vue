@@ -288,7 +288,8 @@
             //攻略点赞
             glthumb:function(triid){
               var vm=this
-              for(let i=0 ; i<this.glmes.length;i++){
+              if (window.sessionStorage.getItem("token")){
+                for(let i=0 ; i<this.glmes.length;i++){
                 if(this.glmes[i].glid==triid){
                   this.glmes[i].colstatus=!this.glmes[i].colstatus
                   if(this.glmes[i].colstatus){
@@ -297,9 +298,9 @@
                     this.glmes[i].glclicknum-=1
                   }
                   axios.post(this.GLOBAL.HOST+'tribune/thumbup/',{
-                    userid:this.uid,
+                    my_token:window.sessionStorage.getItem("token"),
                     postid:this.glmes[i].glid,
-                    dianzanstatus:this.glmes[i].clickstatus
+                    praisestatus:this.glmes[i].clickstatus
                   })
                     .then(function (response) {
                       console.log(response.data)
@@ -308,33 +309,41 @@
                       console.log(error)
                     })
                 }
+              }
+              }else{
+                alert("请您先进行登录")
               }
             },
 
             //攻略收藏
             glcollect:function(triid){
               var vm=this
-              for(let i=0 ; i<this.glmes.length;i++) {
-                if(this.glmes[i].glid==triid){
-                  this.glmes[i].praisestatus=!this.glmes[i].praisestatus
-                  if(this.glmes[i].praisestatus){
-                    this.glmes[i].colnum+=1
-                  }else {
-                    this.glmes[i].colnum-=1
+              if (window.sessionStorage.getItem("token")){
+                for(let i=0 ; i<this.glmes.length;i++) {
+                  if(this.glmes[i].glid==triid){
+                    this.glmes[i].praisestatus=!this.glmes[i].praisestatus
+                    if(this.glmes[i].praisestatus){
+                      this.glmes[i].colnum+=1
+                    }else {
+                      this.glmes[i].colnum-=1
+                    }
+                    axios.post(this.GLOBAL.HOST+'tribune/collect/',{
+                      my_token:window.sessionStorage.getItem("token"),
+                      postid:this.glmes[i].glid,
+                      collectstatus:this.glmes[i].praisestatus
+                    })
+                      .then(function (response) {
+                        console.log(response.data)
+                      })
+                      .catch(function (error) {
+                        console.log(error)
+                      })
                   }
-                  axios.post(this.GLOBAL.HOST+'tribune/collect/',{
-                    userid:this.uid,
-                    postid:this.glmes[i].glid,
-                    collectstatus:this.glmes[i].praisestatus
-                  })
-                    .then(function (response) {
-                      console.log(response.data)
-                    })
-                    .catch(function (error) {
-                      console.log(error)
-                    })
                 }
+              }else{
+                alert("请您先进行登录")
               }
+
             },
 
 
@@ -357,52 +366,60 @@
             //商品点赞
             goodsthumb:function(gooid){
               var vm=this
-              for(let i=0 ; i<this.goodmes.length;i++){
-                if(this.goodmes[i].goodid==gooid){
-                  this.goodmes[i].colstatus=!this.goodmes[i].colstatus;
-                  if(this.goodmes[i].colstatus){
-                    this.goodmes[i].goodclicknum+=1;
-                  }else{
-                    this.goodmes[i].goodclicknum-=1;
+              if(window.sessionStorage.getItem("token")){
+                for(let i=0 ; i<this.goodmes.length;i++){
+                  if(this.goodmes[i].goodid==gooid){
+                    this.goodmes[i].colstatus=!this.goodmes[i].colstatus;
+                    if(this.goodmes[i].colstatus){
+                      this.goodmes[i].goodclicknum+=1;
+                    }else{
+                      this.goodmes[i].goodclicknum-=1;
+                    }
+                    axios.post(this.GLOBAL.HOST+'gift/indexthumbgifts/',{
+                      userid:window.sessionStorage.getItem("token"),
+                      postid:this.goodmes[i].goodid,
+                      dianzanstatus:this.goodmes[i].colstatus
+                    })
+                      .then(function (response) {
+                        console.log(response.data)
+                      })
+                      .catch(function (error) {
+                        console.log(error)
+                      })
                   }
-                  axios.post(this.GLOBAL.HOST+'gift/indexthumbgifts/',{
-                    userid:this.uid,
-                    postid:this.goodmes[i].goodid,
-                    dianzanstatus:this.goodmes[i].colstatus
-                  })
-                    .then(function (response) {
-                      console.log(response.data)
-                    })
-                    .catch(function (error) {
-                      console.log(error)
-                    })
                 }
+              }else{
+                alert("请您先进行登录")
               }
             },
 
             //商品收藏
             goodscollect:function(triid){
               var vm=this
-              for(let i=0 ; i<this.goodmes.length;i++) {
-                if(this.goodmes[i].goodid==triid){
-                  this.goodmes[i].praisestatus=!this.goodmes[i].praisestatus;
-                  if  (this.goodmes[i].praisestatus){
-                    this.goodmes[i].goodreplynum+=1;
-                  }else{
-                    this.goodmes[i].goodreplynum-=1;
+              if(window.sessionStorage.getItem("token")){
+                for(let i=0 ; i<this.goodmes.length;i++) {
+                  if(this.goodmes[i].goodid==triid){
+                    this.goodmes[i].praisestatus=!this.goodmes[i].praisestatus;
+                    if  (this.goodmes[i].praisestatus){
+                      this.goodmes[i].goodreplynum+=1;
+                    }else{
+                      this.goodmes[i].goodreplynum-=1;
+                    }
+                    axios.post(this.GLOBAL.HOST+'gift/indexcolgifts/',{
+                      userid:window.sessionStorage.getItem("token"),
+                      postid:this.goodmes[i].goodid,
+                      collectstatus:this.goodmes[i].praisestatus
+                    })
+                      .then(function (response) {
+                        console.log(response.data)
+                      })
+                      .catch(function (error) {
+                        console.log(error)
+                      })
                   }
-                  axios.post(this.GLOBAL.HOST+'gift/indexcolgifts/',{
-                    userid:this.uid,
-                    postid:this.goodmes[i].goodid,
-                    collectstatus:this.goodmes[i].praisestatus
-                  })
-                    .then(function (response) {
-                      console.log(response.data)
-                    })
-                    .catch(function (error) {
-                      console.log(error)
-                    })
                 }
+              }else{
+                alert("请您先进行登录")
               }
             },
 
