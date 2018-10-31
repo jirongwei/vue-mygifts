@@ -18,10 +18,12 @@ import GiftOrder from '@/components/gift/GiftOrder'
 import PostReply from '@/components/post/PostReply'
 import PostDetail from '@/components/post/PostDetail'
 import Post from '@/components/post/Post'
+import PostSend from '@/components/post/PostSend'
 
 import Settings from '@/components/settings/Settings'
 
 import DetailTalk from '@/components/tribune/DetailTalk'
+import TribuneSend from '@/components/tribune/TribuneSend'
 
 import MyCollection from '@/components/personal/MyCollection'
 import PersonalMyCollection from '@/components/personal/PersonalMyCollection'
@@ -84,7 +86,6 @@ export default new Router({
       component:GiftOrder
     },
 
-
     //帖子详情页
     {
       path:'/postdetail/:pid',
@@ -92,18 +93,26 @@ export default new Router({
       component:PostDetail
     },
 
+    //帖子回复
     {
       path:'/reply',
         name:'reply',
       component:PostReply
     },
 
+    //帖子主页
     {
       path:'/post',
       name:'post',
       component:Post
     },
 
+    //帖子发送
+    {
+      path:'/postsend',
+      name:'postsend',
+      component:PostSend
+    },
 
     // 个人设置
     {
@@ -119,7 +128,12 @@ export default new Router({
       component:DetailTalk
     },
 
-
+    //写攻略
+    {
+      path:'/tribunesend',
+      name:'tribunesend',
+      component:TribuneSend
+    },
 
 
 

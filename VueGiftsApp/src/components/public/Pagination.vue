@@ -14,7 +14,7 @@
         <span v-show="currentPage<pageCount-4" class="jump" @click="$emit('jumpPage',pageCount)">{{pageCount}}</span>
 
         <span class="jumppoint">跳转到：</span>
-        <span class="jumpinp"><input type="number" v-model="changePage"></span>
+        <span class="jumpinp"><input type="text" v-model="changePage"></span>
         <span class="jump gobtn" @click="$emit('jumpPage',changePage)">GO</span>
       </div>
     </div>
