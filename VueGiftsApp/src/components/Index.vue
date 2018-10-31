@@ -101,17 +101,16 @@
             <ul v-bind:style="{ marginLeft:  postmarginleft}">
               <li v-for="pi in postimgs">
                 <div class="pc_m_p_l">
-                  <a href="">
-                    <!--<router-link :to="{path:'/',query:{userid:pi.userid}}"></router-link>-->
+                  <router-link :to="{path:'/postdetail/'+pi.postId,param:{pid:pi.postId}}">
                     <div class="pc_m_p_l_img" v-bind:style="{ backgroundImage:'url('+pi.userImg+')'}"></div>
                     <div class="pc_m_p_l_nickname" v-text="pi.userName"></div>
-                  </a>
+                  </router-link>
                 </div>
                 <div class="pc_m_p_r">
-                    <router-link :to="{path:'/postdetail/'+pi.postId,param:{pid:pi.postId}}">
+                  <router-link :to="{path:'/postdetail/'+pi.postId,param:{pid:pi.postId}}">
                     <div class="pc_m_p_r_title"v-text="pi.postTitle"></div>
                     <div class="pc_m_p_r_content"v-text="pi.postContent"></div>
-                    </router-link>
+                  </router-link>
                 </div>
                 <div class="clear"></div>
               </li>
