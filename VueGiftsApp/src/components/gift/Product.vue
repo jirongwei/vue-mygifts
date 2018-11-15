@@ -1,102 +1,167 @@
 <template>
-  <div class="container" id="gifts">
-    <div class="container" id="gifts-content">
-      <!-------------------------搜索部分----------------------------------------->
-      <div class="row mynav">
-        <div class="col-md-6 liwu">
-          <div class="daifudong">
-            <div class="glyphicon glyphicon-menu-down" @click="show=!show">礼物分类</div>
+  <!--导航栏部分-->
+  <div>
+    <div class="search-nav text-center">
+      <!--搜索-->
+      <div class="search">
+        <div class="search-ipt">
+          <div class="ipt">
+            <input type="text" placeholder="搜索感兴趣礼物" v-model="con" @keydown.enter="getAllSelect">
           </div>
-        </div>
-        <div class="col-md-4 search">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for..." v-model="con">
-            <span class="input-group-btn" style="height: 34px">
-            <button class="btn btn-default btnsearch" type="button" @click="getAllSelect">Go!</button>
-          </span>
+          <div class="search-icon" @click.prevent.stop="getAllSelect">
+            <span></span>
           </div>
         </div>
       </div>
-
-      <transition name="slide-fade">
-        <div class="fudong1" v-if="show">
-          <div class="container-sortbegin">
-            <div class="container-sort-1">节日：</div>
-            <div class="container-sort-2" >
-              <a href="#" class="container-sort-2-a" :day-id="0" :class="{myDayActive:cur_day_id==='0'}" @click="dayChange">全部</a>
-              <a href="#" class="container-sort-2-a" :day-id="i.id" v-for="i in type_day"
-                 @click="dayChange" v-text="i.dayname" :class="{myDayActive:parseInt(cur_day_id)===i.id}">
-              </a>
-            </div>
-
-          </div>
-          <div class="container-sortbegin">
-            <div class="container-sort-1">类型：</div>
-
-            <div class="container-sort-2" >
-              <a href="#" class="container-sort-2-a"  :obj-id="0" :class="{myDayActive:cur_obj_id==='0'}" @click="objChange">全部</a>
-              <a href="#" class="container-sort-2-a" :obj-id="i.id"  v-for="i in type_obj" v-text="i.typename"
-                 @click="objChange"  :class="{myDayActive:parseInt(cur_obj_id)===i.id}"></a>
-            </div>
-
-          </div>
-          <div class="container-sortbegin">
-            <div class="container-sort-1">排序：</div>
-            <div class="container-sort-2">
-              <a href="#" class="container-sort-2-a" :sort-id="0" :class="{myDayActive:cur_sort_id==='0'}" @click="sortChange">默认</a>
-              <a href="#" class="container-sort-2-a" :sort-id="1" :class="{myDayActive:cur_sort_id==='1'}" @click="sortChange">时间升序</a>
-              <a href="#" class="container-sort-2-a" :sort-id="2" :class="{myDayActive:cur_sort_id==='2'}" @click="sortChange">时间降序</a>
-              <a href="#" class="container-sort-2-a" :sort-id="3" :class="{myDayActive:cur_sort_id==='3'}" @click="sortChange">价格升序</a>
-              <a href="#" class="container-sort-2-a" :sort-id="4" :class="{myDayActive:cur_sort_id==='4'}" @click="sortChange">价格降序</a>
-            </div>
-          </div>
+      <!--导航-->
+      <!--节日-->
+      <div style="position: relative; display: inline-block;" class="text-left">
+        <!--对象-->
+        <div class="nav-part nav-cate">
+          <span class="title">对象:</span>
+          <ul id="ul-category">
+            <li :key="0">
+            <span :class="{gray_white:cur_obj_id==='0'}" :obj-id="0"
+                  @click.prevent.stop="objChange"
+            >全部
+            </span>
+            </li>
+            <!--模板-->
+            <li v-for="obj in type_obj" :key="obj.id">
+            <span :class="{gray_white:parseInt(cur_obj_id)===obj.id}"
+                  :obj-id="obj.id" v-text="obj.typename" @click.prevent.stop="objChange"
+            >
+            </span>
+            </li>
+          </ul>
         </div>
-      </transition>
-
-      <div class="splitline"></div>
-
-      <div class="row goodsContain">
-        <div class="col-md-12 gc_list">
-          <ul class="index_pro">
-            <li class="good_box" v-for="gift in select_list">
-              <dl>
-                <dt>
-                  <a href="#">
-                    <router-link :to="{name:'giftInfo',params: {giftid:gift.id}}">
-                      <img class="imga" :src="gift.giftImg" alt="">
-                    </router-link>
-                  </a>
-                </dt>
-                <dd class="name">
-                  <router-link :to="{name:'giftInfo',params: {giftid:gift.id}}">
-                    <a href="#" class="name_a" v-text="gift.gift_name"></a>
-                  </router-link>
-
-                </dd>
-                <dd class="price_box">
-                  <span class="price" v-text="'￥'+gift.price"></span>
-                  <p class="likebut-num like " v-text="gift.clicknum"></p>
-                </dd>
-              </dl>
+        <div class="nav-part">
+          <span class="title">节日:</span>
+          <ul id="ul-direction">
+            <li :key="0">
+            <span :day-id="0" :class="{gray_white:cur_day_id==='0'}"
+                  @click.prevent.stop="dayChange"
+            >全部
+            </span>
+            </li>
+            <!--模板-->
+            <li v-for="dire in type_day" :key="dire.id">
+            <span :class="{gray_white:parseInt(cur_day_id)===dire.id}"
+                  :day-id="dire.id" v-text="dire.dayname" @click.prevent.stop="dayChange"
+            >
+            </span>
+            </li>
+          </ul>
+        </div>
+        <!--难度-->
+        <div class="nav-part">
+          <span class="title">排序:</span>
+          <ul id="ul-degree">
+            <li>
+            <span :sort-id="0" :class="{gray_white:cur_sort_id==='0'}"
+                  @click.prevent.stop="sortChange"
+            >默认
+            </span>
+            </li>
+            <li>
+            <span :sort-id="1" :class="{gray_white:cur_sort_id==='1'}"
+                  @click.prevent.stop="sortChange"
+            >时间升序
+            </span>
+            </li>
+            <li>
+            <span :sort-id="2" :class="{gray_white:cur_sort_id==='2'}"
+                  @click.prevent.stop="sortChange"
+            >时间降序
+            </span>
+            </li>
+            <li>
+            <span :sort-id="3" :class="{gray_white:cur_sort_id==='3'}"
+                  @click.prevent.stop="sortChange"
+            >价格升序
+            </span>
+            </li>
+            <li>
+            <span :sort-id="4" :class="{gray_white:cur_sort_id==='4'}"
+                  @click.prevent.stop="sortChange"
+            >价格降序
+            </span>
             </li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="row" id="gifts-page">
-      <pagination :currentPage="currentPage" :pageCount="parseInt(pageCount)" @prePage="prePage" @nextPage="nextPage" @jumpPage="jumpPage"></pagination>
+
+    <div class="gifts-list">
+      <div class="gifts-container" v-for="list in select_list">
+
+        <router-link :to="{name:'giftInfo',params: {giftid:list.id}}">
+          <div class="gift-card-top">
+            <img :src="list.giftImg" alt="" style="display: inline">
+          </div>
+        </router-link>
+
+        <router-link :to="{name:'giftInfo',params: {giftid:list.id}}">
+          <div>
+            <div class="gift-card-content">
+              <h3 class="gift-card-name" v-text="list.gift_name"></h3>
+            </div>
+          </div>
+        </router-link>
+
+        <div class="gift-card-bottom">
+          <div class="gift-card-info">
+            <span v-text="'￥'+list.price"></span>
+          </div>
+
+
+          <div class="like-num" v-if="showCollect">
+            <span class="glyphicon glyphicon-heart" aria-hidden="true"
+                   :id="list.id" @click="thumbupGift">
+            </span>
+            <span class="num" v-text="list.clicknum"></span>
+          </div>
+          <div class="like-num" v-else>
+            <span class="glyphicon glyphicon-heart" aria-hidden="true"
+                  :class="{selectedStatus:list.giftscollect__collectStatus ?true:false}" :id="list.id" @click="thumbupGift">
+            </span>
+            <span class="num" v-text="list.clicknum"></span>
+          </div>
+
+        </div>
+
+        <p class="gift-card-desc" v-text="list.remark"></p>
+
+
+      </div>
+
+
     </div>
+
+    <pagination :currentPage="currentPage" :pageCount="parseInt(pageCount)" @prePage="prePage" @nextPage="nextPage" @jumpPage="jumpPage" id="gifts-pagination"></pagination>
+
+    <NavFooter></NavFooter>
+
+    <NotLogin v-if="showTip" @sureclick="showTip=false"></NotLogin>
+
+
   </div>
 
 </template>
 
 <script>
+
   import axios from 'axios'
+  import $ from 'jquery'
+  import NavFooter from '../public/NavFooter'
+  import '../../../static/js/message'
+  import NotLogin from './NotLogin'
+
 export default {
   name: 'Product',
   data:function () {
     return{
-      show:false,
+      showTip:false,
       currentPage:1,
       pageCount:'',
       type_obj:[],  // 搜索导航对象
@@ -108,20 +173,44 @@ export default {
       con:'',     // 搜索栏
       select_list:[],
 
+      thumb_id:'',
+      showCollect:true,
+
+
     }
+  },
+  components:{
+    NavFooter,
+    NotLogin
   },
   created:function(){
 
   },
   mounted:function(){
-
+    if(window.sessionStorage.getItem("token")){
+      this.showCollect = false;
+    }else{
+      this.showCollect = true;
+    }
     this.getGiftsType();  // 礼物组合条件搜索
     this.getAllGifts();   // 展示礼物
     this.getAllPages();   // 获取总页数
   },
 
-  methods:{
+  updated: function () {
+    // 处理分类导航 hover 显示全部(jQuery 操作DOM元素)
+    let $NavCate = $('.nav-cate');
+    let CateH = $NavCate.height();
+    if (CateH > 140) {
+      $NavCate.addClass('nav_cate');
+      $NavCate.next().css('marginTop', '150px')
+    } else {
+      $NavCate.removeClass('nav_cate');
+      $NavCate.next().css('marginTop', '0')
+    }
+  },
 
+  methods:{
     // 节日导航点击
     dayChange:function (e) {
       let $day_id = $(e.target).attr('day-id');
@@ -166,7 +255,7 @@ export default {
       axios.get(this.GLOBAL.HOST+'gift/getSelectGifts/'+ this.cur_day_id +','+this.cur_obj_id+','+
         this.cur_sort_id+','+this.con+','+this.currentPage+'/')
         .then(function (response) {
-         vm.select_list=response.data.gifts;
+          vm.select_list=response.data.gifts;
         })
         .catch(function (error) {
           console.log(error)
@@ -178,7 +267,7 @@ export default {
       axios.get(this.GLOBAL.HOST+'gift/getAllPages/'+ this.cur_day_id +','+this.cur_obj_id+','+
         this.cur_sort_id+','+this.con+','+this.currentPage+'/')
         .then(function (response) {
-          vm.pageCount=Math.ceil(response.data.count/4);
+          vm.pageCount=Math.ceil(response.data.count/8);
           vm.currentPage=1;
         })
         .catch(function (error) {
@@ -191,6 +280,51 @@ export default {
       this.currentPage = 1;
       this.getAllGifts();
       this.getAllPages();
+    },
+
+
+    // 点赞
+    thumbupGift:function(e){
+
+      if(window.sessionStorage.getItem("token")){
+        let obj = e.target.id;
+        this.thumb_id = obj;
+        if (e.target.className.toString().indexOf('selectedStatus') != -1) {
+          $(e.target).removeClass('selectedStatus');
+          this.click_num --;
+        }else {
+          $(e.target).addClass('selectedStatus');
+          this.click_num ++;
+        }
+        let vm = this;
+        // 发送axios请求数据
+        axios({
+          method:'POST',
+          url:this.GLOBAL.HOST+'gift/thumbGift/'+vm.thumb_id+'/',
+          headers:{"token":window.sessionStorage.getItem("token")}
+        })
+        .then(function (response) {
+          if(response.data.code === '808'){
+            vm.getAllGifts();
+            $.message({
+              message:'收藏成功！',
+              type:'success'
+            });
+          }else if(response.data.code ==='809'){
+            vm.getAllGifts();
+            $.message({
+              message:'取消收藏！',
+              type:'success'
+            });
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        });
+      }else{
+        this.showTip = true;
+      }
+
     },
 
 
@@ -225,236 +359,279 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .myDayActive{
-    color: red;
+  /*已点赞*/
+  .selectedStatus{
+    color: #FF4949 !important;
+  }
+  /*改变收藏样式*/
+  .numStatus{
+    color: #FF4949 !important;
   }
 
-  body{
-    outline: 0;
+  ul,li{
     margin: 0;
     padding: 0;
-  }
-  ul,li,ol,h1,h2{
     list-style: none;
-    margin: 0;
-    padding: 0;
-    outline: 0;
   }
 
   a{
     text-decoration: none;
-    color: #6e6e6e;
   }
-  a:hover{
-    color: #ff624a;
-    text-decoration: none;
-  }
-
-  .container{
-    width: 1200px;
-    height: auto;
-    background: url("../../assets/goods/bai.jpg");
-    padding: 0;
-    margin: auto;
-    padding-bottom: 20px;
-
-  }
-  .mynav{
-    padding: 0;
-    margin: 0;
-  }
-
-  #gifts{
+  /*搜索和导航*/
+  .search-nav {
+    margin-top: -20px;
     margin-bottom: 20px;
-  }
-
-  #gifts-content{
-    min-height: 643px;
-    margin-bottom: 20px;
-  }
-
-  #gifts-page{
-    margin-bottom: 20px;
-  }
-
-  /*-------------------------------------搜索模块------------------------------*/
-  .mynav{
-    padding: 0;
-    margin: 0;
-    width: 1200px;
-    height: 60px;
-    line-height: 74px;
-    margin-top: 1px;
-    position: relative;
-    top: 15px;
-
-  }
-
-  .small-box li{
-    width: 70px;
-    float: left;
-    line-height: 34px;
-  }
-
-  .liwu{
-    float: left;
-    line-height: 34px;
-    color: #ff624a;
-    font-weight: bolder;
-    cursor: pointer;
-  }
-  .search{
-    height: 34px;
-    float: right;
-  }
-  .btnsearch{
-    top: -20px;
-  }
-  .fudong1{
-    padding: 0;
-    margin: 0;
-    border-top: lightgray 1px solid;
-    border-radius: 0.5em;
-  }
-
-  .container-sortbegin{
-    width: 920px;
-    height: 80px;
-    margin: auto;
-    font-size: 15px;
-  }
-
-  .container-sortbegin .container-sort-1{
-    line-height: 40px;
-    margin-left: 20px;
-    color: gray;
-    float: left;
-  }
-  .container-sortbegin .container-sort-2{
-    width: 800px;
-    line-height: 40px;
-    float: left;
-  }
-
-  .container-sort-2-a{
-    float: left;
-    margin-left: 20px;
-    text-decoration: none;
-  }
-
-
-  /*----------------------------------------商品模块--------------------------------*/
-  .splitline{
-    width: 1200px;
-    height: 1px;
-    background: #b8b8b8;
-  }
-
-  .good_box{
-    display: inline-block;
-    float: left;
-    width: 297px;
-    height: 330px;
-    padding: 28px 28px 0 28px;
-    margin-bottom: 5px;
-
-  }
-  .good_box .imga{
-    width: 237px;
-    height: 237px;
-  }
-  .index_pro li dd {
-    line-height: 22px;
-    font-size: 18px;
-    height: 44px;
-    margin-top: 5px;
-    position: relative;
-  }
-  .name{
-    height: 44px;
-    line-height: 44;
-    text-overflow: ellipsis;
-    overflow:hidden;
-    white-space:nowrap;
-
-  }
-  .name_a{
-    color: #424242;
-    font-family:  Helvetica,Tahoma,Arial,"Hiragino Sans GB","Microsoft YaHei",SimSun,Heiti,sans-serif;
-    font-size: 15px;
-  }
-
-  .index_pro li dd a:hover{
-    color: red;
-  }
-  .good_box dl .price_box{
-    position: relative;
-  }
-
-  .price{
-    position: absolute;
-    color: red;
-    font-family:  Georgia, "Times New Roman", Times, serif;
-
-  }
-  .like{
-    position: absolute;
-    right: 0;
-    font-size: 14px;
-    cursor: pointer;
-
-  }
-
-  .likebut-num {
-    color: #cecece;
-    background: url(../../assets/my-icons/icon_all.png) no-repeat -682px -895px;
-    float: right;
-    height: 24px;
-    padding-left: 21px;
-    line-height: 24px;
-  }
-
-  .likebut-num:hover {
-    background: url(../../assets/my-icons/icon_all.png) no-repeat -682px -945px;
-    text-decoration: none;
-    color: #fd3636;
-  }
-
-  .goodsContain{
-    width: 1200px;
-    margin: auto;
-    margin-top: 30px;
-  }
-  .goodsContain .gc_list{
-    padding: 0;
-  }
-  .goodsContain .gc_list ul{
     width: 100%;
+    /*border-bottom: 1px solid gray;*/
+    box-shadow: 0 2px 15px gray;
+  }
+  /*搜索部分-开始*/
+  .search-nav .search {
+    width: 1100px;
+    height: 85px;
+    line-height: 85px;
+    margin: auto;
+    border-bottom: 1px solid lightgray;
+  }
+
+  /*搜索div*/
+  .search-nav .search .search-ipt {
+    width: 500px;
+    height: 40px;
+    float: right;
+    margin-right: -15px;
+  }
+
+  .search-nav .search .search-ipt > div {
+    float: left;
+  }
+
+  /*搜索输入框*/
+  .search-nav .search .search-ipt .ipt input {
+    outline: none;
+    width: 445px;
+    height: 40px;
+    background: white;
+    padding: 0 15px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px 0 0 10px;
+    font-size: 1.1em;
+    color: gray;
+
+  }
+
+  /*搜索图标*/
+  .search-nav .search .search-ipt .search-icon {
+    width: 40px;
+    height: 40px;
+    margin-top: 22px;
+    border-radius: 0 10px 10px 0;
+    box-sizing: border-box;
+    background: white;
+  }
+
+  .search-nav .search .search-ipt .search-icon span {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background: url("../../assets/my-icons/search.svg") no-repeat 8px 1px;
+  }
+
+  .search-nav .search .search-ipt .search-icon span:hover {
+    cursor: pointer;
+  }
+
+  /*搜索部分-结束*/
+  /*导航部分*/
+  .search-nav .nav-part {
+    width: 1100px;
+    border-bottom: 1px solid whitesmoke;
+    box-sizing: border-box;
+    margin: auto;
+  }
+
+  /*节日、对象、难度*/
+  .search-nav .nav-part .title {
+    display: inline-block;
+    width: 60px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    position: absolute;
+  }
+
+  .search-nav .nav-part ul {
+    width: 1040px;
+    margin-left: 60px;
+    box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-  .goodsContain .gc_list ul li{
-    min-width: 297px;
-    max-width: 297px;
-    height: 360px;
-    margin-top: 10px;
-    margin-right: 3px;
-    box-sizing: border-box;
-    flex: 1;
-    background-color: #ffeef5;
-    padding: 30px;
-  }
-  .goodsContain .gc_list ul li:hover{
-    transition: margin 0.4s,box-shadow 0.4s linear 0.1s;
-    margin-top: 7px;
-    box-shadow: 3px 3px 3px 1px #dadada;
   }
 
+  .search-nav .nav-part > ul li {
+    height: 50px;
+    line-height: 50px;
+    padding: 0 10px;
+  }
+
+  .search-nav .nav-part li span {
+    padding: 5px;
+    border-radius: 10px;
+    color: black;
+  }
+
+  .search-nav .nav-part li span:hover {
+    color: white;
+    background: #bebebe;
+    cursor: pointer;
+  }
+
+  #ul-category, #ul-direction {
+    border-bottom: 1px solid lightgray;
+  }
+  .nav_cate{
+    position: absolute;
+    left: 0;
+    max-height: 150px;
+    overflow: hidden;
+  }
+  .nav_cate:hover {
+    border-radius: 20px;
+    background: ghostwhite;
+    box-shadow: 0 0 5px gray;
+    max-height: 300px;
+    z-index: 3;
+  }
+  .gray_white {
+    background: rgba(242,13,13,.06);
+    color: #F20D0D !important;
+  }
+  .margin_top{
+    margin-top: 150px;
+  }
+
+  /*礼物展示部分*/
+  .gifts-list{
+    padding: 10px 0 20px;
+    width: 1152px;
+    min-height: 500px;
+    margin: auto;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .gifts-list .gifts-container{
+    float: left;
+    margin: 0 40px 25px 32px;
+    height: auto;
+    width: 216px;
+    position: relative;
+    cursor: pointer;
+    min-height: 348px;
+  }
+
+  .gifts-list .gifts-container:hover{
+    transition: box-shadow 0.3s linear 0.1s;
+    box-shadow: 0 3px 5px 2px #dadada;
+    border-radius: 12px;
+  }
+
+  .gifts-list .gifts-container .gift-card-top{
+    width: 216px;
+    height: 220px;
+    position: relative;
+    border-radius: 8px;
+    transition: all .3s;
+    background: yellow;
+  }
+
+  .gifts-list .gifts-container .gift-card-top img{
+    width: 100%;
+    height: 100%;
+    background-color: #f3f5f7;
+    border-radius: 8px;
+    border: 0;
+  }
+
+  .gifts-container .gift-card-content .gift-card-name{
+    font-size: 16px;
+    color: #07111B;
+    line-height: 18px;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 46px;
+    transition: all .3s;
+    font-weight: 400;
+    margin-top: 8px;
+    margin-left: 8px;
+  }
+
+  .gifts-container .gift-card-content .gift-card-name:hover{
+    color: #FF4949;
+  }
+
+  .gift-card-bottom .gift-card-info{
+    float: left;
+  }
+
+  .gift-card-bottom .gift-card-info{
+    font-size: 12px;
+    color: #93999F;
+    line-height: 24px;
+    font-weight: 400;
+    margin-top: 2px;
+  }
 
 
+  .gift-card-bottom .gift-card-info span{
+    margin-right: 12px;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 400;
+    font-family:  Georgia, "Times New Roman", Times, serif;
+    color: #FF4949;
+    margin-left: 8px;
+  }
 
+  .gift-card-bottom .like-num{
+    display: inline-block;
+    margin-top: 4px;
+    margin-left: 15px;
+  }
+
+  .gift-card-bottom .like-num span:first-child{
+    color: #93999F;
+  }
+
+  .gift-card-bottom .like-num span:last-child{
+    font-family:  Georgia, "Times New Roman", Times, serif;
+    font-size: 16px;
+    color: #93999F;
+  }
+
+  .gift-card-desc{
+    font-size: 12px;
+    font-weight: 300;
+    color: #93999F;
+    line-height: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    height: 44px;
+    margin: 2px 8px;
+  }
+
+  #gifts-pagination{
+    margin-bottom: 40px;
+  }
 
 
 </style>

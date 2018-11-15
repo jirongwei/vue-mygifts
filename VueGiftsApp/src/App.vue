@@ -3,7 +3,7 @@
 
     <!--页面导航-->
     <div class="container-fluid">
-      <nav-main v-if="showNav" @flushbody="flushbody"></nav-main>
+      <nav-main v-if="showNav"></nav-main>
     </div>
 
     <router-view @flushnav="flushnav" v-if="showBody"/>

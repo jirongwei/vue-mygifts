@@ -98,7 +98,7 @@ export default {
     // 收藏帖子信息
     getNoteList: function () {
       let vm = this;
-      axios.get('http://localhost:8000/post/collects/',{
+      axios.get('http://47.106.124.242:8000/post/collects/',{
         params:{
         "u_id":this.u_id}
       }).then(function (response) {

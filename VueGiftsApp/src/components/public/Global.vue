@@ -5,7 +5,7 @@
 <script>
     export default {
 
-      HOST:"http://localhost:8000/",
+      HOST:"http://47.106.124.242:8000/",
       IMG:"http://ph8m18qjm.bkt.clouddn.com/",
       // HOST:"http://192.168.155.2:8000/"
       // userSite,//用户地址

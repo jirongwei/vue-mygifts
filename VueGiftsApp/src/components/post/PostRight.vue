@@ -36,7 +36,7 @@
     <div class="card personal">
       <div class="personal_mes" :id="usermes.userid">
         <a href="" class="pimg">
-          <img :src="usermes.userimg" alt="">
+          <img :src="user_icon" alt="">
         </a>
         <div class="mes_div">
           <a href="" class="">
@@ -88,7 +88,7 @@
       </div>
       <ul class="content">
         <li v-for="hotgl in hotgls" v-bind:id="hotgl.glid">
-          <a href="" v-text="hotgl.gltitle"></a>
+          <a href="" v-text="hotgl.gltitle" style="display:inline-block; width:270px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"></a>
           <div>
             <span v-text="hotgl.gllovenum"></span>
             <span>&nbsp;人喜欢•</span>
@@ -107,17 +107,10 @@
         name: "PostRight",
         data:function(){
           return{
+            user_icon:'',
             userid:1,
-            usermes:{
-              //用户id
-              userid:"1",
-              //用户头像
-              userimg:"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3626678142,3205717399&fm=26&gp=0.jpg",
-              //用户昵称
-              usernickname:"疯流涕淌",
-              //最近登陆时间
-              // lastsigntime:""
-            },
+            usermes:[],
+
             //热门攻略
             hotgls:[
               {
@@ -144,12 +137,13 @@
         mounted:function () {
           var vm=this;
           //post右侧加载用户信息
-          axios.post("http://127.0.0.1:8000/user/gettoken/",{
+          axios.post("http://47.106.124.242:8000/user/gettoken/",{
             //将token传给后台，若解析失败则跳转到登录界面
             token:this.userid
           })
             .then(function (response) {
               vm.usermes=response.data;
+              vm.user_icon = vm.GLOBAL.IMG + response.data.userimg;
             })
             .catch(function (error) {
               console.log(error)
@@ -159,7 +153,7 @@
 
 
           //post右侧加载热门攻略
-          axios.get("http://127.0.0.1:8000/tribune/hottri/")
+          axios.get("http://47.106.124.242:8000/tribune/hottri/")
             .then(function (response) {
               vm.hotgls=response.data
             })

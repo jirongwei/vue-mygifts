@@ -52,7 +52,7 @@ export default {
     mounted:function(){
       let vm=this;
       // 根据userid获取地址信息
-      axios.post("http://127.0.0.1:8000/user/getaddr",{
+      axios.post("http://47.106.124.242:8000/user/getaddr",{
         userid:1
       })
         .then(function(response){

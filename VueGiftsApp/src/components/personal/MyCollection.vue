@@ -81,7 +81,7 @@ export default {
     // 礼物列表
     getGiftsList: function () {
       let vm = this;
-      axios.get('http://localhost:8000/gift/addcollect/',{
+      axios.get('http://47.106.124.242:8000/gift/addcollect/',{
         params:{
           "u_id":this.u_id
         }

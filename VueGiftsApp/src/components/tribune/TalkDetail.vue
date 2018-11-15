@@ -8,7 +8,7 @@
           <div class="row">
             <div style="margin-top: 20px" v-for="t in tri_list">
               <div class="col-md-1">
-                <img :src="t.t_userid__icon" alt="..." class="img-circle my-circle">
+                <img :src="user_icon" alt="..." class="img-circle my-circle">
               </div>
               <div class="col-md-11 laizi">
                 <a href="" class="text-center" v-text="t.t_userid__nickname">zmm</a>
@@ -24,7 +24,7 @@
               <div class="my-center">
                 <p><img :src="t.ttitleimg" class="my-img" alt=""></p>
                 <p>&nbsp;</p>
-                <p  v-text="t.tdetailcont"></p>
+                <p  v-html="t.tdetailcont"></p>
                 <p>&nbsp;</p>
                 <p><a href="http://www.douban.com/thing/175/?on=1050083">参考攻略</a></p>
                 <p v-text="'来源:'+t.t_userid__nickname"></p>
@@ -65,7 +65,7 @@
 
       <div class="comment" v-for="t in tri_list">
         <div class="col-md-1">
-          <img :src="t.t_userid__icon" alt="..." class="img-circle my-circle">
+          <img :src="user_icon" alt="..." class="img-circle my-circle">
         </div>
         <div class="col-md-11 input-wrap">
             <textarea  class="comment-input" placeholder="写下您的评论..." v-model="comment"></textarea>
@@ -90,7 +90,7 @@
               <li v-for="re in comments">
                 <div class="pitem_cont" >
                   <a href="" class="replyImg">
-                    <img class="Img" src="../../assets/user-icon/friends-1.jpg" :src="re.tReply_uid__icon"alt="">
+                    <img class="Img" :src="re.tReply_uid__icon"alt="">
                   </a>
                   <div class="replycontent">
                     <div class="pitem_author">
@@ -118,6 +118,7 @@ export default {
   name: 'TalkDetail',
   data () {
     return {
+      user_icon:'',
       comments:'',          // 评论列表
       // id:'1',            // 文章id
       comment:'' ,          // 评论内容
@@ -146,7 +147,7 @@ export default {
       let vm = this;
       this.collectstatus=!this.collectstatus;
       if (this.token){
-        axios.post("http://127.0.0.1:8000/tribune/collect/",{
+        axios.post("http://47.106.124.242:8000/tribune/collect/",{
           my_token:this.token,
           postid:this.tri_id,
           collectstatus:this.collectstatus
@@ -169,7 +170,7 @@ export default {
       let vm = this;
       this.praisestatus=!this.praisestatus;
       if (this.token){
-        axios.post("http://127.0.0.1:8000/tribune/thumbup/",{
+        axios.post("http://47.106.124.242:8000/tribune/thumbup/",{
           my_token:this.token,
           postid:this.tri_id,
           praisestatus:this.praisestatus
@@ -190,11 +191,12 @@ export default {
 //渲染攻略详情渲染数据
     getTribune:function(){
       let vm = this;
-      axios.get('http://127.0.0.1:8000/tribune/publisher/',{
+      axios.get('http://47.106.124.242:8000/tribune/publisher/',{
         params:{"tid":this.tri_id}
       })
         .then(function (response) {
           vm.tri_list=response.data;
+          vm.user_icon=vm.GLOBAL.IMG+response.data[0].t_userid__icon;
           console.log(vm.tri_list)
         })
         .catch(function (error) {
@@ -204,10 +206,16 @@ export default {
     //  渲染评论列表
     addComment:function(){
       let vm = this;
-      axios.get('http://127.0.0.1:8000/tribune/comment/')
+      axios.get('http://47.106.124.242:8000/tribune/comment/')
         .then(function (response) {
           vm.comments = response.data;
           console.log(vm.comments)
+          for(let item of vm.comments){
+            item.tReply_uid__icon = vm.GLOBAL.IMG+item.tReply_uid__icon;
+            console.log(item)
+          }
+          console.log(vm.comments)
+
         })
         .catch(function (error) {
           console.log(error)
@@ -218,7 +226,7 @@ export default {
     add:function(){
       let vm = this;
       if (vm.token){
-        axios.post('http://localhost:8000/tribune/zmAddComment/',{
+        axios.post('http://47.106.124.242:8000/tribune/zmAddComment/',{
           "tReply_pid_id":vm.tri_id,
           "tReply_con":this.comment,
           "tReply_time":"123456",

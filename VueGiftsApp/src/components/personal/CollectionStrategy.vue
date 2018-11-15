@@ -78,7 +78,7 @@ export default {
     // 遍历攻略收藏列表
     getStraList: function () {
       let vm = this;
-      axios.get('http://127.0.0.1:8000/tribune/collection/',{
+      axios.get('http://47.106.124.242:8000/tribune/collection/',{
         params:{u_id:this.u_id}
       })
         .then(function (response) {

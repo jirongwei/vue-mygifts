@@ -266,7 +266,7 @@
         mounted:function(){
             var vm=this;
             //初始化帖子
-            axios.post("http://127.0.0.1:8000/post/showpost/",{
+            axios.post("http://47.106.124.242:8000/post/showpost/",{
               navtype:this.navType,
               pageindex:this.page,
               uid:this.user.userid
@@ -283,7 +283,7 @@
           changenav:function (type) {
             var vm=this;
             this.navType=type;
-            axios.post("http://127.0.0.1:8000/post/showpost/",{
+            axios.post("http://47.106.124.242:8000/post/showpost/",{
               navtype:this.navType,
               pageindex:this.page,
               uid:this.user.userid
@@ -296,7 +296,7 @@
               })
           },
         //加载更多帖子
-        //   axios.post("http://127.0.0.1:8000/post/showpost/",{
+        //   axios.post("http://47.106.124.242:8000/post/showpost/",{
         //   navtype:this.navType,
         //   pageindex:this.page,
         //   uid:this.user.userid
@@ -338,7 +338,7 @@
             }
 
             //写入数据库
-            axios.post("http://127.0.0.1:8000/post/collectpost/",{
+            axios.post("http://47.106.124.242:8000/post/collectpost/",{
               userid:this.user.userid,
               postid:id,
               collectstatus:oldstatus
@@ -370,7 +370,7 @@
             }
 
             //写入数据库
-            axios.post("http://127.0.0.1:8000/post/dianzanpost/",{
+            axios.post("http://47.106.124.242:8000/post/dianzanpost/",{
               userid:this.user.userid,
               postid:id,
               dianzanstatus:oldstatus

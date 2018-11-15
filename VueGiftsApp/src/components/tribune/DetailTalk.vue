@@ -1,64 +1,68 @@
 <template>
-  <div class="container all">
-    <div class="top row ">
-      <div class="col-lg-9">
-        <div class="title">精选攻略</div>
-      </div>
-      <div class="col-lg-3">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="中秋节送妈妈什么好" v-model="search" style="outline: none;">
-          <span class="input-group-btn" style="height: 34px">
+  <div>
+    <div class="container all">
+      <div class="top row ">
+        <div class="col-lg-9">
+          <div class="title">精选攻略</div>
+        </div>
+        <div class="col-lg-3">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="中秋节送妈妈什么好" v-model="search" style="outline: none;">
+            <span class="input-group-btn" style="height: 34px">
             <button class="btn btn-default btnsearch" type="button" @click="getAllSelectgl"  style="outline: none;">Go!</button>
           </span>
-        </div>
-      </div>
-    </div>
-    <div class="content container">
-      <div class="row" style="width: 100%;margin:0 auto;">
-        <div class="tuijian col-lg-3" >
-          <div class="hotgoods" v-for="hg in hotgoods">
-            <router-link tag="a" :to="{path:'/giftInfo/'+hg.id,params:{giftid:hg.id}}">
-              <div class="gotile">精美礼品</div>
-              <div class="gocon">
-                <div class="goimg" :style="{backgroundImage:'url('+hg.giftImg+')'}"></div>
-                <div class="goname" v-text="hg.gift_name"></div>
-                <div class="goprice">
-                  <span style="margin-right:-4px;">￥</span>
-                  <span v-text="hg.price"></span>
-                </div>
-              </div>
-            </router-link>
           </div>
-
-        </div>
-        <div class="gl col-lg-9">
-          <ul >
-            <li v-for="gl in gls">
-              <router-link :to="{path:'/talkdetail/'+gl.id,params:{tid:gl.id}}">
-                <div class="sc_list_img" :style="{backgroundImage:'url('+gl.ttitleimg+')'}"></div>
-                <div class="sc_list_title" v-text="gl.ttitle"></div>
-                <div class="sc_list_content" v-text="gl.tbriefcont"></div>
-              </router-link>
-              <div class="sc_list_info">
-                <i class="sc_list_info_icon sc_list_info_love"></i>
-                <span class="sc_list_info_love_" v-text="gl.clicknum"></span>
-                <i class="sc_list_info_icon sc_list_info_comment"></i>
-                <span class="sc_list_info_comment_" v-text="gl.replynum">11</span>
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
+      <div class="content container">
+        <div class="row" style="width: 100%;margin:0 auto;">
+          <div class="tuijian col-lg-3" >
+            <div class="hotgoods" v-for="hg in hotgoods">
+              <router-link tag="a" :to="{path:'/giftInfo/'+hg.id,params:{giftid:hg.id}}">
+                <div class="gotile">精美礼品</div>
+                <div class="gocon">
+                  <div class="goimg" :style="{backgroundImage:'url('+hg.giftImg+')'}"></div>
+                  <div class="goname" v-text="hg.gift_name"></div>
+                  <div class="goprice">
+                    <span style="margin-right:-4px;">￥</span>
+                    <span v-text="hg.price"></span>
+                  </div>
+                </div>
+              </router-link>
+            </div>
+
+          </div>
+          <div class="gl col-lg-9">
+            <ul >
+              <li v-for="gl in gls">
+                <router-link :to="{path:'/talkdetail/'+gl.id,params:{tid:gl.id}}">
+                  <div class="sc_list_img" :style="{backgroundImage:'url('+gl.ttitleimg+')'}"></div>
+                  <div class="sc_list_title" v-text="gl.ttitle"></div>
+                  <div class="sc_list_content" v-text="gl.tbriefcont"></div>
+                </router-link>
+                <div class="sc_list_info">
+                  <i class="sc_list_info_icon sc_list_info_love"></i>
+                  <span class="sc_list_info_love_" v-text="gl.clicknum"></span>
+                  <i class="sc_list_info_icon sc_list_info_comment"></i>
+                  <span class="sc_list_info_comment_" v-text="gl.replynum">11</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
 
 
-      <pagination :currentPage="page" :pageCount="parseInt(pagecount)" @prePage="prePage" @nextPage="nextPage" @jumpPage="jumpPage"></pagination>
+        <pagination :currentPage="page" :pageCount="parseInt(pagecount)" @prePage="prePage" @nextPage="nextPage" @jumpPage="jumpPage"></pagination>
 
+      </div>
     </div>
+    <NavFooter style="margin-top: 50px"></NavFooter>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
+  import NavFooter from '../public/NavFooter'
 
   export default {
     name: "DetailTalkbody",
@@ -71,6 +75,9 @@
         gls:[]
       }
 
+    },
+    components:{
+      NavFooter
     },
     mounted: function () {
       this.getAllSelect();
@@ -291,10 +298,15 @@
   }
   .gl ul li a .sc_list_content{
     width: 100%;
-    height: 100px;
+    height: 105px;
     padding: 0 20px 10px;
     box-sizing: border-box;
     font-size: 0.9em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    overflow: hidden;
+
   }
   .gl ul li .sc_list_info{
     height: 44px;

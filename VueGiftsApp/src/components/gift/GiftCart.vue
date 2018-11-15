@@ -1,127 +1,133 @@
 <template>
 
-    <div class="mainbody cart" style="margin-top: 80px;">
-      <div class="container">
-        <!-- 购物车详情头 -->
-        <table class="cart-header">
-          <tbody>
-          <tr>
-            <td class="cart-col-select col-md-3 col-xs-3 col-sm-3">
-              <div class="cart-select-all JSelectAll">
-                <div class="mz-checkbox" v-if="isSelectAll==false"  @click="selectAll(),select=!select"></div>
-                <div class="mz-checkbox checked" v-else="isSelectAll==true"  @click="selectNone(),select=!select"></div>
-                <span class="cart-select-title">全选</span>
-              </div>
-            </td>
-            <td class="cart-col-name col-md-3 hidden-xs hidden-sm">商品</td>
-            <td class="cart-col-price col-md-2 hidden-xs hidden-sm">单价(元)</td>
-            <td class="cart-col-number col-md-2 hidden-xs hidden-sm">数量</td>
-            <td class="cart-col-total col-md-1 hidden-xs hidden-sm">小计(元)</td>
-            <td class="cart-col-ctrl col-md-1 hidden-xs hidden-sm">操作</td>
-          </tr>
-          </tbody>
-        </table>
+   <div>
+     <div class="mainbody cart" style="margin-top: 80px;">
+       <div class="container">
+         <!-- 购物车详情头 -->
+         <table class="cart-header">
+           <tbody>
+           <tr>
+             <td class="cart-col-select col-md-3 col-xs-3 col-sm-3">
+               <div class="cart-select-all JSelectAll">
+                 <div class="mz-checkbox" v-if="isSelectAll==false"  @click="selectAll(),select=!select"></div>
+                 <div class="mz-checkbox checked" v-else="isSelectAll==true"  @click="selectNone(),select=!select"></div>
+                 <span class="cart-select-title">全选</span>
+               </div>
+             </td>
+             <td class="cart-col-name col-md-3 hidden-xs hidden-sm">商品</td>
+             <td class="cart-col-price col-md-2 hidden-xs hidden-sm">单价(元)</td>
+             <td class="cart-col-number col-md-2 hidden-xs hidden-sm">数量</td>
+             <td class="cart-col-total col-md-1 hidden-xs hidden-sm">小计(元)</td>
+             <td class="cart-col-ctrl col-md-1 hidden-xs hidden-sm">操作</td>
+           </tr>
+           </tbody>
+         </table>
 
-        <!-- 购物清单信息列表 -->
-        <div class="cart-merchant-list" v-for="(cart,index) in goodsList" :id="cart.gifts_id">
-          <div class="cart-merchant">
-            <table class="cart-merchant-body">
-              <tbody>
-              <tr class="cart-product">
+         <!-- 购物清单信息列表 -->
+         <div class="cart-merchant-list" v-for="(cart,index) in goodsList" :id="cart.gifts_id">
+           <div class="cart-merchant">
+             <table class="cart-merchant-body">
+               <tbody>
+               <tr class="cart-product">
 
-                <!--商品主图片-->
-                <td class="cart-col-select col-md-3 col-xs-4 col-sm-4">
-                  <div class="mz-checkbox" v-if="cart.select==false"  @click="cart.select=!cart.select"></div>
-                  <div class="mz-checkbox checked" v-else="cart.select==true"  @click="cart.select=!cart.select"></div>
-                  <a href="#" class="cart-product-link">
-                    <img :src="cart.gifts__giftImg" class="cart-product-img" alt="" width="50">
-                  </a>
-                </td>
+                 <!--商品主图片-->
+                 <td class="cart-col-select col-md-3 col-xs-4 col-sm-4">
+                   <div class="mz-checkbox" v-if="cart.select==false"  @click="cart.select=!cart.select"></div>
+                   <div class="mz-checkbox checked" v-else="cart.select==true"  @click="cart.select=!cart.select"></div>
+                   <a href="#" class="cart-product-link">
+                     <img :src="cart.gifts__giftImg" class="cart-product-img" alt="" width="50">
+                   </a>
+                 </td>
 
-                <!--商品名字-->
-                <td class="cart-col-name col-md-3 col-xs-8 col-sm-8">
-                  <a href="#" class="cart-product-link">
-                    <p v-text="cart.gifts__gift_name"></p>
-                  </a>
-                  <span class="cart-product-desc" v-text="cart.gifts__descr"></span>
-                </td>
+                 <!--商品名字-->
+                 <td class="cart-col-name col-md-3 col-xs-8 col-sm-8">
+                   <a href="#" class="cart-product-link">
+                     <p v-text="cart.gifts__gift_name"></p>
+                   </a>
+                   <span class="cart-product-desc" v-text="cart.gifts__descr"></span>
+                 </td>
 
-                <!--商品价格-->
-                <td class="cart-col-price col-md-2 hidden-xs hidden-sm">
-                  <p>
-                    <span class="cart-product-price" v-text="cart.gifts__price"></span>
-                  </p>
-                </td>
+                 <!--商品价格-->
+                 <td class="cart-col-price col-md-2 hidden-xs hidden-sm">
+                   <p>
+                     <span class="cart-product-price" v-text="cart.gifts__price"></span>
+                   </p>
+                 </td>
 
-                <!--商品数量的加减-->
-                <td class="cart-col-number col-md-2 hidden-xs hidden-sm">
-                  <div class="cart-product-number-adder">
-                    <p class="cart-product-number-max show"></p>
-                    <div class="mz-adder">
-                      <button class="mz-adder-subtract" @click="reduce_num(cart)"></button>
-                      <div class="mz-adder-num"><input class="mz-adder-input" type="text" v-model="cart.cart_num"></div>
-                      <button  class="mz-adder-add" @click="add_num(cart)"></button>
-                    </div>
-                  </div>
-                </td>
+                 <!--商品数量的加减-->
+                 <td class="cart-col-number col-md-2 hidden-xs hidden-sm">
+                   <div class="cart-product-number-adder">
+                     <p class="cart-product-number-max show"></p>
+                     <div class="mz-adder">
+                       <button class="mz-adder-subtract" @click="reduce_num(cart)"></button>
+                       <div class="mz-adder-num"><input class="mz-adder-input" type="text" v-model="cart.cart_num"></div>
+                       <button  class="mz-adder-add" @click="add_num(cart)"></button>
+                     </div>
+                   </div>
+                 </td>
 
-                <!--小计-->
-                <td class="cart-col-total col-md-1 hidden-xs hidden-sm">
-                  <span class="cart-product-price total">{{cart.gifts__price*cart.cart_num}}</span>
-                </td>
+                 <!--小计-->
+                 <td class="cart-col-total col-md-1 hidden-xs hidden-sm">
+                   <span class="cart-product-price total">{{cart.gifts__price*cart.cart_num}}</span>
+                 </td>
 
-                <!--删除操作-->
-                <td class="cart-col-ctrl col-md-1 hidden-xs hidden-sm">
-                  <a href="#" title="删除" @click.prevent.stop="deleteOne(cart.gifts_id)">
-                    <div class="cart-product-remove">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </div>
-                  </a>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+                 <!--删除操作-->
+                 <td class="cart-col-ctrl col-md-1 hidden-xs hidden-sm">
+                   <a href="#" title="删除" @click.prevent.stop="deleteOne(cart.gifts_id)">
+                     <div class="cart-product-remove">
+                       <span class="glyphicon glyphicon-remove"></span>
+                     </div>
+                   </a>
+                 </td>
+               </tr>
+               </tbody>
+             </table>
+           </div>
+         </div>
 
-        <!-- 结算详情 -->
-        <div class="cart-footer" id="cartFooter">
-          <div class="container">
-            <div class="cart-footer-left col-md-6 col-xs-4 col-sm-4">
-              <div class="cart-select-all">
-                <div class="mz-checkbox" v-if="isSelectAll==false"  @click="selectAll(),select=!select"></div>
-                <div class="mz-checkbox checked" v-else="isSelectAll==true"  @click="selectNone(),select=!select"></div>
-                <span class="cart-select-title">全选</span>
-              </div>
+         <!-- 结算详情 -->
+         <div class="cart-footer" id="cartFooter">
+           <div class="container">
+             <div class="cart-footer-left col-md-6 col-xs-4 col-sm-4">
+               <div class="cart-select-all">
+                 <div class="mz-checkbox" v-if="isSelectAll==false"  @click="selectAll(),select=!select"></div>
+                 <div class="mz-checkbox checked" v-else="isSelectAll==true"  @click="selectNone(),select=!select"></div>
+                 <span class="cart-select-title">全选</span>
+               </div>
 
-              <span class="cart-footer-count">
+               <span class="cart-footer-count">
             共
             <span class="cart-footer-num" v-text="getTotal.totalNum"></span>
             件商品
            </span>
-              <div class="mz-btn btn-danger" @click="showTip=true">清空购物车</div>
-            </div>
-            <div class="cart-footer-right col-md-5 col-md-offset-1 col-sm-offset-2 col-xs-8 col-sm-6">
+               <div class="mz-btn btn-danger" @click="showTip=true">清空购物车</div>
+             </div>
+             <div class="cart-footer-right col-md-5 col-md-offset-1 col-sm-offset-2 col-xs-8 col-sm-6">
           <span class="cart-footer-sum">
             <span class="cart-footer-text">已优惠</span>
             <span class="cart-footer-num red" id="totalDiscount">0.00</span>
             <span class="cart-footer-text">元， 合计(不含运费)：</span>
             <span class="cart-footer-total" id="totalPrice"  v-text="getTotal.totalPrice"></span>
           </span>
-              <button type="button" class="mz-btn btn-success" id="cartSubmit" @click="toshowadd">去结算</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <user_addr v-if="showaddr" v-on:getaddr="cartAccounts"></user_addr>
-      <!--清空购物车提示模态框-->
-      <MakeSureBuy v-if="showTip" @quxiaoclick="showTip=false" @sureclick="deleteGoods"></MakeSureBuy>
-    </div>
+               <button type="button" class="mz-btn btn-success" id="cartSubmit" @click="toshowadd">去结算</button>
+             </div>
+           </div>
+         </div>
+       </div>
+       <user_addr v-if="showaddr" v-on:getaddr="cartAccounts"></user_addr>
+       <!--清空购物车提示模态框-->
+       <MakeSureBuy v-if="showTip" @quxiaoclick="showTip=false" @sureclick="deleteGoods"></MakeSureBuy>
+
+
+     </div>
+     <NavFooter></NavFooter>
+   </div>
 </template>
 
 <script>
   import axios from 'axios'
   import MakeSureBuy from './MakeSureBuy'
+  import NavFooter from '../public/NavFooter'
 export default {
   name: 'GiftCart',
 
@@ -144,7 +150,10 @@ export default {
     }
 
   },
-  components: {MakeSureBuy},
+  components: {
+    MakeSureBuy,
+    NavFooter
+  },
   mounted:function () {
     let _this = this;
     setTimeout(function () {

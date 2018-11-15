@@ -1,110 +1,113 @@
 <template>
 
-    <div class="allContent">
-      <personal-header></personal-header>
+    <div>
+      <div class="allContent">
+        <personal-header></personal-header>
 
-      <div id="content-container" class="container">
-        <ul class="nav nav-tabs clearfix">
-          <li>
-            <router-link to="/personal">
-              <a href="#">个人介绍</a>
-            </router-link>
-          </li>
-          <li>
-            <router-link to="/receive">
-              <a href="#" >我的礼物</a>
-            </router-link>
-          </li>
-          <li>
-            <router-link to="">
-              <a href="#" >我的点赞</a>
-            </router-link>
-          </li>
-        </ul>
+        <div id="content-container" class="container">
+          <ul class="nav nav-tabs clearfix">
+            <li>
+              <router-link to="/personal">
+                <a href="#">个人介绍</a>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/receive">
+                <a href="#" >我的礼物</a>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="">
+                <a href="#" >我的点赞</a>
+              </router-link>
+            </li>
+          </ul>
 
-        <div class="cart" style="margin-top: 20px;">
-        <div class="container" style="margin-right: 0;margin-left: -15px">
+          <div class="cart" style="margin-top: 20px;">
+            <div class="container" style="margin-right: 0;margin-left: -15px">
 
-          <!--订单导航-->
-          <div class="order_nav">
-            <ul>
-              <li><a href="" :class="{on: this.nav=='all'}" @click.prevent="chengenav('all')">全部订单</a></li>
-              <li><a href="" :class="{on: this.nav=='nopay'}"  @click.prevent="chengenav('nopay')">未支付订单</a></li>
-              <li><a href="" :class="{on: this.nav=='nofinish'}"  @click.prevent="chengenav('nofinish')">未完成订单</a></li>
-              <li><a href="" :class="{on: this.nav=='history'}"  @click.prevent="chengenav('history')">历史订单</a></li>
-            </ul>
-          </div>
+              <!--订单导航-->
+              <div class="order_nav">
+                <ul>
+                  <li><a href="" :class="{on: this.nav=='all'}" @click.prevent="chengenav('all')">全部订单</a></li>
+                  <li><a href="" :class="{on: this.nav=='nopay'}"  @click.prevent="chengenav('nopay')">未支付订单</a></li>
+                  <li><a href="" :class="{on: this.nav=='nofinish'}"  @click.prevent="chengenav('nofinish')">未完成订单</a></li>
+                  <li><a href="" :class="{on: this.nav=='history'}"  @click.prevent="chengenav('history')">历史订单</a></li>
+                </ul>
+              </div>
 
 
-          <!-- 订单车详情头 -->
-          <table class="cart-header">
-            <tbody>
-            <tr>
-              <td class="cart-col-select col-md-3 col-xs-4 col-sm-4">
-
-                <span class="cart-select-title">订单列表</span>
-
-              </td>
-              <td class="cart-col-price col-md-3 hidden-xs hidden-sm">商品信息</td>
-              <td class="cart-col-number col-md-2 hidden-xs hidden-sm">数量</td>
-              <td class="cart-col-total col-md-2 hidden-xs hidden-sm">总金额</td>
-              <td class="cart-col-ctrl col-md-2 hidden-xs hidden-sm">订单状态</td>
-            </tr>
-            </tbody>
-          </table>
-
-          <!-- 订单信息列表 -->
-          <div class="cart-merchant-list">
-            <div class="cart-merchant">
-              <table class="cart-merchant-body">
+              <!-- 订单车详情头 -->
+              <table class="cart-header">
                 <tbody>
-                <tr class="cart-product" v-for="good in goodsList">
-
-                  <!--商品主图片-->
+                <tr>
                   <td class="cart-col-select col-md-3 col-xs-4 col-sm-4">
-                    <a href="#" class="cart-product-link">
-                      <img :src="good.gifts__giftImg" class="cart-product-img" alt="" width="50">
-                    </a>
-                  </td>
 
-                  <!--商品名字-->
-                  <td class="cart-col-name col-md-3 col-xs-8 col-sm-8">
-                    <a href="#" class="cart-product-link">
-                      <p v-text="good.gifts__gift_name"></p>
-                    </a>
-                    <span class="cart-product-desc" v-text="good.gifts__descr"></span>
-                  </td>
+                    <span class="cart-select-title">订单列表</span>
 
-                  <!--商品数量-->
-                  <td class="cart-col-price col-md-2 hidden-xs hidden-sm">
-                    <p>
-                      <span  v-text="good.cart_num"></span>
-                    </p>
                   </td>
-
-
-                  <!--金额-->
-                  <td class="cart-col-total col-md-2 hidden-xs hidden-sm">
-                    <span class="cart-product-price total" >{{good.gifts__price*good.cart_num}}</span>
-                  </td>
-
-                  <!--订单状态-->
-                  <td class="cart-col-ctrl col-md-2 hidden-xs hidden-sm">
-                    <span v-text="good.order_status"></span>
-                  </td>
+                  <td class="cart-col-price col-md-3 hidden-xs hidden-sm">商品信息</td>
+                  <td class="cart-col-number col-md-2 hidden-xs hidden-sm">数量</td>
+                  <td class="cart-col-total col-md-2 hidden-xs hidden-sm">总金额</td>
+                  <td class="cart-col-ctrl col-md-2 hidden-xs hidden-sm">订单状态</td>
                 </tr>
                 </tbody>
               </table>
+
+              <!-- 订单信息列表 -->
+              <div class="cart-merchant-list">
+                <div class="cart-merchant">
+                  <table class="cart-merchant-body">
+                    <tbody>
+                    <tr class="cart-product" v-for="good in goodsList">
+
+                      <!--商品主图片-->
+                      <td class="cart-col-select col-md-3 col-xs-4 col-sm-4">
+                        <a href="#" class="cart-product-link">
+                          <img :src="good.gifts__giftImg" class="cart-product-img" alt="" width="50">
+                        </a>
+                      </td>
+
+                      <!--商品名字-->
+                      <td class="cart-col-name col-md-3 col-xs-8 col-sm-8">
+                        <a href="#" class="cart-product-link">
+                          <p v-text="good.gifts__gift_name"></p>
+                        </a>
+                        <span class="cart-product-desc" v-text="good.gifts__descr"></span>
+                      </td>
+
+                      <!--商品数量-->
+                      <td class="cart-col-price col-md-2 hidden-xs hidden-sm">
+                        <p>
+                          <span  v-text="good.cart_num"></span>
+                        </p>
+                      </td>
+
+
+                      <!--金额-->
+                      <td class="cart-col-total col-md-2 hidden-xs hidden-sm">
+                        <span class="cart-product-price total" >{{good.gifts__price*good.cart_num}}</span>
+                      </td>
+
+                      <!--订单状态-->
+                      <td class="cart-col-ctrl col-md-2 hidden-xs hidden-sm">
+                        <span v-text="good.order_status"></span>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <pagination :currentPage="page" :pageCount="parseInt(pagecount)" @prePage="prePage" @nextPage="nextPage" @jumpPage="jumpPage"></pagination>
+
+
             </div>
+
           </div>
-
-          <pagination :currentPage="page" :pageCount="parseInt(pagecount)" @prePage="prePage" @nextPage="nextPage" @jumpPage="jumpPage"></pagination>
-
-
         </div>
-
       </div>
-      </div>
+      <NavFooter></NavFooter>
     </div>
 
 
@@ -114,6 +117,7 @@
 
 <script>
   import axios from 'axios'
+  import NavFooter from '../public/NavFooter'
 export default {
   name: 'GiftCart',
   data () {
@@ -138,6 +142,9 @@ export default {
   mounted:function(){
     this.changeOrderShow();
     this.getpagesize()
+  },
+  components:{
+    NavFooter
   },
 
   methods: {

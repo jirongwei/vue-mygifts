@@ -22,7 +22,7 @@
         <div class="code-image">
           <span class="tel-code-image"></span>
           <input type="text" placeholder="短信验证码" class="phone-code" v-model.lazy="telCode">
-          <input class="btn-code" type="button" v-model="codeMsg" @click="mobileCode()">
+          <input class="btn-code" type="button" :disabled="disabled" v-model="codeMsg" @click="mobileCode()">
         </div>
 
       </div>
@@ -92,6 +92,7 @@ export default {
 
       // 存放用户输入短信验证码
       telCode:'',
+      disabled:false,
 
 
 
@@ -183,30 +184,29 @@ export default {
 
     // [获取验证码]按钮
     mobileCode:function () {
-      // 发送请求验证码
-      let vm = this;
-      axios.get(this.GLOBAL.HOST+'user/sendmessage/'+vm.telephone+'/')
-        .then(function (response) {
-        })
-        .catch(function (error) {
-          console.log(error)
-        });
-      // 判断获取验证码时间
-      let timer = 60;
-      this.codeMsg = timer+'(s)';
-      let auth_time = setInterval(()=>{
-        timer--;
+      if(this.reg_telephone.test(this.telephone)){
+        this.disabled = true;
+        // 发送请求验证码
+        let vm = this;
+        axios.get(this.GLOBAL.HOST+'user/sendmessage/'+vm.telephone+'/')
+          .then(function (response) {
+          })
+          .catch(function (error) {
+            console.log(error)
+          });
+        // 判断获取验证码时间
+        let timer = 60;
         this.codeMsg = timer+'(s)';
-        if(timer <= 0){
-          this.codeMsg = '获取验证码';
-          clearInterval(auth_time);
-        }
-      },1000);
-
-
-
-
-
+        let auth_time = setInterval(()=>{
+          timer--;
+          this.codeMsg = timer+'(s)';
+          if(timer <= 0){
+            this.codeMsg = '获取验证码';
+            clearInterval(auth_time);
+            this.disabled = false;
+          }
+        },1000);
+      }
     }
 
 

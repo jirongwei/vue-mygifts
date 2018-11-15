@@ -20,6 +20,7 @@ import PostDetail from '@/components/post/PostDetail'
 import Post from '@/components/post/Post'
 import PostSend from '@/components/post/PostSend'
 
+import Settings from '@/components/settings/Settings'
 
 import DetailTalk from '@/components/tribune/DetailTalk'
 import TribuneSend from '@/components/tribune/TribuneSend'
@@ -31,6 +32,8 @@ import CollectionNote from '@/components/personal/CollectionNote'
 import PersonalMyColnote from '@/components/personal/PersonalMyColnote'
 import PersonalMyColstrategy from '@/components/personal/PersonalMyColstrategy'
 import TalkDetail from '@/components/tribune/TalkDetail'
+
+import User from '@/components/user/User'
 
 
 
@@ -113,6 +116,13 @@ export default new Router({
       component:PostSend
     },
 
+    // 个人设置
+    {
+      path:'/settings',
+      name:'settings',
+      component:Settings
+    },
+
     //攻略搜索
     {
       path:'/tribuneSearch',
@@ -126,6 +136,15 @@ export default new Router({
       name:'tribunesend',
       component:TribuneSend
     },
+
+    // 关于我们
+    {
+      path:'/about',
+      name:'about',
+      component:User
+    },
+
+
 
 
 

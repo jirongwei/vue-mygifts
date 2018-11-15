@@ -1,165 +1,166 @@
 <template>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-5 col-sm-12 col-xs-12">
-        <div class="preview">
-          <!-- Tab panes -->
-          <div class="tab-content preview-booth pt10">
-            <!--礼物循环模板-->
-            <div role="tabpanel" class="tab-pane mod-pic" :class="{'active':index===0}" :id="'list-p'+index"  v-for="(img,index) in giftImages">
-              <img  :src="img.pic_url" width="375" height="375"  class="sImg">
+  <div class="container-fluid" style="padding-bottom: 100px">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 col-sm-12 col-xs-12">
+          <div class="preview">
+            <!-- Tab panes -->
+            <div class="tab-content preview-booth pt10">
+              <!--礼物循环模板-->
+              <div role="tabpanel" class="tab-pane mod-pic" :class="{'active':index===0}" :id="'list-p'+index"  v-for="(img,index) in giftImages">
+                <img  :src="img.pic_url" width="375" height="375"  class="sImg">
+              </div>
             </div>
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs preview-thumb clearfix " role="tablist">
+              <!--礼物循环模板-->
+              <li role="presentation" v-for="(img,index) in giftImages">
+                <a :href="'#list-p'+index" :aria-controls="'list-p'+index" role="tab" data-toggle="tab">
+                  <img  :src="img.pic_url" style="display: inline;" width="75" height="75">
+                </a>
+              </li>
+
+            </ul>
+
           </div>
-
-          <!-- Nav tabs -->
-          <ul class="nav nav-tabs preview-thumb clearfix " role="tablist">
-            <!--礼物循环模板-->
-            <li role="presentation" v-for="(img,index) in giftImages">
-              <a :href="'#list-p'+index" :aria-controls="'list-p'+index" role="tab" data-toggle="tab">
-                <img  :src="img.pic_url" style="display: inline;" width="75" height="75">
-              </a>
-            </li>
-
-          </ul>
-
         </div>
-      </div>
-      <div class="col-md-7 col-sm-12 col-xs-12 pt10">
-        <div class="property hidden-xs hidden-sm">
+        <div class="col-md-7 col-sm-12 col-xs-12 pt10">
+          <div class="property hidden-xs hidden-sm">
 
-          <div class="property-hd">
-            <h1 v-text="giftData.gift_name">忘情巴黎--33枝红玫瑰</h1>
-            <p class="mod-info active" v-text="giftData.gift_tip">浪漫唯美 女神挚爱</p>
-          </div>
+            <div class="property-hd">
+              <h1 v-text="giftData.gift_name">忘情巴黎--33枝红玫瑰</h1>
+              <p class="mod-info active" v-text="giftData.gift_tip">浪漫唯美 女神挚爱</p>
+            </div>
 
-          <div class="property-sell">
-            <dl class="property-sell-price clearfix">
-              <dt class="vm-metatit">心&nbsp;&nbsp;房&nbsp;&nbsp;价：
-              </dt>
-              <dd>
-                <div class="mod-price">
-                  <small>¥</small>
-                  <span id="J_price" class="vm-money" v-text="giftData.new_price"></span>
-                </div>
-                <div class="old-price">
-                  <small>¥</small>
-                  <span id="price" class="vm-money" v-text="giftData.price"></span>
-                </div>
-              </dd>
-            </dl>
-            <dl class="property-sell-coupon clearfix" id="J_prodPromo" style="">
-              <dt class="vm-metatit">寄<span class="s-space"></span><span class="s-space"></span>语：
-              </dt>
-              <dd>
-                <p id="J_promoInner">
-                  <span class="vm-tag multiple"><em v-text="giftData.remark"></em></span></p>
-              </dd>
-            </dl>
-          </div>
+            <div class="property-sell">
+              <dl class="property-sell-price clearfix">
+                <dt class="vm-metatit">心&nbsp;&nbsp;房&nbsp;&nbsp;价：
+                </dt>
+                <dd>
+                  <div class="mod-price">
+                    <small>¥</small>
+                    <span id="J_price" class="vm-money" v-text="giftData.new_price"></span>
+                  </div>
+                  <div class="old-price">
+                    <small>¥</small>
+                    <span id="price" class="vm-money" v-text="giftData.price"></span>
+                  </div>
+                </dd>
+              </dl>
+              <dl class="property-sell-coupon clearfix" id="J_prodPromo" style="">
+                <dt class="vm-metatit">寄<span class="s-space"></span><span class="s-space"></span>语：
+                </dt>
+                <dd>
+                  <p id="J_promoInner">
+                    <span class="vm-tag multiple"><em v-text="giftData.remark"></em></span></p>
+                </dd>
+              </dl>
+            </div>
 
-          <div class="property-sibling">
-            <dl class="property-sibling-item">
-              <dt class="vm-metatit">
-                类<span class="s-space"></span><span class="s-space"></span>别：
-              </dt>
-              <dd class="clearfix">
-                <a href="javascript:;" class="prop selected" v-text="giftData.type_id__typename"></a>
-              </dd>
-            </dl>
-          </div>
+            <div class="property-sibling">
+              <dl class="property-sibling-item">
+                <dt class="vm-metatit">
+                  类<span class="s-space"></span><span class="s-space"></span>别：
+                </dt>
+                <dd class="clearfix">
+                  <a href="javascript:;" class="prop selected" v-text="giftData.type_id__typename"></a>
+                </dd>
+              </dl>
+            </div>
 
-          <div class="property-set">
-            <dl class="property-set-sale">
-              <dt class="vm-metatit">材料：</dt>
-              <dd class="clearfix">
-                <a v-text="giftData.descr">
-                </a>
-              </dd>
-            </dl>
-            <dl class="property-set-sale">
-              <dt class="vm-metatit">包装：</dt>
-              <dd class="clearfix">
-                <a v-text="giftData.gift_package">
-                </a>
-              </dd>
-            </dl>
+            <div class="property-set">
+              <dl class="property-set-sale">
+                <dt class="vm-metatit">材料：</dt>
+                <dd class="clearfix">
+                  <a v-text="giftData.descr">
+                  </a>
+                </dd>
+              </dl>
+              <dl class="property-set-sale">
+                <dt class="vm-metatit">包装：</dt>
+                <dd class="clearfix">
+                  <a v-text="giftData.gift_package">
+                  </a>
+                </dd>
+              </dl>
 
-          </div>
+            </div>
 
-          <div class="property-service">
-            <dl class="property-service-item clearfix">
-              <dt class="vm-metatit">支<span class="s-space"></span><span class="s-space"></span>持：
-              </dt>
-              <dd class="mod-bd" id="J_prodService">
-                <span><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>花呗分期</span>
-                <span><a href="#" target="_blank"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>百城速达</a></span>
-                <span><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>顺丰包邮</span>
-                <span><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>7天无理由退货</span>
-              </dd>
-            </dl>
+            <div class="property-service">
+              <dl class="property-service-item clearfix">
+                <dt class="vm-metatit">支<span class="s-space"></span><span class="s-space"></span>持：
+                </dt>
+                <dd class="mod-bd" id="J_prodService">
+                  <span><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>花呗分期</span>
+                  <span><a href="#" target="_blank"><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>百城速达</a></span>
+                  <span><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>顺丰包邮</span>
+                  <span><i class="glyphicon glyphicon-ok-circle" aria-hidden="true"></i>7天无理由退货</span>
+                </dd>
+              </dl>
 
-            <dl class="property-service-provider clearfix">
-              <dt class="vm-metatit">附<span class="s-space"></span><span class="s-space"></span>送：
-              </dt>
-              <dd class="clearfix">
-                <span ></span>
-                下单填写留言，即免费赠送精美贺卡！
-              </dd>
-            </dl>
+              <dl class="property-service-provider clearfix">
+                <dt class="vm-metatit">附<span class="s-space"></span><span class="s-space"></span>送：
+                </dt>
+                <dd class="clearfix">
+                  <span ></span>
+                  下单填写留言，即免费赠送精美贺卡！
+                </dd>
+              </dl>
 
-            <dl class="property-service-provider clearfix">
-              <dt class="vm-metatit">服<span class="s-space"></span><span class="s-space"></span>务：
-              </dt>
-              <dd class="clearfix">
-                <span></span>
-                本商品由 左心房 负责发货并提供售后服务
-              </dd>
-            </dl>
-          </div>
+              <dl class="property-service-provider clearfix">
+                <dt class="vm-metatit">服<span class="s-space"></span><span class="s-space"></span>务：
+                </dt>
+                <dd class="clearfix">
+                  <span></span>
+                  本商品由 左心房 负责发货并提供售后服务
+                </dd>
+              </dl>
+            </div>
 
-          <div class="property-buy">
-            <p class="vm-message"></p>
-            <dl class="property-buy-quantity">
-              <dt class="vm-metatit">数<span class="s-space"></span><span class="s-space"></span>量：</dt>
-              <dd class="clearfix">
-                <div class="mod-control">
-                  <a title="减少" href="javascript:;" class="vm-minus" @click="numSub" :class="{disabled:isDisabled}">-</a>
-                  <input name="m" data-max="5" type="text" v-model="gift_num">
-                  <a title="增加" href="javascript:;" class="vm-plus" @click="numAdd">+</a>
-                </div>
-              </dd>
-            </dl>
-            <div class="property-buy-action">
-              <router-link to="/giftCart">
+            <div class="property-buy">
+              <p class="vm-message"></p>
+              <dl class="property-buy-quantity">
+                <dt class="vm-metatit">数<span class="s-space"></span><span class="s-space"></span>量：</dt>
+                <dd class="clearfix">
+                  <div class="mod-control">
+                    <a title="减少" href="javascript:;" class="vm-minus" @click="numSub" :class="{disabled:isDisabled}">-</a>
+                    <input name="m" data-max="5" type="text" v-model="gift_num">
+                    <a title="增加" href="javascript:;" class="vm-plus" @click="numAdd">+</a>
+                  </div>
+                </dd>
+              </dl>
+              <div class="property-buy-action">
+
                 <button type="submit" class="btn btn-danger btn-lg mr20" @click="addCart">立即购买</button>
-              </router-link>
+
+              </div>
             </div>
+
           </div>
 
         </div>
-
       </div>
-    </div>
 
-    <!--礼物详情、用户评论-->
-    <div class="row" id="gift-detail-content">
-      <ul class="nav nav-tabs clearfix">
-        <li class="active"><a href="#gift-info" data-toggle="tab" :info-id="0" :class="{GiftDetailNav:curr_info_id==='0'}" @click="detailChange">礼物详情</a></li>
-        <li><a href="#gift-comment" data-toggle="tab" :info-id="1" :class="{GiftDetailNav:curr_info_id==='1'}" @click="detailChange">礼物评论</a></li>
-      </ul>
-    </div>
+      <!--礼物详情、用户评论-->
+      <div class="row" id="gift-detail-content">
+        <ul class="nav nav-tabs clearfix">
+          <li class="active"><a href="#gift-info" data-toggle="tab" :info-id="0" :class="{GiftDetailNav:curr_info_id==='0'}" @click="detailChange">礼物详情</a></li>
+          <li><a href="#gift-comment" data-toggle="tab" :info-id="1" :class="{GiftDetailNav:curr_info_id==='1'}" @click="detailChange">礼物评论</a></li>
+        </ul>
+      </div>
 
-    <div class="row">
-      <div class="tab-content">
-        <div class="tab-pane active" id="gift-info">
-          <!--详情左侧-->
-          <div class="gift-detail">
-            <div class="gift-detail-left">
-              <img :src="img.pic_url" v-for="img in giftImages" style="width: 500px;height: auto;display: block">
-            </div>
+      <div class="row">
+        <div class="tab-content">
+          <div class="tab-pane active" id="gift-info">
+            <!--详情左侧-->
+            <div class="gift-detail">
+              <div class="gift-detail-left">
+                <img :src="img.pic_url" v-for="img in giftImages" style="width: 500px;height: auto;display: block">
+              </div>
 
-            <div class="gift-detail-right">
+              <div class="gift-detail-right">
 
                 <div class="block">
                   <h3>
@@ -167,7 +168,8 @@
                     <span class="clear">STYLE NOTES</span>
                   </h3>
                   <p>
-                  </p><p>AZALEA系列设计灵感来自杜鹃花，寓意爱与喜悦。弹力真丝缎面睡衣，将LEAVERS蕾丝与乔其纱褶皱工艺完美结合。后背细肩带及排扣设计更添女性优雅魅力。</p>
+                  </p><p>今夏，由法国Le petit prince原作授权，野兽派与小王子再度合作，推出小王子75周年限量版枪炮花盒。特别的荔枝皮纹包装，用烫金工艺呈现小王子眺望的漫天星空，搭配全金纪念贴纸。
+                  盒中搭配全新双色渐变红白玫瑰，像你一样罕有，你是我于辽阔宇宙中遇见的无法替代的玫瑰。</p>
                   <p></p>
 
                 </div>
@@ -178,7 +180,7 @@
                     <span class="clear">BRAND STORY</span>
                   </h3>
                   <p>
-                  </p><p>“一个女人，在脱下外衣时，仍然是美丽的，而且是最富有魅力的，性感的。受着神灵的爱护和眷顾，必须把庸俗和色情分得很清楚。”这样的内衣哲学恐怕也只有La Perla能够读写的如此淋漓尽致。<br>LA PERLA集团创立于1954年，它是世界高端内衣、女装、泳装生产厂家之一，更是时尚的奠基者。LA PERLA品牌内衣具有深厚的文化内涵和惟美的艺术气息，成功地令内衣真正显示出女性的妩媚，把内衣潮流及时地带进年轻人的世界。因其高贵的风格和悠久的历史，被业内誉为内衣商品中的“劳斯莱斯”。</p>
+                  </p><p>我们都是都会丛林中的野兽，寻找栖身之所，寻找同伴，寻找爱，从一个地方到另一个地方。Love like a beast。</p>
                   <p></p>
 
                 </div>
@@ -189,7 +191,10 @@
                     <span class="clear">DETAILS</span>
                   </h3>
                   <p>
-                  </p><p style="white-space: normal;">礼盒包含：</p><p style="white-space: normal;">AZALEA白色蕾丝吊带裙*1</p><p style="white-space: normal;">大双层永生花盒*1</p><p style="white-space: normal;"><br></p><p style="white-space: normal;">吊带裙</p><p style="white-space: normal;">面料：92.3%桑蚕丝、7.7%氨纶；</p><p style="white-space: normal;">辅料：91.3%桑蚕丝、8.7%氨纶；</p><p style="white-space: normal;">蕾丝：86.6%锦纶、13.4%氨纶；</p><p style="white-space: normal;">产地：克罗地亚</p><p><br></p>
+                  </p><p style="white-space: normal;">商品包含小王子75周年限量枪炮礼盒*1、16支玫瑰<br>
+                  花盒尺寸 71cm*19.5cm*11.5cm<br>
+                  产地 厄瓜多尔<br>
+                  颜色 红白双色（由特殊工艺染色而成，并非自然色，如有掉色，属于正常现象）</p>
                   <p></p>
 
                 </div>
@@ -216,54 +221,61 @@
 
                 </div>
 
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="tab-pane" id="gift-comment">
-          <div class="div-trend" v-for="com in comments_list">
-            <div class="user-pic">
-              <!--<img :src="require(`../assets/user-icon/${com.userinfo__icon}`)" alt="">-->
-              <img src="../../assets/user-icon/head_icon_1.jpg" alt="">
-            </div>
-            <div class="trend-right">
-
-              <div class="trend-header">
-                <div class="trend-user">
-                  <a href="#" v-text="com.userinfo__nickname"></a>
-                </div>
-                <div class="trend-time">{{getPublishTime(com.comment_time)}}</div>
               </div>
 
-              <div class="trend-address">
-                <div class="user-address" v-text="com.userinfo__address__detailLocation"></div>
-                <div class="comment-level">
-                  评价等级:
-                  <span class="glyphicon glyphicon-heart" aria-hidden="true" style="color:orangered" v-for="i of com.credit"></span>
-                </div>
-              </div>
-
-              <div class="trend-content" v-text="com.comment"></div>
             </div>
+
           </div>
 
+          <div class="tab-pane" id="gift-comment">
+            <div class="div-trend" v-for="com in comments_list">
+              <div class="user-pic">
+                <!--<img :src="require(`../assets/user-icon/${com.userinfo__icon}`)" alt="">-->
+                <img src="../../assets/user-icon/head_icon_1.jpg" alt="">
+              </div>
+              <div class="trend-right">
 
-          <!--加载更多按钮-->
-          <div class="load-more" @click="getCommentsMore" v-if="showMoreBtn">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <div class="trend-header">
+                  <div class="trend-user">
+                    <a href="#" v-text="com.userinfo__nickname"></a>
+                  </div>
+                  <div class="trend-time">{{getPublishTime(com.comment_time)}}</div>
+                </div>
+
+                <div class="trend-address">
+                  <div class="user-address" v-text="com.userinfo__address__detailLocation"></div>
+                  <div class="comment-level">
+                    评价等级:
+                    <span class="glyphicon glyphicon-heart" aria-hidden="true" style="color:orangered" v-for="i of com.credit"></span>
+                  </div>
+                </div>
+
+                <div class="trend-content" v-text="com.comment"></div>
+              </div>
+            </div>
+
+
+            <!--加载更多按钮-->
+            <div class="load-more" @click="getCommentsMore" v-if="showMoreBtn">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </div>
+
+            <div class="load-more-nothing" v-if="!showMoreBtn">没有更多了~~~</div>
+
+
           </div>
-
-          <div class="load-more-nothing" v-if="!showMoreBtn">没有更多了~~~</div>
-
-
         </div>
+
       </div>
+
+
 
     </div>
 
 
+
+    <NotLogin  v-if="showTip" @sureclick="showTip=false"></NotLogin>
+    <NavFooter></NavFooter>
   </div>
 
 
@@ -273,10 +285,13 @@
 <script>
 
   import axios from 'axios'
+  import NotLogin from './NotLogin'
+  import NavFooter from '../public/NavFooter'
 export default {
   name: 'DetailFlower',
   data () {
     return {
+      showTip:false,
       // 获取礼物id
       gift_id:this.$route.params.giftid,
       // 接受礼物详情数据
@@ -298,6 +313,10 @@ export default {
 
 
     }
+  },
+  components:{
+    NotLogin,
+    NavFooter
   },
 
   mounted:function(){
@@ -371,23 +390,32 @@ export default {
 
     // 点击加入购物车
     addCart:function(){
-      // 用户id 这里默认 1
-      let cart={
-        userinfo_id:1,
-        gifts_id:this.gift_id,
-        cart_num:this.gift_num
-      };
-      axios({
-        method:'POST',
-        url:this.GLOBAL.HOST+'gift/addcart/',
-        data:cart
-      })
-      .then(function (response) {
 
-      })
-      .catch(function (error) {
-        console.log(error)
-      });
+      if(window.sessionStorage.getItem("token")){
+        let cart={
+          gifts_id:this.gift_id,
+          cart_num:this.gift_num
+        };
+        let vm = this;
+        axios({
+          method:'POST',
+          url:this.GLOBAL.HOST+'gift/addcart/',
+          data:cart,
+          headers:{"token":window.sessionStorage.getItem("token")}
+        })
+          .then(function (response) {
+            if(response.data.code === '808'){
+              vm.$router.push({path:'/giftCart'})
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          });
+      }else{
+        this.showTip = true;
+      }
+
+
     },
 
     // 礼物详情nav点击事件
